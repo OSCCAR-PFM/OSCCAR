@@ -1,0 +1,6 @@
+OSCCAR_DIR=$HOME/OSCCAR
+
+alias OSCCARtut='cd $OSCCAR_DIR/tutorials'
+alias OSCCARsrc='cd $OSCCAR_DIR/src'
+alias OSCCARsol='cd $OSCCAR_DIR/applications/solvers'
+alias OSCCARutil='cd $OSCCAR_DIR/applications/utilities'
