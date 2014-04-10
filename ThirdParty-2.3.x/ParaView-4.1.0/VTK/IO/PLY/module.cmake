@@ -1,0 +1,13 @@
+vtk_module(vtkIOPLY
+  GROUPS
+    StandAlone
+  DEPENDS
+    vtkCommonMisc
+    vtkCommonExecutionModel
+    vtkIOGeometry
+  TEST_DEPENDS
+    vtkRenderingOpenGL
+    vtkIOImage
+    vtkTestingRendering
+    vtkInteractionStyle
+  )

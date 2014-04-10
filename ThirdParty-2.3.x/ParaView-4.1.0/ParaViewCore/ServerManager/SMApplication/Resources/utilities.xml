@@ -1,0 +1,3047 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="lookup_tables">
+    <Proxy class="vtkLookupTable"
+           name="LookupTable"
+           post_push="Build"
+           processes="dataserver|renderserver|client">
+      <IntVectorProperty command="SetNumberOfTableValues"
+                         default_values="256"
+                         name="NumberOfTableValues"
+                         number_of_elements="1">
+        <IntRangeDomain min="1"
+                        name="range" />
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetHueRange"
+                            default_values="0 0.66667"
+                            name="HueRange"
+                            number_of_elements="2">
+        <DoubleRangeDomain max="1 1"
+                           min="0 0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetSaturationRange"
+                            default_values="1 1"
+                            name="SaturationRange"
+                            number_of_elements="2">
+        <DoubleRangeDomain max="1 1"
+                           min="0 0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetValueRange"
+                            default_values="1 1"
+                            name="ValueRange"
+                            number_of_elements="2">
+        <DoubleRangeDomain max="1 1"
+                           min="0 0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetTableRange"
+                            default_values="0 1"
+                            name="ScalarRange"
+                            number_of_elements="2"></DoubleVectorProperty>
+      <IntVectorProperty command="SetVectorComponent"
+                         default_values="0"
+                         name="VectorComponent"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="X"
+                 value="0" />
+          <Entry text="Y"
+                 value="1" />
+          <Entry text="Z"
+                 value="2" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetVectorMode"
+                         default_values="1"
+                         name="VectorMode"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="Magnitude"
+                 value="0" />
+          <Entry text="Component"
+                 value="1" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <StringVectorProperty command="SetArrayName"
+                            default_values=""
+                            name="ArrayName"
+                            number_of_elements="1"></StringVectorProperty>
+    </Proxy>
+
+    <TransferFunctionProxy class="vtkDiscretizableColorTransferFunction"
+                           name="PVLookupTable"
+                           post_push="Build"
+                           processes="dataserver|renderserver|client">
+      <IntVectorProperty name="IndexedLookup"
+                         command="SetIndexedLookup"
+                         default_values="0"
+                         number_of_elements="1"
+                         label="Interpret Values As Categories">
+        <BooleanDomain name="bool" />
+        <Documentation>
+          When enabled, the color transfer function switches to indexed-lookup
+          (categorical colors) mode.
+        </Documentation>
+      </IntVectorProperty>
+
+      <IntVectorProperty name="EnableOpacityMapping"
+                         command="SetEnableOpacityMapping"
+                         number_of_elements="1"
+                         default_values="0">
+        <BooleanDomain name="bool" />
+        <Documentation>
+          When enabled, the opacity transfer function is used for
+          rendering, if applicable.
+        </Documentation>
+      </IntVectorProperty>
+
+      <ProxyProperty name="ScalarOpacityFunction"
+                     command="SetScalarOpacityFunction">
+      </ProxyProperty>
+
+      <DoubleVectorProperty clean_command="RemoveAllPoints"
+                            command="AddRGBPoint"
+                            name="RGBPoints"
+                            number_of_elements_per_command="4"
+                            repeat_command="1">
+        <Documentation>
+          Specify the control points that form the color-transfer-function. These are
+          a list of 4-tuples of the form (x, r, g, b) where x is the data value,
+          and r,g,b are three color components in the range [0,1].
+        </Documentation>
+      </DoubleVectorProperty>
+      <IntVectorProperty command="SetUseLogScale"
+                         default_values="0"
+                         name="UseLogScale"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty default_values="0"
+                         name="LockScalarRange"
+                         number_of_elements="1">
+        <!-- This is a data-property allowing us to save state of
+          scalar range lock in state. SM does not use this at all
+          hence the absence of "command" -->
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetColorSpace"
+                         default_values="0"
+                         name="ColorSpace"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="RGB" value="0" />
+          <Entry text="HSV" value="1" />
+          <Entry text="Lab" value="2" />
+          <Entry text="Diverging" value="3" />
+        </EnumerationDomain>
+        <Documentation>
+          The color space used for interpolation: RGB, HSV, Lab (CIELAB), or
+          Diverging. In HSV mode, if HSVWrap is on, it will take the shortest
+          path in Hue (going back through 0 if that is the shortest way around
+          the hue circle) whereas if HSVWrap is off it will not go through 0
+          (in order the match the current functionality of vtkLookupTable).
+          Diverging is a special mode where colors will pass through white when
+          interpolating between two saturated colors.
+        </Documentation>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetNanColor"
+                            default_values="0.5 0 0"
+                            name="NanColor"
+                            number_of_elements="3"
+                            panel_widget="color_selector" >
+        <Documentation>
+          Set the color to use when NaN (not-a-number) is encountered.
+        </Documentation>
+      </DoubleVectorProperty>
+
+      <IntVectorProperty command="SetDiscretize"
+                         default_values="1"
+                         name="Discretize"
+                         number_of_elements="1"
+                         panel_visibility="advanced" >
+        <BooleanDomain name="bool" />
+        <Documentation>
+          When set, the color transfer function will comprise of discrete colors
+          with number of discrete colors specified using NumberOfTableValues.
+        </Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetNumberOfValues"
+                         default_values="256"
+                         name="NumberOfTableValues"
+                         number_of_elements="1"
+                         panel_visibility="advanced" >
+        <IntRangeDomain min="1" max="1024" name="range" />
+        <Documentation>
+          When Discretize is set, this specifies the number of discrete colors
+          that must be present in the transfer function.
+        </Documentation>
+        <Hints>
+          <PropertyWidgetDecorator type="EnableWidgetDecorator">
+            <Property name="Discretize" function="boolean" index="0" />
+          </PropertyWidgetDecorator>
+        </Hints>
+      </IntVectorProperty>
+
+      <DoubleVectorProperty default_values="0"
+                            name="ScalarRangeInitialized"
+                            number_of_elements="1"
+                            panel_visibility="never" >
+        <!-- This is used to keep track of whether the
+        user initialized the scalar range -->
+        <BooleanDomain name="bool" />
+      </DoubleVectorProperty>
+      <IntVectorProperty command="SetHSVWrap"
+                         default_values="0"
+                         name="HSVWrap"
+                         number_of_elements="1"
+                         panel_visibility="never" >
+        <!-- FIXME: need to add "Wrapped HSV" as a color-space type instead -->
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <Property command="Build" name="Build" panel_visibility="never" />
+      <IntVectorProperty command="SetVectorComponent"
+                         default_values="0"
+                         name="VectorComponent"
+                         number_of_elements="1"
+                         panel_visibility="never" >
+        <IntRangeDomain name="range" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetVectorMode"
+                         default_values="1"
+                         name="VectorMode"
+                         number_of_elements="1"
+                         panel_visibility="never" >
+        <EnumerationDomain name="enum">
+          <Entry text="Magnitude" value="0" />
+          <Entry text="Component" value="1" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetAllowDuplicateScalars"
+                         default_values="1"
+                         name="AllowDuplicateScalars"
+                         number_of_elements="1"
+                         panel_visibility="never" >
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+
+      <StringVectorProperty name="Annotations"
+                            clean_command="ResetAnnotations"
+                            command="SetAnnotation"
+                            element_types="2 2"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>
+          Specify annotations.
+        </Documentation>
+      </StringVectorProperty>
+
+      <DoubleVectorProperty name="IndexedColors"
+                            command="SetIndexedColor"
+                            number_of_elements_per_command="3"
+                            repeat_command="1"
+                            set_number_command="SetNumberOfIndexedColors"
+                            use_index="1">
+        <Documentation>
+          Colors used when using IndexedLookup is true.
+        </Documentation>
+      </DoubleVectorProperty>
+
+      <PropertyGroup label="Mapping Data" panel_widget="ColorOpacityEditor">
+        <Property name="EnableOpacityMapping" function="EnableOpacityMapping" />
+        <Property name="RGBPoints" function="XRGBPoints" />
+        <Property name="ScalarOpacityFunction" function="ScalarOpacityFunction" />
+        <Property name="UseLogScale" function="UseLogScale" />
+        <Property name="LockScalarRange" function="LockScalarRange" />
+      </PropertyGroup>
+
+      <PropertyGroup label="Color Mapping Parameters">
+        <Property name="ColorSpace" />
+        <Property name="NanColor" />
+        <Property name="Discretize" />
+        <Property name="NumberOfTableValues" />
+	<Property name="LockScalarRange" function="LockScalarRange" />
+      </PropertyGroup>
+
+      <PropertyGroup label="Annotations" panel_widget="AnnotationsEditor">
+        <Property name="Annotations" />
+        <Property name="IndexedColors" />
+      </PropertyGroup>
+      <!-- End of PVLookupTable -->
+    </TransferFunctionProxy>
+  </ProxyGroup>
+  <ProxyGroup name="parametric_functions">
+    <Proxy class="vtkParametricSpline"
+           name="Spline">
+      <DoubleVectorProperty command="SetPoint"
+                            default_values="0 0 0 1 0 0"
+                            name="Points"
+                            number_of_elements="6"
+                            number_of_elements_per_command="3"
+                            repeat_command="1"
+                            set_number_command="SetNumberOfPoints"
+                            use_index="1"></DoubleVectorProperty>
+      <IntVectorProperty command="SetClosed"
+                         default_values="0"
+                         name="Closed"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <Hints>
+        <!-- Hints are metadata associated with the proxy.
+             As far as the ServerManager is concerned, Hints have no
+             significance. GUI is free to interpret the hints as
+             it chooses. Hints provide a mechanism to add some GUI
+             pertinant information to the server manager XML.
+        -->
+        <PropertyGroup type="Spline">
+          <Property function="HandlePositions"
+                    name="Points" />
+          <Property function="Closed"
+                    name="Closed" />
+        </PropertyGroup>
+      </Hints>
+      <!-- end of Spline -->
+    </Proxy>
+  </ProxyGroup>
+  <!-- incremental point locators begin -->
+  <ProxyGroup name="incremental_point_locators">
+    <NullProxy name="None"></NullProxy>
+    <NullProxy name="Scalar"></NullProxy>
+    <Proxy class="vtkPointLocator"
+           name="PointLocator">
+      <Documentation>Point locator based on a search structure of uniform
+      fixed-resolution bins / buckets for point location and generic (zero or
+      non-zero) tolerance point insertion.</Documentation>
+      <IntVectorProperty command="SetDivisions"
+                         default_values="50 50 50"
+                         name="Divisions"
+                         number_of_elements="3">
+        <Documentation>Specify the number of divisions in each axis / direction
+        (x, y, z) for creating a search structure of uniform fixed-resolution
+        bins / buckets.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetNumberOfPointsPerBucket"
+                         default_values="8"
+                         label="Number of points per bucket"
+                         name="NumberOfPointsPerBucket"
+                         number_of_elements="1">
+        <Documentation>Specify the average number of points in each bin /
+        bucket that determines the initial and growing sizes (in terms of
+        number of points) of each bin / bucket.</Documentation>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetTolerance"
+                            default_values="0.001"
+                            name="Tolerance"
+                            number_of_elements="1">
+        <Documentation>Specify an absolute tolerance for check-based /
+        tolerance-based point insertion.</Documentation>
+      </DoubleVectorProperty>
+    </Proxy>
+    <Proxy class="vtkMergePoints"
+           label="Uniform Binning"
+           name="MergePoints">
+      <Documentation>A point merger using a search structure of uniform
+      fixed-resolution bins / buckets for zero tolerance point insertion (to
+      avoid exactly duplicate / coincident points).</Documentation>
+      <IntVectorProperty command="SetDivisions"
+                         default_values="50 50 50"
+                         name="Divisions"
+                         number_of_elements="3">
+        <Documentation>Specify the number of divisions in each axis / direction
+        (x, y, z) for creating a search structure of uniform fixed-resolution
+        bins / buckets.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetNumberOfPointsPerBucket"
+                         default_values="8"
+                         label="Number of points per bucket"
+                         name="NumberOfPointsPerBucket"
+                         number_of_elements="1">
+        <Documentation>Specify the average number of points in each bin /
+        bucket that determines the initial and growing sizes (in terms of
+        number of points) of each bin / bucket.</Documentation>
+      </IntVectorProperty>
+    </Proxy>
+    <Proxy class="vtkNonMergingPointLocator"
+           label="Don't Merge Points"
+           name="NonMergingPointLocator">
+      <Documentation>Perform direct / check-free point insertion (any point is
+      inserted to a vtkPoints object) and therefore there can be duplicate
+      points.</Documentation>
+      <IntVectorProperty command="SetDivisions"
+                         default_values="50 50 50"
+                         name="Divisions"
+                         number_of_elements="3">
+        <Documentation>Specify the number of divisions in each axis / direction
+        (x, y, z) for creating a search structure of uniform fixed-resolution
+        bins / buckets.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetNumberOfPointsPerBucket"
+                         default_values="8"
+                         label="Number of points per bucket"
+                         name="NumberOfPointsPerBucket"
+                         number_of_elements="1">
+        <Documentation>Specify the average number of points in each bin /
+        bucket that determines the initial and growing sizes (in terms of
+        number of points) of each bin / bucket.</Documentation>
+      </IntVectorProperty>
+    </Proxy>
+    <Proxy class="vtkIncrementalOctreePointLocator"
+           name="IncrementalOctreePointLocator">
+      <Documentation>Point locator based on a fast search structure of
+      data-aware multi-resolution octree nodes for point location and generic
+      (zero or non-zero) tolerance point insertion.</Documentation>
+      <IntVectorProperty command="SetMaxPointsPerLeaf"
+                         default_values="128"
+                         label="Max number of points per leaf"
+                         name="MaxPointsPerLeaf"
+                         number_of_elements="1">
+        <IntRangeDomain max="256"
+                        min="16"
+                        name="range" />
+        <Documentation>Specify the maximum number of points that a leaf node
+        may maintain. This value is a trade-off between the cost of dynamic
+        octree construction (top-down recursive node sub-division into eight
+        children as points are incrementally inserted to the octree) and the
+        speed of point location (particularly within a container leaf
+        node).</Documentation>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetTolerance"
+                            default_values="0.001"
+                            name="Tolerance"
+                            number_of_elements="1">
+        <Documentation>Specify an absolute tolerance for check-based /
+        tolerance-based point insertion.</Documentation>
+      </DoubleVectorProperty>
+    </Proxy>
+    <Proxy class="vtkIncrementalOctreePointLocator"
+           label="Octree Binning"
+           name="IncrementalOctreeMergePoints">
+      <Documentation>A point merger exploiting a fast search structure of
+      data-aware multi-resolution octree nodes for zero-tolerance point
+      insertion (to avoid exactly duplicate / coincident
+      points).</Documentation>
+      <IntVectorProperty command="SetMaxPointsPerLeaf"
+                         default_values="128"
+                         label="Max number of points per leaf"
+                         name="MaxPointsPerLeaf"
+                         number_of_elements="1">
+        <IntRangeDomain max="256"
+                        min="16"
+                        name="range" />
+        <Documentation>Specify the maximum number of points that a leaf node
+        may maintain. This value is a trade-off between the cost of dynamic
+        octree construction (top-down recursive node sub-division into eight
+        children as points are incrementally inserted to the octree) and the
+        speed of point location (particularly within a container leaf
+        node).</Documentation>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetTolerance"
+                            default_values="0.0"
+                            name="Tolerance"
+                            number_of_elements="1">
+        <Documentation>Always specify a zero tolerance for point insertion ---
+        merging points.</Documentation>
+      </DoubleVectorProperty>
+      <Hints>
+        <Property name="Tolerance"
+                  show="0" />
+      </Hints>
+    </Proxy>
+  </ProxyGroup>
+  <!-- incremental point locators end -->
+  <ProxyGroup name="implicit_functions">
+    <NullProxy name="None"></NullProxy>
+    <NullProxy name="Scalar"></NullProxy>
+    <Proxy class="vtkPVPlane"
+           name="Plane">
+      <InputProperty is_internal="1"
+                     name="Input"></InputProperty>
+      <DoubleVectorProperty command="SetOrigin"
+                            default_values="0.0 0.0 0.0"
+                            name="Origin"
+                            number_of_elements="3">
+        <BoundsDomain default_mode="mid"
+                      mode="normal"
+                      name="range">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="Input" />
+          </RequiredProperties>
+        </BoundsDomain>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetNormal"
+                            default_values="1.0 0.0 0.0"
+                            name="Normal"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty animateable="1"
+                            command="SetOffset"
+                            default_values="0.0"
+                            name="Offset"
+                            number_of_elements="1">
+      </DoubleVectorProperty>
+      <Hints>
+        <!-- Hints are metadata associated with the proxy.
+             As far as the ServerManager is concerned, Hints have no
+             significance. GUI is free to interpret the hints as
+             it chooses. Hints provide a mechanism to add some GUI
+             pertinant information to the server manager XML.
+        -->
+        <PropertyGroup type="Plane">
+          <Property function="Origin"
+                    name="Origin" />
+          <Property function="Normal"
+                    name="Normal" />
+        </PropertyGroup>
+        <ProxyList>
+          <!--
+            ProxyList hints are used when this proxy
+            is made a part of a proxy list domain.
+            It provides a mechanism to link certain
+            properties from this proxy with properties
+            from the proxy which has the property
+            with the proxy list domain.
+          -->
+          <Link name="Input"
+                with_property="Input" />
+        </ProxyList>
+      </Hints>
+    </Proxy>
+    <Proxy class="vtkPlanes"
+           name="Planes">
+      <ProxyProperty command="SetPoints"
+                     name="Points">
+        <ProxyGroupDomain name="group">
+          <Group name="points" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+      <ProxyProperty command="SetNormals"
+                     name="Normals">
+        <ProxyGroupDomain name="group">
+          <Group name="data_arrays" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+    </Proxy>
+    <Proxy class="vtkPVBox"
+           name="Box">
+      <DoubleVectorProperty command="SetBounds"
+                            default_values="0 1 0 1 0 1"
+                            name="Bounds"
+                            number_of_elements="6"></DoubleVectorProperty>
+      <DoubleVectorProperty animateable="1"
+                            command="SetPosition"
+                            default_values="0.0 0.0 0.0"
+                            name="Position"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty animateable="1"
+                            command="SetRotation"
+                            default_values="0.0 0.0 0.0"
+                            name="Rotation"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty animateable="1"
+                            command="SetScale"
+                            default_values="1.0 1.0 1.0"
+                            name="Scale"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <Hints>
+        <!-- Hints are metadata associated with the proxy.
+             As far as the ServerManager is concerned, Hints have no
+             significance. GUI is free to interpret the hints as
+             it chooses. Hints provide a mechanism to add some GUI
+             pertinant information to the server manager XML.
+        -->
+        <PropertyGroup type="Box">
+          <Property function="Position"
+                    name="Position" />
+          <Property function="Rotation"
+                    name="Rotation" />
+          <Property function="Scale"
+                    name="Scale" />
+          <Property function="PlaceWidget"
+                    name="Bounds" />
+        </PropertyGroup>
+      </Hints>
+      <!-- End of Box -->
+    </Proxy>
+    <Proxy class="vtkSphere"
+           name="Sphere">
+      <DoubleVectorProperty command="SetCenter"
+                            default_values="none"
+                            name="Center"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetRadius"
+                            default_values="none"
+                            name="Radius"
+                            number_of_elements="1">
+        <DoubleRangeDomain min="0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <Hints>
+        <!-- Hints are metadata associated with the proxy.
+             As far as the ServerManager is concerned, Hints have no
+             significance. GUI is free to interpret the hints as
+             it chooses. Hints provide a mechanism to add some GUI
+             pertinant information to the server manager XML.
+        -->
+        <PropertyGroup type="Sphere">
+          <Property function="Center"
+                    name="Center" />
+          <Property function="Radius"
+                    name="Radius" />
+        </PropertyGroup>
+      </Hints>
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="transforms">
+    <Proxy class="vtkTransform"
+           name="Transform">
+      <ProxyProperty command="SetMatrix"
+                     name="MatrixProxy">
+        <ProxyGroupDomain name="groups">
+          <Group name="matrices" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+      <DoubleVectorProperty argument_is_array="1"
+                            command="SetMatrix"
+                            default_values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+                            name="Matrix"
+                            number_of_elements="16" />
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="matrices">
+    <Proxy class="vtkMatrix4x4"
+           name="Matrix4x4">
+      <DoubleVectorProperty argument_is_array="1"
+                            command="DeepCopy"
+                            default_values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+                            name="DeepCopy"
+                            number_of_elements="16"></DoubleVectorProperty>
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="points">
+    <Proxy class="vtkPoints"
+           name="Points">
+      <DoubleVectorProperty command="SetPoint"
+                            name="Points"
+                            number_of_elements="0"
+                            number_of_elements_per_command="3"
+                            repeat_command="1"
+                            set_number_command="SetNumberOfPoints"
+                            use_index="1" />
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="data_arrays">
+    <Proxy class="vtkDoubleArray"
+           name="DoubleArray">
+      <DoubleVectorProperty command="SetValue"
+                            name="Values"
+                            number_of_elements="0"
+                            number_of_elements_per_command="1"
+                            repeat_command="1"
+                            set_number_command="SetNumberOfValues"
+                            use_index="1" />
+      <IntVectorProperty command="SetNumberOfComponents"
+                         default_values="1"
+                         name="Components"
+                         number_of_elements="1" />
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="internals">
+    <Proxy class="vtkMPIMToNSocketConnection"
+           name="MPIMToNSocketConnection"
+           processes="dataserver|renderserver">
+      <IntVectorProperty command="Initialize"
+                         default_values="none"
+                         is_internal="1"
+                         name="WaitingProcess"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="DataServer"
+                 value="2" />
+          <Entry text="RenderServer"
+                 value="3" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <StringVectorProperty command="SetPortInformation"
+                            element_types="0 0 2"
+                            name="Connections"
+                            number_of_elements_per_command="3"
+                            repeat_command="1"
+                            set_number_command="SetNumberOfConnections">
+                            </StringVectorProperty>
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="animation">
+    <Proxy name="AnimationCueBase">
+      <Documentation>Internal base interface for all animation
+      cues.</Documentation>
+      <IntVectorProperty command="SetTimeMode"
+                         default_values="0"
+                         name="TimeMode"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="Normalized"
+                 value="0" />
+          <Entry text="Relative"
+                 value="1" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetStartTime"
+                            default_values="0"
+                            name="StartTime"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetEndTime"
+                            default_values="1"
+                            name="EndTime"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <IntVectorProperty command="SetAnimatedElement"
+                         default_values="0"
+                         name="AnimatedElement"
+                         number_of_elements="1"></IntVectorProperty>
+      <IntVectorProperty command="SetEnabled"
+                         default_values="1"
+                         name="Enabled"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Enables this animation cue.</Documentation>
+      </IntVectorProperty>
+      <!-- End of AnimationCueBase -->
+    </Proxy>
+    <ComparativeAnimationCueProxy class="vtkPVComparativeAnimationCue"
+                                  name="ComparativeAnimationCue"
+                                  processes="client">
+      <Documentation>Animation cue used by comparative views.</Documentation>
+      <IntVectorProperty command="SetAnimatedElement"
+                         default_values="0"
+                         name="AnimatedElement"
+                         number_of_elements="1"></IntVectorProperty>
+      <IntVectorProperty command="SetEnabled"
+                         default_values="1"
+                         name="Enabled"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Enables this animation cue.</Documentation>
+      </IntVectorProperty>
+      <ProxyProperty argument_type="SMProxy"
+                     clean_command="RemoveAnimatedProxy"
+                     command="SetAnimatedProxy"
+                     name="AnimatedProxy">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources" />
+          <Group name="filters" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+      <StringVectorProperty command="SetAnimatedPropertyName"
+                            name="AnimatedPropertyName"
+                            number_of_elements="1"></StringVectorProperty>
+      <StringVectorProperty command="SetAnimatedDomainName"
+                            name="AnimatedDomainName"
+                            number_of_elements="1"></StringVectorProperty>
+      <!-- end of ComparativeAnimationCue -->
+    </ComparativeAnimationCueProxy>
+    <Proxy base_proxygroup="animation"
+           base_proxyname="AnimationCueBase"
+           class="vtkPVKeyFrameAnimationCueForProxies"
+           name="KeyFrameAnimationCue"
+           processes="client">
+      <Documentation>Animation cue with keyframes.</Documentation>
+      <ProxyProperty argument_type="SMProxy"
+                     clean_command="RemoveAnimatedProxy"
+                     command="SetAnimatedProxy"
+                     name="AnimatedProxy">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources" />
+          <Group name="filters" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+      <StringVectorProperty command="SetAnimatedPropertyName"
+                            name="AnimatedPropertyName"
+                            number_of_elements="1"></StringVectorProperty>
+      <StringVectorProperty command="SetAnimatedDomainName"
+                            name="AnimatedDomainName"
+                            number_of_elements="1"></StringVectorProperty>
+      <ProxyProperty command="AddKeyFrame"
+                     name="KeyFrames"
+                     remove_command="RemoveKeyFrame"
+                     repeat_command="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="animation_keyframes" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+      <IntVectorProperty command="GetLastAddedKeyFrameIndex"
+                         information_only="1"
+                         name="LastAddedKeyFrameIndex"></IntVectorProperty>
+      <!-- End of KeyFrameAnimationCue -->
+    </Proxy>
+    <Proxy base_proxygroup="animation"
+           base_proxyname="AnimationCueBase"
+           class="vtkPVCameraAnimationCue"
+           name="CameraAnimationCue"
+           processes="client">
+      <Documentation>Animation cue which can be used for animating Camera using
+      keyframes.</Documentation>
+      <ProxyProperty command="SetView"
+                     name="AnimatedProxy"></ProxyProperty>
+      <IntVectorProperty command="SetMode"
+                         default_values="0"
+                         name="Mode"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="Interpolate Camera" value="0" />
+          <Entry text="Path-based" value="1" />
+          <Entry text="Follow-data" value="2" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <ProxyProperty command="AddKeyFrame"
+                     name="KeyFrames"
+                     remove_command="RemoveKeyFrame"
+                     repeat_command="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="animation_keyframes" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+      <IntVectorProperty command="GetLastAddedKeyFrameIndex"
+                         information_only="1"
+                         name="LastAddedKeyFrameIndex">
+      </IntVectorProperty>
+      <ProxyProperty name="DataSource"
+                     argument_type="SMProxy"
+                     command="SetDataSourceProxy">
+      </ProxyProperty>
+      <!-- End of CameraAnimationCue -->
+    </Proxy>
+    <Proxy base_proxygroup="animation"
+           base_proxyname="KeyFrameAnimationCue"
+           class="vtkPVKeyFrameAnimationCueForProxies"
+           name="TimeAnimationCue"
+           processes="client">
+      <Documentation>This is same as KeyFrameAnimationCue except that it has a
+      new property "UseAnimationTime" which when set overrides the keyframes
+      all together and directly uses the animation clock time to update the
+      animated property.</Documentation>
+      <IntVectorProperty command="SetUseAnimationTime"
+                         default_values="1"
+                         name="UseAnimationTime"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>When enabled, the animated property is directly updated
+        with the value of the Animation clock. Default value it
+        true.</Documentation>
+      </IntVectorProperty>
+      <!-- end of TimeAnimationCue -->
+    </Proxy>
+    <!--Scene -->
+    <AnimationSceneProxy class="vtkSMAnimationScene"
+                         name="AnimationScene"
+                         processes="client">
+      <Documentation>Proxy for animation scene.</Documentation>
+      <ProxyProperty argument_type="SMProxy"
+                     clean_command="RemoveAllViewProxies"
+                     command="AddViewProxy"
+                     name="ViewModules"
+                     repeat_command="1"
+                     state_ignored="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="views" />
+        </ProxyGroupDomain>
+        <Documentation>Add views to this scene. These are all the views that
+        need to be updated when playing the animation.</Documentation>
+      </ProxyProperty>
+      <ProxyProperty command="AddCue"
+                     name="Cues"
+                     remove_command="RemoveCue"
+                     repeat_command="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="animation" />
+        </ProxyGroupDomain>
+        <Documentation>Add cues to this scene.</Documentation>
+      </ProxyProperty>
+      <DoubleVectorProperty command="SetSceneTime"
+                            default_values="none"
+                            name="AnimationTime"
+                            number_of_elements="1"
+                            precision="16">
+        <Documentation>Set the current animation time.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetStartTime"
+                            default_values="0.0"
+                            information_property="StartTimeInfo"
+                            label="Start Time"
+                            name="StartTime"
+                            number_of_elements="1"
+                            precision="16">
+        <Documentation>Set the start time for the animation
+        scene.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetEndTime"
+                            default_values="1.0"
+                            information_property="EndTimeInfo"
+                            label="End Time"
+                            name="EndTime"
+                            number_of_elements="1"
+                            precision="16">
+        <Documentation>Set the end time for the animation
+        scene.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="GetStartTime"
+                            information_only="1"
+                            name="StartTimeInfo">
+        <SimpleDoubleInformationHelper />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="GetEndTime"
+                            information_only="1"
+                            name="EndTimeInfo">
+        <SimpleDoubleInformationHelper />
+      </DoubleVectorProperty>
+      <IntVectorProperty command="SetLockStartTime"
+                         default_values="0"
+                         name="LockStartTime"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>When set the StartTime will not be changed when the data
+        time steps change.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetLockEndTime"
+                         default_values="0"
+                         name="LockEndTime"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>When set the EndTime will not be changed when the data
+        time steps change.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetCaching"
+                         default_values="0"
+                         name="Caching"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Indicates if cache is to be used while playing the
+        animation.</Documentation>
+      </IntVectorProperty>
+      <ProxyProperty argument_type="SMProxy"
+                     command="SetTimeKeeper"
+                     name="TimeKeeper">
+        <Documentation>Set the time keeper. Time keeper is used to obtain the
+        information about timesteps. This is required to play animation in
+        "Snap To Timesteps" mode.</Documentation>
+      </ProxyProperty>
+      <IntVectorProperty command="SetLoop"
+                         default_values="0"
+                         name="Loop"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Set to true to play the animation in a
+        loop.</Documentation>
+      </IntVectorProperty>
+      <Property command="Play"
+                name="Play" />
+      <Property command="Stop"
+                name="Stop" />
+      <Property command="GoToNext"
+                name="GoToNext" />
+      <Property command="GoToPrevious"
+                name="GoToPrevious" />
+      <Property command="GoToFirst"
+                name="GoToFirst" />
+      <Property command="GoToLast"
+                name="GoToLast" />
+      <IntVectorProperty command="SetPlayMode"
+                         default_values="0"
+                         name="PlayMode"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="Sequence"
+                 value="0" />
+          <Entry text="Real Time"
+                 value="1" />
+          <Entry text="Snap To TimeSteps"
+                 value="2" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetNumberOfFrames"
+                         default_values="10"
+                         name="NumberOfFrames"
+                         number_of_elements="1">
+        <IntRangeDomain min="1"
+                        name="range" />
+        <Documentation>Set the number of frames in which to play the
+        animation.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetDuration"
+                         default_values="10"
+                         name="Duration"
+                         number_of_elements="1">
+        <Documentation>Set the duration for playing the animation in
+        seconds.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFramesPerTimestep"
+                         default_values="1"
+                         name="FramesPerTimestep"
+                         number_of_elements="1">
+        <IntRangeDomain min="1"
+                        name="range" />
+        <Documentation>The number of frames per timestep.</Documentation>
+      </IntVectorProperty>
+      <!-- End of AnimationScene -->
+    </AnimationSceneProxy>
+    <!-- End of animation -->
+  </ProxyGroup>
+  <ProxyGroup name="animation_keyframes">
+    <Proxy class="vtkPVKeyFrame"
+           name="KeyFrame"
+           processes="client">
+      <DoubleVectorProperty command="SetKeyTime"
+                            default_values="0.0"
+                            name="KeyTime"
+                            number_of_elements="1">
+        <DoubleRangeDomain max="1.0"
+                           min="0.0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty clean_command="RemoveAllKeyValues"
+                            command="SetKeyValue"
+                            default_values="0.0"
+                            name="KeyValues"
+                            number_of_elements="1"
+                            number_of_elements_per_command="1"
+                            repeat_command="1"
+                            use_index="1"></DoubleVectorProperty>
+    </Proxy>
+    <Proxy base_proxygroup="animation_keyframes"
+           base_proxyname="KeyFrame"
+           class="vtkPVCompositeKeyFrame"
+           name="CompositeKeyFrame"
+           processes="client">
+      <IntVectorProperty command="SetType"
+                         default_values="2"
+                         label="Interpolation"
+                         name="Type"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="Boolean"
+                 value="1" />
+          <Entry text="Ramp"
+                 value="2" />
+          <Entry text="Exponential"
+                 value="3" />
+          <Entry text="Sinusoid"
+                 value="4" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetBase"
+                            default_values="2.0"
+                            name="Base"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetStartPower"
+                            default_values="0.0"
+                            name="StartPower"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetEndPower"
+                            default_values="1.0"
+                            name="EndPower"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetPhase"
+                            default_values="0.0"
+                            name="Phase"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetFrequency"
+                            default_values="1.0"
+                            name="Frequency"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetOffset"
+                            default_values="0.0"
+                            name="Offset"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <!-- End of CompositeKeyFrame -->
+    </Proxy>
+    <Proxy base_proxygroup="animation_keyframes"
+           base_proxyname="KeyFrame"
+           class="vtkPVBooleanKeyFrame"
+           name="BooleanKeyFrame"
+           processes="client"></Proxy>
+    <Proxy base_proxygroup="animation_keyframes"
+           base_proxyname="KeyFrame"
+           class="vtkPVRampKeyFrame"
+           name="RampKeyFrame"
+           processes="client"></Proxy>
+    <Proxy base_proxygroup="animation_keyframes"
+           base_proxyname="KeyFrame"
+           class="vtkPVExponentialKeyFrame"
+           name="ExponentialKeyFrame"
+           processes="client">
+      <DoubleVectorProperty command="SetBase"
+                            default_values="2.0"
+                            name="Base"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetStartPower"
+                            default_values="0.0"
+                            name="StartPower"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetEndPower"
+                            default_values="1.0"
+                            name="EndPower"
+                            number_of_elements="1"></DoubleVectorProperty>
+    </Proxy>
+    <Proxy base_proxygroup="animation_keyframes"
+           base_proxyname="KeyFrame"
+           class="vtkPVSinusoidKeyFrame"
+           name="SinusoidKeyFrame"
+           processes="client">
+      <DoubleVectorProperty command="SetPhase"
+                            default_values="0.0"
+                            name="Phase"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetFrequency"
+                            default_values="1.0"
+                            name="Frequency"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetOffset"
+                            default_values="0.0"
+                            name="Offset"
+                            number_of_elements="1"></DoubleVectorProperty>
+    </Proxy>
+    <Proxy base_proxygroup="animation_keyframes"
+           base_proxyname="KeyFrame"
+           class="vtkPVCameraKeyFrame"
+           name="CameraKeyFrame"
+           processes="client">
+      <DoubleVectorProperty command="SetPosition"
+                            default_values="0.0 0.0 0.0"
+                            name="Position"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetFocalPoint"
+                            default_values="0.0 0.0 0.0"
+                            name="FocalPoint"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetViewUp"
+                            default_values="0.0 1.0 0.0"
+                            name="ViewUp"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetViewAngle"
+                            default_values="30"
+                            name="ViewAngle"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetParallelScale"
+                            default_values="1.0"
+                            name="ParallelScale"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <!-- These are properties for the new style camera interpolation
+           using path
+      -->
+      <DoubleVectorProperty clean_command="ClearPositionPath"
+                            command="AddPositionPathPoint"
+                            default_values="5 0 0 5 5 0 5 0 0"
+                            name="PositionPathPoints"
+                            number_of_elements="9"
+                            number_of_elements_per_command="3"
+                            repeat_command="1"></DoubleVectorProperty>
+      <DoubleVectorProperty clean_command="ClearFocalPath"
+                            command="AddFocalPathPoint"
+                            default_values="0 0 0 1 0 0"
+                            name="FocalPathPoints"
+                            number_of_elements="6"
+                            number_of_elements_per_command="3"
+                            repeat_command="1"></DoubleVectorProperty>
+      <IntVectorProperty command="SetPositionMode"
+                         default_values="0"
+                         name="PositionMode"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="Path"
+                 value="0" />
+          <Entry text="FixedDirection"
+                 value="1" />
+          <Entry text="LookAhead"
+                 value="2" />
+          <Entry text="Orthogonal"
+                 value="3" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFocalPointMode"
+                         default_values="0"
+                         name="FocalPointMode"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="Path"
+                 value="0" />
+          <Entry text="FixedDirection"
+                 value="1" />
+          <Entry text="LookAhead"
+                 value="2" />
+          <Entry text="Orthogonal"
+                 value="3" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetClosedFocalPath"
+                         default_values="0"
+                         name="ClosedFocalPath"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetClosedPositionPath"
+                         default_values="0"
+                         name="ClosedPositionPath"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <!-- end of CameraKeyFrame -->
+    </Proxy>
+    <!-- end of keyframes -->
+  </ProxyGroup>
+  <ProxyGroup name="piecewise_functions">
+    <TransferFunctionProxy class="vtkPiecewiseFunction"
+           name="PiecewiseFunction"
+           processes="client|renderserver|dataserver">
+      <DoubleVectorProperty animateable="0"
+                            clean_command="RemoveAllPoints"
+                            command="AddPoint"
+                            default_values="0.0 0.0 0.5 0.0"
+                            name="Points"
+                            number_of_elements="4"
+                            number_of_elements_per_command="4"
+                            repeat_command="1"></DoubleVectorProperty>
+      <IntVectorProperty command="SetAllowDuplicateScalars"
+                         default_values="1"
+                         name="AllowDuplicateScalars"
+                         number_of_elements="1"
+                         panel_visibility="never" >
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+    </TransferFunctionProxy>
+  </ProxyGroup>
+  <ProxyGroup name="transfer_functions">
+    <TransferFunctionProxy class="vtkColorTransferFunction"
+                           name="ColorTransferFunction"
+                           processes="client|renderserver|dataserver">
+      <DoubleVectorProperty animateable="0"
+                            clean_command="RemoveAllPoints"
+                            command="AddRGBPoint"
+                            name="RGBPoints"
+                            number_of_elements_per_command="4"
+                            repeat_command="1"></DoubleVectorProperty>
+      <IntVectorProperty animateable="0"
+                         command="SetColorSpace"
+                         default_values="0"
+                         name="ColorSpace"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="RGB"
+                 value="0" />
+          <Entry text="HSV"
+                 value="1" />
+          <Entry text="Lab"
+                 value="2" />
+          <Entry text="Diverging"
+                 value="3" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <IntVectorProperty animateable="0"
+                         command="SetHSVWrap"
+                         default_values="0"
+                         name="HSVWrap"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+    </TransferFunctionProxy>
+  </ProxyGroup>
+  <ProxyGroup name="annotations">
+    <Proxy class="vtkCubeAxesActor2D"
+           name="CubeAxesActor2D">
+      <IntVectorProperty command="SetFlyMode"
+                         default_values="1"
+                         name="FlyMode"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="FlyToOuterEdges"
+                 value="0" />
+          <Entry text="FlyToClosetTriad"
+                 value="1" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetInertia"
+                         default_values="1"
+                         name="Inertia"
+                         number_of_elements="1">
+        <IntRangeDomain name="range" />
+      </IntVectorProperty>
+      <ProxyProperty command="SetCamera"
+                     name="Camera">
+        <ProxyGroupDomain name="groups">
+          <Group name="camera" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+      <IntVectorProperty command="SetVisibility"
+                         default_values="1"
+                         name="Visibility"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+    </Proxy>
+    <Proxy class="vtkPVScalarBarActor"
+           name="ScalarBarActor"
+           si_class="vtkSIScalarBarActorProxy">
+      <ProxyProperty command="SetLookupTable"
+                     name="LookupTable"
+                     number_of_elements="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="lookup_tables" />
+        </ProxyGroupDomain>
+      </ProxyProperty>
+      <IntVectorProperty animateable="0"
+                         command="SetVisibility"
+                         default_values="1"
+                         name="Visibility"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <DoubleVectorProperty animateable="0"
+                            command="SetPosition"
+                            default_values="0.87 0.25"
+                            name="Position"
+                            number_of_elements="2">
+        <DoubleRangeDomain max="1 1"
+                           min="0 0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty animateable="0"
+                            command="SetPosition2"
+                            default_values="0.13 0.5"
+                            name="Position2"
+                            number_of_elements="2">
+        <DoubleRangeDomain max="1 1"
+                           min="0 0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetAspectRatio"
+                            default_values="20"
+                            name="AspectRatio"
+                            number_of_elements="1">
+        <DoubleRangeDomain min="0.001"
+                           name="range" />
+      </DoubleVectorProperty>
+      <StringVectorProperty animateable="0"
+                            command="SetTitle"
+                            default_values=""
+                            name="Title"
+                            number_of_elements="1"></StringVectorProperty>
+      <StringVectorProperty animateable="0"
+                            command="SetComponentTitle"
+                            default_values=""
+                            name="ComponentTitle"
+                            number_of_elements="1"></StringVectorProperty>
+      <IntVectorProperty command="SetAutomaticLabelFormat"
+                         default_values="1"
+                         name="AutomaticLabelFormat"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <StringVectorProperty animateable="0"
+                            command="SetLabelFormat"
+                            default_values="%-#6.3g"
+                            name="LabelFormat"
+                            number_of_elements="1">
+        <Hints>
+          <PropertyWidgetDecorator type="EnableWidgetDecorator">
+            <Property name="AutomaticLabelFormat" function="boolean_invert" index="0" />
+          </PropertyWidgetDecorator>
+        </Hints>
+      </StringVectorProperty>
+      <IntVectorProperty command="SetNumberOfLabels"
+                         default_values="5"
+                         name="NumberOfLabels"
+                         number_of_elements="1">
+        <IntRangeDomain min="2"
+                        name="range" />
+      </IntVectorProperty>
+      <IntVectorProperty animateable="0"
+                         command="SetDrawNanAnnotation"
+                         default_values="0"
+                         name="DrawNanAnnotation"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty animateable="0"
+                         command="SetDrawAnnotations"
+                         default_values="1"
+                         name="DrawAnnotations"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <StringVectorProperty animateable="0"
+                            command="SetNanAnnotation"
+                            default_values="NaN"
+                            name="NanAnnotation"
+                            number_of_elements="1">
+        <Hints>
+          <PropertyWidgetDecorator type="EnableWidgetDecorator">
+            <Property name="DrawNanAnnotation" function="boolean" index="0" />
+          </PropertyWidgetDecorator>
+        </Hints>
+      </StringVectorProperty>
+      <IntVectorProperty animateable="0"
+                         command="SetTextPosition"
+                         default_values="1"
+                         name="TextPosition"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <!--label text property -->
+      <SubProxy>
+        <Proxy name="LabelTextProperty"
+               proxygroup="properties"
+               proxyname="TextProperty"></Proxy>
+        <ExposedProperties>
+          <Property exposed_name="LabelColor"
+                    name="Color" />
+          <Property exposed_name="LabelOpacity"
+                    name="Opacity" />
+          <Property exposed_name="LabelFontFamily"
+                    name="FontFamily" />
+          <Property exposed_name="LabelBold"
+                    name="Bold" />
+          <Property exposed_name="LabelItalic"
+                    name="Italic" />
+          <Property exposed_name="LabelShadow"
+                    name="Shadow" />
+          <Property exposed_name="LabelFontSize"
+                    name="FontSize" />
+        </ExposedProperties>
+      </SubProxy>
+      <!--title text property -->
+      <SubProxy>
+        <Proxy name="TitleTextProperty"
+               proxygroup="properties"
+               proxyname="TextProperty"></Proxy>
+        <ExposedProperties>
+          <Property exposed_name="TitleColor"
+                    name="Color" />
+          <Property exposed_name="TitleOpacity"
+                    name="Opacity" />
+          <Property exposed_name="TitleFontFamily"
+                    name="FontFamily" />
+          <Property exposed_name="TitleBold"
+                    name="Bold" />
+          <Property exposed_name="TitleItalic"
+                    name="Italic" />
+          <Property exposed_name="TitleShadow"
+                    name="Shadow" />
+          <Property exposed_name="TitleFontSize"
+                    name="FontSize" />
+        </ExposedProperties>
+      </SubProxy>
+    </Proxy>
+    <!-- End of ProxyGroup annotations -->
+  </ProxyGroup>
+  <ProxyGroup name="file_listing">
+    <Proxy class="vtkPVFileInformationHelper"
+           name="ServerFileListing">
+      <IntVectorProperty command="GetActiveFileIsDirectory"
+                         information_only="1"
+                         name="ActiveFileIsDirectory">
+        <SimpleIntInformationHelper />
+      </IntVectorProperty>
+      <IntVectorProperty command="GetActiveFileIsReadable"
+                         information_only="1"
+                         name="ActiveFileIsReadable">
+        <SimpleIntInformationHelper />
+      </IntVectorProperty>
+      <StringVectorProperty command="SetPath"
+                            name="ActiveFileName"
+                            number_of_elements="1">
+        <Documentation>Set the filename whose information we
+        need.</Documentation>
+      </StringVectorProperty>
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="locators">
+    <Proxy class="vtkPKdTree"
+           name="PKdTree">
+      <!--
+      <ProxyProperty name="DataSets"
+                     command="AddDataSet"
+                     remove_command="RemoveDataSet"/>
+                     -->
+      <IntVectorProperty command="SetMinCells"
+                         default_values="0"
+                         name="MinCells"
+                         number_of_elements="1" />
+      <Property command="OmitZPartitioning"
+                name="OmitZPartitioning" />
+      <Property command="BuildLocator"
+                name="BuildLocator" />
+      <ProxyProperty command="BuildLocatorFromPoints"
+                     name="BuildLocatorFromPoints" />
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="selection_helpers">
+    <Proxy class="vtkSelection"
+           name="Selection"></Proxy>
+    <SourceProxy class="vtkAnnotationLink"
+                 name="AnnotationLink">
+      <InputProperty command="SetInputConnection"
+                     name="Input"
+                     port_index="0">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources" />
+          <Group name="filters" />
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkAnnotationLayers" />
+          <DataType value="vtkSelection" />
+        </DataTypeDomain>
+      </InputProperty>
+      <InputProperty command="SetInputConnection"
+                     name="DomainMaps"
+                     port_index="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources" />
+          <Group name="filters" />
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkTable" />
+        </DataTypeDomain>
+      </InputProperty>
+      <ProxyProperty command="SetAnnotations"
+                     name="Annotations"></ProxyProperty>
+      <OutputPort index="0"
+                  name="Annotations" />
+      <OutputPort index="1"
+                  name="Domain Maps" />
+      <OutputPort index="2"
+                  name="Selection" />
+    </SourceProxy>
+  </ProxyGroup>
+  <ProxyGroup name="remote_player">
+    <!-- Proxy used to save animation remotely when the client disconnect -->
+    <Proxy class="vtkPVServerSideAnimationPlayer"
+           name="AnimationPlayer">
+      <ProxyProperty command="SetWriter"
+                     name="Writer"></ProxyProperty>
+      <StringVectorProperty command="SetSessionProxyManagerState"
+                            default_values=""
+                            name="XMLState"
+                            number_of_elements="1">
+        <Documentation>Set the XML content of the vtkSMSessionProxyManager
+        state.</Documentation>
+      </StringVectorProperty>
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="extended_sources">
+    <SourceProxy class="vtkLineSource"
+                 label="Line Source"
+                 name="LineSource">
+      <DoubleVectorProperty animateable="1"
+                            command="SetPoint1"
+                            default_values="0.0 0.0 0.0"
+                            name="Point1"
+                            number_of_elements="3">
+        <BoundsDomain default_mode="min"
+                      mode="normal"
+                      name="range">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="DummyInput" />
+          </RequiredProperties>
+        </BoundsDomain>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty animateable="1"
+                            command="SetPoint2"
+                            default_values="0.0 0.0 0.0"
+                            name="Point2"
+                            number_of_elements="3">
+        <BoundsDomain default_mode="max"
+                      mode="normal"
+                      name="range">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="DummyInput" />
+          </RequiredProperties>
+        </BoundsDomain>
+      </DoubleVectorProperty>
+      <IntVectorProperty command="SetResolution"
+                         default_values="6"
+                         name="Resolution"
+                         number_of_elements="1">
+        <IntRangeDomain min="1"
+                        name="range" />
+      </IntVectorProperty>
+      <InputProperty is_internal="1"
+                     name="DummyInput">
+        <!-- Used when this source is added to a proxy list domain. -->
+      </InputProperty>
+      <Hints>
+        <PropertyGroup type="LineSource">
+          <Property function="Point1WorldPosition"
+                    name="Point1" />
+          <Property function="Point2WorldPosition"
+                    name="Point2" />
+          <Property function="Resolution"
+                    name="Resolution" />
+        </PropertyGroup>
+        <ProxyList>
+          <Link name="DummyInput"
+                with_property="Input" />
+        </ProxyList>
+      </Hints>
+      <!-- End LineSource -->
+    </SourceProxy>
+    <SourceProxy class="vtkLineSource"
+                 label="High Resolution Line Source"
+                 name="HighResLineSource">
+      <DoubleVectorProperty animateable="1"
+                            command="SetPoint1"
+                            default_values="0.0 0.0 0.0"
+                            name="Point1"
+                            number_of_elements="3">
+        <BoundsDomain default_mode="min"
+                      mode="normal"
+                      name="range">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="DummyInput" />
+          </RequiredProperties>
+        </BoundsDomain>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty animateable="1"
+                            command="SetPoint2"
+                            default_values="0.0 0.0 0.0"
+                            name="Point2"
+                            number_of_elements="3">
+        <BoundsDomain default_mode="max"
+                      mode="normal"
+                      name="range">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="DummyInput" />
+          </RequiredProperties>
+        </BoundsDomain>
+      </DoubleVectorProperty>
+      <IntVectorProperty command="SetResolution"
+                         default_values="100"
+                         name="Resolution"
+                         number_of_elements="1">
+        <IntRangeDomain min="1"
+                        name="range" />
+      </IntVectorProperty>
+      <InputProperty is_internal="1"
+                     name="DummyInput">
+        <!-- Used when this source is added to a proxy list domain. -->
+      </InputProperty>
+      <Hints>
+        <PropertyGroup type="LineSource">
+          <Property function="Point1WorldPosition"
+                    name="Point1" />
+          <Property function="Point2WorldPosition"
+                    name="Point2" />
+          <Property function="Resolution"
+                    name="Resolution" />
+        </PropertyGroup>
+        <ProxyList>
+          <Link name="DummyInput"
+                with_property="Input" />
+        </ProxyList>
+      </Hints>
+      <!-- End HighResLineSource -->
+    </SourceProxy>
+    <SourceProxy class="vtkPointSource"
+                 label="Point Source"
+                 name="PointSource">
+      <DoubleVectorProperty animateable="1"
+                            command="SetCenter"
+                            default_values="0.0 0.0 0.0"
+                            name="Center"
+                            number_of_elements="3">
+        <BoundsDomain default_mode="mid"
+                      mode="normal"
+                      name="range">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="DummyInput" />
+          </RequiredProperties>
+        </BoundsDomain>
+      </DoubleVectorProperty>
+      <IntVectorProperty animateable="1"
+                         command="SetNumberOfPoints"
+                         default_values="100"
+                         name="NumberOfPoints"
+                         number_of_elements="1">
+        <IntRangeDomain min="1"
+                        name="range" />
+      </IntVectorProperty>
+      <DoubleVectorProperty animateable="1"
+                            command="SetRadius"
+                            default_values="1.0"
+                            name="Radius"
+                            number_of_elements="1">
+        <BoundsDomain mode="scaled_extent"
+                      name="range"
+                      scale_factor="0.1">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="DummyInput" />
+          </RequiredProperties>
+        </BoundsDomain>
+      </DoubleVectorProperty>
+      <InputProperty is_internal="1"
+                     name="DummyInput">
+        <!-- Used when this source is added to a proxy list domain. -->
+      </InputProperty>
+      <Hints>
+        <PropertyGroup type="PointSource">
+          <Property function="WorldPosition"
+                    name="Center" />
+          <Property function="Radius"
+                    name="Radius" />
+          <Property function="NumberOfPoints"
+                    name="NumberOfPoints" />
+        </PropertyGroup>
+        <ProxyList>
+          <Link name="DummyInput"
+                with_property="Input" />
+        </ProxyList>
+      </Hints>
+      <!-- End PointSource -->
+    </SourceProxy>
+    <SourceProxy class="vtkPointSource"
+                 label="Fixed Radius Point Source"
+                 name="FixedRadiusPointSource">
+      <DoubleVectorProperty animateable="1"
+                            command="SetCenter"
+                            default_values="0.0 0.0 0.0"
+                            name="Center"
+                            number_of_elements="3">
+        <BoundsDomain default_mode="mid"
+                      mode="normal"
+                      name="range">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="DummyInput" />
+          </RequiredProperties>
+        </BoundsDomain>
+      </DoubleVectorProperty>
+      <IntVectorProperty animateable="1"
+                         command="SetNumberOfPoints"
+                         default_values="1"
+                         name="NumberOfPoints"
+                         number_of_elements="1">
+        <IntRangeDomain min="1"
+                        name="range" />
+      </IntVectorProperty>
+      <DoubleVectorProperty animateable="1"
+                            command="SetRadius"
+                            default_values="0.0"
+                            name="Radius"
+                            number_of_elements="1">
+        <DoubleRangeDomain min="0.0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <InputProperty is_internal="1"
+                     name="DummyInput">
+        <!-- Used when this source is added to a proxy list domain. -->
+      </InputProperty>
+      <Hints>
+        <PropertyGroup type="PointSource">
+          <Property function="WorldPosition"
+                    name="Center" />
+          <Property function="Radius"
+                    name="Radius" />
+          <Property function="NumberOfPoints"
+                    name="NumberOfPoints" />
+        </PropertyGroup>
+        <ProxyList>
+          <Link name="DummyInput"
+                with_property="Input" />
+        </ProxyList>
+      </Hints>
+      <!-- End PointSource -->
+    </SourceProxy>
+    <Proxy class="vtkPVTransform"
+           name="Transform2">
+      <!--Transform proxy with unconventional interface, used by BoxWidget -->
+      <DoubleVectorProperty command="SetAbsolutePosition"
+                            default_values="0.0 0.0 0.0"
+                            information_property="PositionInfo"
+                            label="Translate"
+                            name="Position"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="GetPosition"
+                            default_values="0.0 0.0 0.0"
+                            information_only="1"
+                            name="PositionInfo"
+                            number_of_elements="3">
+        <SimpleDoubleInformationHelper />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetAbsoluteRotation"
+                            default_values="0.0 0.0 0.0"
+                            information_property="RotationInfo"
+                            label="Rotate"
+                            name="Rotation"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="GetOrientation"
+                            default_values="0.0 0.0 0.0"
+                            information_only="1"
+                            name="RotationInfo"
+                            number_of_elements="3">
+        <SimpleDoubleInformationHelper />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetAbsoluteScale"
+                            default_values="1.0 1.0 1.0"
+                            information_property="ScaleInfo"
+                            label="Scale"
+                            name="Scale"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="GetScale"
+                            default_values="1.0 1.0 1.0"
+                            information_only="1"
+                            name="ScaleInfo"
+                            number_of_elements="3" />
+    </Proxy>
+    <Proxy class="vtkPVTransform"
+           label="Transform"
+           name="Transform3">
+      <DoubleVectorProperty command="SetAbsolutePosition"
+                            default_values="0.0 0.0 0.0"
+                            information_property="PositionInfo"
+                            label="Translate"
+                            name="Position"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="GetAbsolutePosition"
+                            default_values="0.0 0.0 0.0"
+                            information_only="1"
+                            name="PositionInfo"
+                            number_of_elements="3" />
+      <DoubleVectorProperty command="SetAbsoluteRotation"
+                            default_values="0.0 0.0 0.0"
+                            information_property="RotationInfo"
+                            label="Rotate"
+                            name="Rotation"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="GetAbsoluteRotation"
+                            default_values="0.0 0.0 0.0"
+                            information_only="1"
+                            name="RotationInfo"
+                            number_of_elements="3" />
+      <DoubleVectorProperty command="SetAbsoluteScale"
+                            default_values="1.0 1.0 1.0"
+                            information_property="ScaleInfo"
+                            label="Scale"
+                            name="Scale"
+                            number_of_elements="3">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="GetAbsoluteScale"
+                            default_values="1.0 1.0 1.0"
+                            information_only="1"
+                            name="ScaleInfo"
+                            number_of_elements="3" />
+      <Hints>
+        <PropertyGroup type="Box">
+          <Property function="Position"
+                    name="Position" />
+          <Property function="Rotation"
+                    name="Rotation" />
+          <Property function="Scale"
+                    name="Scale" />
+        </PropertyGroup>
+        <!--
+         <ProxyList>
+           <Link name="DummyInput" with_property="Input" />
+         </ProxyList>
+         -->
+      </Hints>
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="misc">
+    <DirectoryProxy class="vtkDirectory"
+                    name="Directory"
+                    processes="client|dataserver|renderserver">
+    </DirectoryProxy>
+    <DirectoryProxy class="vtkDirectory"
+                    si_class="vtkSIDirectoryProxy"
+                    name="ListDirectory"
+                    processes="dataserver">
+
+      <!-- Fake properties that will be filled by the vtkSIDirectoryProxy
+           class in the pull request -->
+      <StringVectorProperty name="FileList"      information_only="1"/>
+      <StringVectorProperty name="DirectoryList" information_only="1"/>
+    </DirectoryProxy>
+    <Proxy class="vtkPVFileInformationHelper"
+           name="FileInformationHelper">
+      <StringVectorProperty command="SetPath"
+                            name="Path" />
+      <IntVectorProperty command="SetDirectoryListing"
+                         default_values="0"
+                         name="DirectoryListing"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetSpecialDirectories"
+                         default_values="0"
+                         name="SpecialDirectories"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <StringVectorProperty command="GetPathSeparator"
+                            information_only="1"
+                            name="PathSeparator"
+                            number_of_elements="1">
+        <SimpleStringInformationHelper />
+      </StringVectorProperty>
+      <StringVectorProperty command="SetWorkingDirectory"
+                            default_values=""
+                            name="WorkingDirectory"
+                            number_of_elements="1">
+        <Documentation>Override the working directory used to resolve relative
+        paths.</Documentation>
+      </StringVectorProperty>
+      <!-- End of FileInformationHelper -->
+    </Proxy>
+    <Proxy class="vtkPVEnvironmentInformationHelper"
+           name="EnvironmentInformationHelper">
+      <StringVectorProperty command="SetVariable"
+                            name="Variable" />
+      <!-- End of FileInformationHelper -->
+    </Proxy>
+    <TimeKeeperProxy class="vtkSMTimeKeeper"
+                     name="TimeKeeper"
+                     processes="client">
+      <Documentation>TimeKeeper is used to keep the pipeline time for the
+      application. All views added to the timekeeper show the same time as that
+      on the time keeper.</Documentation>
+      <DoubleVectorProperty command="SetTime"
+                            default_values="0"
+                            name="Time"
+                            number_of_elements="1"
+                            precision="16">
+        <DoubleRangeDomain name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty information_only="1"
+                            name="TimestepValues">
+        <Documentation>The timesteps currently available. This property does
+        not have any information helper since vtkSMTimeKeeperProxy keeps this
+        updated without any need to call
+        UpdatePropertyInformation().</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty default_values="0.0 0.0"
+                            information_only="1"
+                            name="TimeRange"
+                            number_of_elements="2"
+                            precision="16">
+        <Documentation>This is the time range. It's possible that there are no
+        TimestepValues but there is a valid TimeRange since some sources may
+        provide continuous time.</Documentation>
+      </DoubleVectorProperty>
+      <StringVectorProperty default_values="Time"
+                            information_only="1"
+                            name="TimeLabel"
+                            number_of_elements="1">
+        <Documentation>This is the string that is used as label to eventually
+        replace "time" by something else such as "frequency" or any user
+        specific label that the user want to set to use a 4th dimension that is
+        not time.</Documentation>
+      </StringVectorProperty>
+      <ProxyProperty argument_type="SMProxy"
+                     command="AddView"
+                     name="Views"
+                     remove_command="RemoveView"
+                     repeatable="1">
+        <Documentation>Views with their view time linked with this time
+        keeper.</Documentation>
+      </ProxyProperty>
+      <ProxyProperty argument_type="SMProxy"
+                     command="AddTimeSource"
+                     name="TimeSources"
+                     remove_command="RemoveTimeSource"
+                     repeatable="1">
+        <Documentation>List of proxies that provide time. TimestepValues
+        property has a set of timesteps provided by all the sources added to
+        this property alone.</Documentation>
+      </ProxyProperty>
+      <!-- End of TimeKeeper -->
+    </TimeKeeperProxy>
+    <Proxy class="vtkSISourceProxy"
+           name="StrictLoadBalancing"
+           processes="client|dataserver|renderserver">
+      <IntVectorProperty command="SetDisableExtentsTranslator"
+                         default_values="0"
+                         name="DisableExtentsTranslator"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <!-- End of StrictLoadBalancing -->
+    </Proxy>
+    <PluginLoaderProxy class="vtkPVPluginLoader"
+                       name="PluginLoader"
+                       processes="dataserver|renderserver">
+      <Documentation>Use this proxy to load a plugin remotely. This proxy has
+      no properties that users can set. Only information-properties are
+      provided that can be used to obtain various states.
+      vtkSMPluginLoaderProxy has API that can be used to load plugins,
+      configuration xmls etc.</Documentation>
+      <IntVectorProperty command="GetLoaded"
+                         information_only="1"
+                         name="Loaded"></IntVectorProperty>
+      <StringVectorProperty command="GetErrorString"
+                            information_only="1"
+                            name="ErrorString"></StringVectorProperty>
+      <StringVectorProperty command="GetSearchPaths"
+                            information_only="1"
+                            name="SearchPaths"></StringVectorProperty>
+      <!-- End of PluginLoader -->
+    </PluginLoaderProxy>
+    <Proxy class="vtkKdTreeManager"
+           name="KdTreeManager">
+      <ProxyProperty command="SetKdTree"
+                     name="KdTree">
+        <Documentation>Set the KdTree managed by this manager.</Documentation>
+      </ProxyProperty>
+      <ProxyProperty command="AddProducer"
+                     name="Producers"
+                     remove_command="RemoveProducer">
+        <Documentation>Producers/algorithms producing data that needs to be
+        distributed.</Documentation>
+      </ProxyProperty>
+      <ProxyProperty command="SetStructuredProducer"
+                     name="StructuredProducer">
+        <Documentation>The optional producer whose partitioning is used to
+        build the KdTree.</Documentation>
+      </ProxyProperty>
+      <Property command="Update"
+                name="Update"></Property>
+      <!-- End of KdTreeManager -->
+    </Proxy>
+    <Proxy class="vtkPVRepresentationAnimationHelper"
+           name="RepresentationAnimationHelper"
+           processes="client">
+      <Documentation>Used to help in animation representation
+      properties.</Documentation>
+      <ProxyProperty argument_type="SMProxy"
+                     command="SetSourceProxy"
+                     name="Source" />
+      <IntVectorProperty command="SetVisibility"
+                         default_values="none"
+                         is_internal="1"
+                         name="Visibility"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetOpacity"
+                            default_values="none"
+                            is_internal="1"
+                            name="Opacity"
+                            number_of_elements="1">
+        <DoubleRangeDomain max="1.0"
+                           min="0.0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <!-- End of RepresentationAnimationHelper -->
+    </Proxy>
+    <Proxy name="GlobalProperties">
+      <DoubleVectorProperty default_values="1.0 1.0 1.0"
+                            label="Foreground"
+                            name="ForegroundColor"
+                            number_of_elements="3">
+        <DoubleRangeDomain max="1 1 1"
+                           min="0 0 0"
+                           name="range" />
+        <Documentation>Foreground color.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty default_values="0.32 0.34 0.43"
+                            label="Background"
+                            name="BackgroundColor"
+                            number_of_elements="3">
+        <DoubleRangeDomain max="1 1 1"
+                           min="0 0 0"
+                           name="range" />
+        <Documentation>Background color.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 1.0 1.0"
+                            label="Surface"
+                            name="SurfaceColor"
+                            number_of_elements="3">
+        <DoubleRangeDomain max="1 1 1"
+                           min="0 0 0"
+                           name="range" />
+        <Documentation>Surface color.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 1.0 1.0"
+                            label="Text"
+                            name="TextAnnotationColor"
+                            number_of_elements="3">
+        <DoubleRangeDomain max="1 1 1"
+                           min="0 0 0"
+                           name="range" />
+        <Documentation>Color used for text annotations.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 0.0 1.0"
+                            label="Selection"
+                            name="SelectionColor"
+                            number_of_elements="3">
+        <DoubleRangeDomain max="1 1 1"
+                           min="0 0 0"
+                           name="range" />
+        <Documentation>Color used for showing selected
+        cells/points.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty default_values="0.0 0.0 0.5"
+                            label="Edges"
+                            name="EdgeColor"
+                            number_of_elements="3">
+        <DoubleRangeDomain max="1 1 1"
+                           min="0 0 0"
+                           name="range" />
+        <Documentation>Color used for showing selected
+        cells/points.</Documentation>
+      </DoubleVectorProperty>
+      <!-- End of GlobalProperties -->
+    </Proxy>
+    <Proxy class="vtkPolyDataMapper"
+           name="GlobalMapperProperties"
+           processes="client|renderserver">
+      <Documentation>This proxy is useful for changing global mapper settings
+      such as the coincident topology resolution setting on all rendering
+      proceses.</Documentation>
+      <IntVectorProperty command="SetResolveCoincidentTopology"
+                         default_values="none"
+                         name="Mode"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="Off"
+                 value="0" />
+          <Entry text="PolygonOffset"
+                 value="1" />
+          <Entry text="ShiftZBuffer"
+                 value="2" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetResolveCoincidentTopologyPolygonOffsetParameters"
+                            default_values="none"
+                            name="PolygonOffsetParameters"
+                            number_of_elements="2">
+        <Documentation>Used to set the polygon offset scale factor and units.
+        Used when ResolveCoincidentTopology is set to PolygonOffset. These are
+        global variables.</Documentation>
+      </DoubleVectorProperty>
+      <IntVectorProperty command="SetResolveCoincidentTopologyPolygonOffsetFaces"
+                         default_values="none"
+                         name="PolygonOffsetFaces"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Used when ResolveCoincidentTopology is set to
+        PolygonOffset. The polygon offset can be applied either to the solid
+        polygonal faces or the lines/vertices. When set (default), the offset
+        is applied to the faces otherwise it is applied to lines and vertices.
+        This is a global variable.</Documentation>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetResolveCoincidentTopologyZShift"
+                            default_values="none"
+                            name="ZShift"
+                            number_of_elements="1">
+        <Documentation>Used to set the z-shift if ResolveCoincidentTopology is
+        set to ShiftZBuffer. This is a global variable.</Documentation>
+      </DoubleVectorProperty>
+      <IntVectorProperty command="SetGlobalImmediateModeRendering"
+                         default_values="none"
+                         name="GlobalImmediateModeRendering"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Turn on/off flag to control whether data is rendered
+        using immediate mode or note. Immediate mode rendering tends to be
+        slower but it can handle larger datasets. The default value is
+        immediate mode off. If you are having problems rendering a large
+        dataset you might want to consider using immediate more
+        rendering.</Documentation>
+      </IntVectorProperty>
+      <!-- End of GlobalMapperProperties -->
+    </Proxy>
+    <Proxy class="vtkSMAnimationScene"
+           name="GlobalAnimationProperties"
+           processes="client|dataserver|renderserver">
+      <Documentation>Proxy used to update animation related settings on all
+      processes.</Documentation>
+      <IntVectorProperty command="SetCacheLimit"
+                         default_values="none"
+                         name="CacheLimit"
+                         number_of_elements="1">
+        <Documentation>Set the cache limit in KiloBytes.</Documentation>
+      </IntVectorProperty>
+      <!-- End of GlobalAnimationProperties-->
+    </Proxy>
+    <Proxy class="vtkTimerLog"
+           name="TimerLog"
+           processes="client|dataserver|renderserver">
+      <Documentation>This is a proxy used to control the timer log parameters
+      on all processes. Note that since vtkTimerLog has loads of static ivar,
+      most properties will affect all timer log instances.</Documentation>
+      <Property command="ResetLog"
+                name="ResetLog">
+        <Documentation>Resets the log on all processes.</Documentation>
+      </Property>
+      <IntVectorProperty command="SetLogging"
+                         default_values="none"
+                         name="Enable">
+        <EnumerationDomain name="enum" />
+        <Documentation>Enables the timer-log on all processes.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetMaxEntries"
+                         default_values="none"
+                         name="MaxEntries">
+        <Documentation>Set the maximum length for the log on all
+        processes.</Documentation>
+      </IntVectorProperty>
+      <!-- End of TimerLog -->
+    </Proxy>
+    <ViewLayoutProxy name="ViewLayout"
+                     processes="client">
+      <Documentation>Proxy used to manage layout for mutliple
+      views.</Documentation>
+    </ViewLayoutProxy>
+    <Proxy class="vtkViewLayout"
+           name="InternalViewLayoutHelper"
+           processes="renderserver">
+      <Documentation>Proxy used to manage layout for mutliple
+      views.</Documentation>
+    </Proxy>
+    <Proxy class="vtkPVRayCastPickingHelper"
+           name="PickingHelper"
+           processes="dataserver">
+      <Documentation>Proxy used to pick a point of a surface
+      mesh.</Documentation>
+      <DoubleVectorProperty command="SetPointA"
+                            default_values="0.0 0.0 0.0"
+                            name="PointA"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty command="SetPointB"
+                            default_values="0.0 0.0 1.0"
+                            name="PointB"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty command="GetIntersection"
+                            default_values="0.0 0.0 0.0"
+                            information_only="1"
+                            name="Intersection"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <Property command="ComputeIntersection"
+                name="Update"></Property>
+      <ProxyProperty command="SetInput"
+                     name="Input">
+        <Documentation>The input from which the selection is
+        extracted.</Documentation>
+      </ProxyProperty>
+      <ProxyProperty command="SetSelection"
+                     name="Selection">
+        <Documentation>The selection that is used to reduced the
+        input.</Documentation>
+      </ProxyProperty>
+    </Proxy>
+    <!-- End of group "misc" -->
+  </ProxyGroup>
+  <ProxyGroup name="palettes">
+    <Proxy label="Screen"
+           name="Screen">
+      <DoubleVectorProperty default_values="1.0 1.0 1.0"
+                            label="Foreground"
+                            name="ForegroundColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="0.32 0.34 0.43"
+                            label="Background"
+                            name="BackgroundColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 1.0 1.0"
+                            label="Surface"
+                            name="SurfaceColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 1.0 1.0"
+                            label="Text"
+                            name="TextAnnotationColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 0.0 1.0"
+                            label="Selection"
+                            name="SelectionColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="0.0 0.0 0.5"
+                            label="Edges"
+                            name="EdgeColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <!-- End of (palettes, Screen) -->
+    </Proxy>
+    <Proxy label="Print"
+           name="Print">
+      <DoubleVectorProperty default_values="0.0 0.0 0.0"
+                            label="Foreground"
+                            name="ForegroundColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 1.0 1.0"
+                            label="Background"
+                            name="BackgroundColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 1.0 1.0"
+                            label="Surface"
+                            name="SurfaceColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="0.0 0.0 0.0"
+                            label="Text"
+                            name="TextAnnotationColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="1.0 0.0 1.0"
+                            label="Selection"
+                            name="SelectionColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <DoubleVectorProperty default_values="0.0 0.0 0.5"
+                            label="Edges"
+                            name="EdgeColor"
+                            number_of_elements="3"></DoubleVectorProperty>
+      <!-- End of (palettes, Print) -->
+    </Proxy>
+    <!-- End of group "palettes" -->
+  </ProxyGroup>
+  <ProxyGroup name="exporters">
+    <!-- Proxy group for exporters used to export views.  -->
+    <RenderViewExporterProxy class="vtkX3DExporter"
+                             file_extension="x3d"
+                             name="X3DExporter">
+      <Documentation long_help="Export X3D Files"
+                     short_help="X3D Files">vtkX3DExporter is a render window
+                     exporter which writes out the renderered scene into an X3D
+                     file. X3D is an XML-based format for representation 3D
+                     scenes (similar to VRML). Check out
+                     http://www.web3d.org/x3d/ for more
+                     details.</Documentation>
+      <StringVectorProperty command="SetFileName"
+                            name="FileName"
+                            panel_visibility="never"
+                            number_of_elements="1">
+        <Documentation>Name of the file to be written.</Documentation>
+      </StringVectorProperty>
+      <!-- End of X3DExporter -->
+    </RenderViewExporterProxy>
+    <RenderViewExporterProxy base_proxygroup="exporters"
+                             base_proxyname="X3DExporter"
+                             class="vtkX3DExporter"
+                             file_extension="x3db"
+                             name="X3DExporterBinary">
+      <Documentation>Binary x3d exporter</Documentation>
+      <IntVectorProperty command="SetBinary"
+                         default_values="1"
+                         name="Binary"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Turn on binary mode</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFastest"
+                         default_values="0"
+                         name="Fastest"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>In binary mode use fastest instead of best
+        compression.</Documentation>
+      </IntVectorProperty>
+    </RenderViewExporterProxy>
+    <RenderViewExporterProxy class="vtkVRMLExporter"
+                             file_extension="vrml"
+                             name="VRMLExporter">
+      <Documentation>Exporter to export a single render view to an VRML
+      file.</Documentation>
+      <StringVectorProperty command="SetFileName"
+                            name="FileName"
+                            panel_visibility="never"
+                            number_of_elements="1">
+        <Documentation>Name of the file to be written.</Documentation>
+      </StringVectorProperty>
+      <!-- End of VRMLExporter -->
+    </RenderViewExporterProxy>
+    <CSVExporterProxy class="vtkCSVExporter"
+                      file_extension="csv"
+                      name="CSVExporter">
+      <Documentation>Exporter to export a single render view to an CSV
+      file.</Documentation>
+      <StringVectorProperty command="SetFileName"
+                            name="FileName"
+                            panel_visibility="never"
+                            number_of_elements="1">
+        <Documentation>Name of the file to be written.</Documentation>
+      </StringVectorProperty>
+      <!-- End of VRMLExporter -->
+    </CSVExporterProxy>
+    <RenderViewExporterProxy class="vtkPOVExporter"
+                             file_extension="pov"
+                             name="POVExporter">
+      <Documentation long_help="Export POV Ray Files"
+                     short_help="POV Files">vtkPOVExporter is a render window
+                     exporter which writes out the renderered scene into an POV
+                     Ray file.</Documentation>
+      <StringVectorProperty command="SetFileName"
+                            name="FileName"
+                            panel_visibility="never"
+                            number_of_elements="1">
+        <Documentation>Name of the file to be written.</Documentation>
+      </StringVectorProperty>
+      <!-- End of POVExporter -->
+    </RenderViewExporterProxy>
+
+    <!-- GL2PS exporter, shared options between render and context views: -->
+    <GL2PSExporterProxy class="not-used"
+                        viewtype="none"
+                        name="GL2PSExporterBase">
+      <Documentation>Base API definition for all GL2PS vector graphic exporters.
+      </Documentation>
+      <StringVectorProperty command="SetFileName"
+                            name="FileName"
+                            panel_visibility="never"
+                            number_of_elements="1">
+        <Documentation>Name of the file to be written.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="SetTitle"
+                            name="SetTitle"
+                            label="Plot title"
+                            default_values="ParaView GL2PS Export"
+                            number_of_elements="1">
+      </StringVectorProperty>
+      <IntVectorProperty command="SetCompress"
+                         default_values="0"
+                         name="SetCompress"
+                         label="Compress output file"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetDrawBackground"
+                         default_values="1"
+                         name="SetDrawBackground"
+                         label="Draw background"
+                         panel_visibility="advanced"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetOcclusionCull"
+                         default_values="1"
+                         name="SetOcclusionCull"
+                         label="Cull hidden primitives"
+                         panel_visibility="advanced"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetLineWidthFactor"
+                            default_values="0.714"
+                            name="LineWidthFactor"
+                            label="Line width scaling factor"
+                            panel_visibility="advanced"
+                            number_of_elements="1">
+        <DoubleRangeDomain max="10"
+                           min="0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <DoubleVectorProperty command="SetPointSizeFactor"
+                            default_values="0.714"
+                            name="PointSizeFactor"
+                            label="Point size scaling factor"
+                            panel_visibility="advanced"
+                            number_of_elements="1">
+        <DoubleRangeDomain max="10"
+                           min="0"
+                           name="range" />
+      </DoubleVectorProperty>
+      <!-- End of "GL2PSExporterBase" -->
+    </GL2PSExporterProxy>
+
+    <!-- GL2PS exporter, additional render view options added: -->
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSExporterBase"
+                        class="not-used"
+                        viewtype="none"
+                        name="GL2PSRenderViewExporterBase">
+      <Documentation>Base API definition for all GL2PS render view exporters.
+      </Documentation>
+      <IntVectorProperty command="SetSort"
+                         default_values="1"
+                         name="SetSort"
+                         label="GL2PS depth sort method"
+                         panel_visibility="advanced"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="No sorting (fastest, poor)"
+                 value="0" />
+          <Entry text="Simple sorting (fast, good)"
+                 value="1" />
+          <Entry text="BSP sorting (slow, best)"
+                 value="2" />
+        </EnumerationDomain>
+        <Documentation>Method of sorting 3D primitives.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetWrite3DPropsAsRasterImage"
+                         default_values="1"
+                         name="Write3DPropsAsRasterImage"
+                         label="Rasterize 3D geometry"
+                         number_of_elements="1">
+        <Documentation>Export all 3D geometry as a rasterized image behind 2D
+        geometry, which is still rendered as vector graphics.</Documentation>
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetExcludeCubeAxesActorsFromRasterization"
+                         default_values="1"
+                         name="ExcludeCubeAxesActorsFromRasterization"
+                         label="Don't rasterize cube axes"
+                         panel_visibility="advanced"
+                         number_of_elements="1">
+        <Documentation>If rasterizing 3D geometry, setting this option will
+        export all cube axes actors as vector graphics.</Documentation>
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <!-- End of "GL2PSRenderViewExporterBase" -->
+    </GL2PSExporterProxy>
+
+    <!-- GL2PS exporter, additional context view options added: -->
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSExporterBase"
+                        class="not-used"
+                        viewtype="none"
+                        name="GL2PSContextViewExporterBase">
+      <Documentation>Base API definition for all GL2PS context view exporters.
+      </Documentation>
+      <!-- No sorting, preserve painter order: -->
+      <IntVectorProperty command="SetSort"
+                         default_values="0"
+                         name="SetSort"
+                         label="GL2PS depth sort method"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Method of sorting 3D primitives.</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetWrite3DPropsAsRasterImage"
+                         default_values="0"
+                         name="Write3DPropsAsRasterImage"
+                         label="Rasterize 3D geometry"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Export all 3D geometry as a rasterized image behind 2D
+        geometry, which is still rendered as vector graphics.</Documentation>
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetExcludeCubeAxesActorsFromRasterization"
+                         default_values="1"
+                         name="ExcludeCubeAxesActorsFromRasterization"
+                         label="Don't rasterize cube axes"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>If rasterizing 3D geometry, setting this option will
+        export all cube axes actors as vector graphics.</Documentation>
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <!-- End of "GL2PSContextViewExporterBase" -->
+    </GL2PSExporterProxy>
+
+    <!-- Actual render view GL2PS exporter proxies -->
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSRenderViewExporterBase"
+                        class="vtkPVGL2PSExporter"
+                        file_extension="ps"
+                        viewtype="renderview"
+                        name="GL2PSRenderViewExporterPS">
+      <Documentation long_help="Export PostScript (PS) Files"
+                     short_help="PS Files">vtkPVGL2PSExporter is a render
+                     window exporter which writes out the renderered scene into
+                     a variety of vector graphics formats.</Documentation>
+      <IntVectorProperty command="SetTextAsPath"
+                         default_values="0"
+                         name="SetTextAsPath"
+                         label="Render text as paths"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetPS3Shading"
+                         default_values="1"
+                         name="SetPS3Shading"
+                         label="Use shfill shading operator"
+                         panel_visibility="advanced"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFileFormat"
+                         default_values="0"
+                         name="FileFormat"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Set the output file format: 0: PostScript, 1:
+        Encapsulated PostScript, 2: PDF, 3: TeX, 4: SVG</Documentation>
+      </IntVectorProperty>
+      <!-- End of GL2PSRenderViewExporterPS -->
+    </GL2PSExporterProxy>
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSRenderViewExporterBase"
+                        class="vtkPVGL2PSExporter"
+                        file_extension="eps"
+                        viewtype="renderview"
+                        name="GL2PSRenderViewExporterEPS">
+      <Documentation long_help="Export Encapsulated PostScript (EPS) Files"
+                     short_help="EPS Files">vtkPVGL2PSExporter is a render
+                     window exporter which writes out the renderered scene into
+                     a variety of vector graphics formats.</Documentation>
+      <IntVectorProperty command="SetTextAsPath"
+                         default_values="0"
+                         name="SetTextAsPath"
+                         label="Render text as paths"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFileFormat"
+                         default_values="1"
+                         name="FileFormat"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Set the output file format: 0: PostScript, 1:
+        Encapsulated PostScript, 2: PDF, 3: TeX, 4: SVG</Documentation>
+      </IntVectorProperty>
+      <!-- End of GL2PSRenderViewExporterEPS -->
+    </GL2PSExporterProxy>
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSRenderViewExporterBase"
+                        class="vtkPVGL2PSExporter"
+                        file_extension="pdf"
+                        viewtype="renderview"
+                        name="GL2PSRenderViewExporterPDF">
+      <Documentation long_help="Export Portable Document Format (PDF) Files"
+                     short_help="PDF Files">vtkPVGL2PSExporter is a render
+                     window exporter which writes out the renderered scene into
+                     a variety of vector graphics formats.</Documentation>
+      <IntVectorProperty command="SetTextAsPath"
+                         default_values="1"
+                         name="SetTextAsPath"
+                         label="Render text as paths"
+                         panel_visibility="advanced"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFileFormat"
+                         default_values="2"
+                         name="FileFormat"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Set the output file format: 0: PostScript, 1:
+        Encapsulated PostScript, 2: PDF, 3: TeX, 4: SVG</Documentation>
+      </IntVectorProperty>
+      <!-- End of GL2PSRenderViewExporterPDF -->
+    </GL2PSExporterProxy>
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSRenderViewExporterBase"
+                        class="vtkPVGL2PSExporter"
+                        file_extension="svg"
+                        viewtype="renderview"
+                        name="GL2PSRenderViewExporterSVG">
+      <Documentation long_help="Export Scalable Vector Graphics (SVG) Files"
+                     short_help="SVG Files">vtkPVGL2PSExporter is a render
+                     window exporter which writes out the renderered scene into
+                     a variety of vector graphics formats.</Documentation>
+      <IntVectorProperty command="SetTextAsPath"
+                         default_values="0"
+                         name="SetTextAsPath"
+                         label="Render text as paths"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFileFormat"
+                         default_values="4"
+                         name="FileFormat"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Set the output file format: 0: PostScript, 1:
+        Encapsulated PostScript, 2: PDF, 3: TeX, 4: SVG</Documentation>
+      </IntVectorProperty>
+      <!-- End of GL2PSRenderViewExporterSVG -->
+    </GL2PSExporterProxy>
+
+    <!-- Actual context view GL2PS exporter proxies -->
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSContextViewExporterBase"
+                        class="vtkPVGL2PSExporter"
+                        file_extension="ps"
+                        viewtype="contextview"
+                        name="GL2PSContextViewExporterPS">
+      <Documentation long_help="Export PostScript (PS) Files"
+                     short_help="PS Files">vtkPVGL2PSExporter is a render
+                     window exporter which writes out the renderered scene into
+                     a variety of vector graphics formats.</Documentation>
+      <IntVectorProperty command="SetTextAsPath"
+                         default_values="0"
+                         name="SetTextAsPath"
+                         label="Render text as paths"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetPS3Shading"
+                         default_values="1"
+                         name="SetPS3Shading"
+                         label="Use shfill shading operator"
+                         panel_visibility="advanced"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFileFormat"
+                         default_values="0"
+                         name="FileFormat"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Set the output file format: 0: PostScript, 1:
+        Encapsulated PostScript, 2: PDF, 3: TeX, 4: SVG</Documentation>
+      </IntVectorProperty>
+      <!-- End of GL2PSContextViewExporterPS -->
+    </GL2PSExporterProxy>
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSContextViewExporterBase"
+                        class="vtkPVGL2PSExporter"
+                        file_extension="eps"
+                        viewtype="contextview"
+                        name="GL2PSContextViewExporterEPS">
+      <Documentation long_help="Export Encapsulated PostScript (EPS) Files"
+                     short_help="EPS Files">vtkPVGL2PSExporter is a render
+                     window exporter which writes out the renderered scene into
+                     a variety of vector graphics formats.</Documentation>
+      <IntVectorProperty command="SetTextAsPath"
+                         default_values="0"
+                         name="SetTextAsPath"
+                         label="Render text as paths"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFileFormat"
+                         default_values="1"
+                         name="FileFormat"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Set the output file format: 0: PostScript, 1:
+        Encapsulated PostScript, 2: PDF, 3: TeX, 4: SVG</Documentation>
+      </IntVectorProperty>
+      <!-- End of GL2PSContextViewExporterEPS -->
+    </GL2PSExporterProxy>
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSContextViewExporterBase"
+                        class="vtkPVGL2PSExporter"
+                        file_extension="pdf"
+                        viewtype="contextview"
+                        name="GL2PSContextViewExporterPDF">
+      <Documentation long_help="Export Portable Document Format (PDF) Files"
+                     short_help="PDF Files">vtkPVGL2PSExporter is a render
+                     window exporter which writes out the renderered scene into
+                     a variety of vector graphics formats.</Documentation>
+      <IntVectorProperty command="SetTextAsPath"
+                         default_values="1"
+                         name="SetTextAsPath"
+                         label="Render text as paths"
+                         panel_visibility="advanced"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFileFormat"
+                         default_values="2"
+                         name="FileFormat"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Set the output file format: 0: PostScript, 1:
+        Encapsulated PostScript, 2: PDF, 3: TeX, 4: SVG</Documentation>
+      </IntVectorProperty>
+      <!-- End of GL2PSContextViewExporterPDF -->
+    </GL2PSExporterProxy>
+    <GL2PSExporterProxy base_proxygroup="exporters"
+                        base_proxyname="GL2PSContextViewExporterBase"
+                        class="vtkPVGL2PSExporter"
+                        file_extension="svg"
+                        viewtype="contextview"
+                        name="GL2PSContextViewExporterSVG">
+      <Documentation long_help="Export Scalable Vector Graphics (SVG) Files"
+                     short_help="SVG Files">vtkPVGL2PSExporter is a render
+                     window exporter which writes out the renderered scene into
+                     a variety of vector graphics formats.</Documentation>
+      <IntVectorProperty command="SetTextAsPath"
+                         default_values="0"
+                         name="SetTextAsPath"
+                         label="Render text as paths"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+      <IntVectorProperty command="SetFileFormat"
+                         default_values="4"
+                         name="FileFormat"
+                         panel_visibility="never"
+                         number_of_elements="1">
+        <Documentation>Set the output file format: 0: PostScript, 1:
+        Encapsulated PostScript, 2: PDF, 3: TeX, 4: SVG</Documentation>
+      </IntVectorProperty>
+      <!-- End of GL2PSContextViewExporterSVG -->
+    </GL2PSExporterProxy>
+
+    <RenderViewExporterProxy name="WebGLExporter" class="vtkPVWebGLExporter"
+                             file_extension="webgl">
+       <StringVectorProperty name="FileName" command="SetFileName"
+                             number_of_elements="1">
+          <Documentation>Name of the file to write into</Documentation>
+       </StringVectorProperty>
+      <!-- End of WebGLExporter -->
+    </RenderViewExporterProxy>
+
+    <!-- End of "exporters" -->
+  </ProxyGroup>
+  <ProxyGroup name="point_placers">
+    <Proxy class="not-used"
+           name="PointPlacerBase">
+      <Documentation>Base API definition for all point placers.</Documentation>
+      <!-- End of "PointPlacerBase" -->
+    </Proxy>
+    <Proxy base_proxygroup="point_placers"
+           base_proxyname="PointPlacerBase"
+           class="vtkFocalPlanePointPlacer"
+           name="FocalPlanePointPlacer"></Proxy>
+    <Proxy base_proxygroup="point_placers"
+           base_proxyname="PointPlacerBase"
+           class="vtkBoundedPlanePointPlacer"
+           name="BoundedPlanePointPlacer">
+      <IntVectorProperty command="SetProjectionNormal"
+                         default_values="2"
+                         name="ProjectionNormal"
+                         number_of_elements="1">
+        <EnumerationDomain name="enum">
+          <Entry text="XAxis"
+                 value="0" />
+          <Entry text="YAxis"
+                 value="1" />
+          <Entry text="ZAxis"
+                 value="2" />
+          <Entry text="Oblique"
+                 value="3" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+      <DoubleVectorProperty command="SetProjectionPosition"
+                            default_values="0.0"
+                            name="ProjectionPosition"
+                            number_of_elements="1"></DoubleVectorProperty>
+      <ProxyProperty clean_command="RemoveAllBoundingPlanes"
+                     command="AddBoundingPlane"
+                     name="BoundingPlanes"
+                     number_of_elements_per_command="1"
+                     repeat_command="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="implicit_functions" />
+        </ProxyGroupDomain>
+        <ProxyListDomain name="proxy_list">
+          <Proxy group="implicit_functions"
+                 name="Plane" />
+          <Proxy group="implicit_functions"
+                 name="Box" />
+        </ProxyListDomain>
+      </ProxyProperty>
+    </Proxy>
+    <Proxy base_proxygroup="point_placers"
+           base_proxyname="PointPlacerBase"
+           class="vtkPolygonalSurfacePointPlacer"
+           name="PolygonalSurfacePointPlacer"></Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="contour_line_interpolators">
+    <Proxy class="not-used"
+           name="ContourLineInterpolatorBase">
+      <Documentation>Base API definition for all contour line
+      interpolators.</Documentation>
+      <!-- End of "ContourLineInterpolatorBase" -->
+    </Proxy>
+    <Proxy base_proxygroup="contour_line_interpolators"
+           base_proxyname="ContourLineInterpolatorBase"
+           class="vtkBezierContourLineInterpolator"
+           name="BezierContourLineInterpolator"></Proxy>
+    <Proxy base_proxygroup="contour_line_interpolators"
+           base_proxyname="ContourLineInterpolatorBase"
+           class="vtkPolyDataContourLineInterpolator"
+           name="PolyDataContourLineInterpolator"></Proxy>
+    <Proxy base_proxygroup="contour_line_interpolators"
+           base_proxyname="ContourLineInterpolatorBase"
+           class="vtkPolygonalSurfaceContourLineInterpolator"
+           name="PolygonalSurfaceContourLineInterpolator"></Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="tile_helper">
+    <Proxy class="vtkTileDisplayHelper"
+           name="TileDisplayHelper"
+           processes="renderserver">
+      <Documentation>Helper proxy used to enable/disable server side tile image
+      dump.</Documentation>
+      <StringVectorProperty command="SetDumpImagePath"
+                            default_values=""
+                            name="DumpImagePath"
+                            number_of_elements="1">
+        <Documentation>Full Path + prefix file name. The image full path will
+        be: ${DumpImagePath}-Tile${processId}.png</Documentation>
+      </StringVectorProperty>
+    </Proxy>
+  </ProxyGroup>
+  <ProxyGroup name="options">
+    <!-- =================================================================== -->
+    <ContextNamedOptionsProxy class="vtkChartNamedOptions"
+                              name="PlotOptionsBase"
+                              processes="client|dataserver|renderserver">
+      <StringVectorProperty information_only="1"
+                            name="VisibilityInfo"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Property which has the current state of visibility for
+        the series available currently.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty information_only="1"
+                            name="LabelInfo"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Property which has the current state of labels for the
+        series available currently.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="SetVisibility"
+                            element_types="2 0"
+                            information_property="VisibilityInfo"
+                            name="Visibility"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Set the series visibility.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="SetLabel"
+                            element_types="2 2"
+                            information_property="LabelInfo"
+                            name="Label"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Set the series labels.</Documentation>
+      </StringVectorProperty>
+      <!-- End of PlotOptionsBase -->
+    </ContextNamedOptionsProxy>
+    <ContextNamedOptionsProxy base_proxygroup="options"
+                              base_proxyname="PlotOptionsBase"
+                              class="vtkXYChartNamedOptions"
+                              name="XYPlotOptions"
+                              processes="client|dataserver|renderserver">
+      <StringVectorProperty information_only="1"
+                            name="LineThicknessInfo"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Property which has the current state of line thickness
+        for the series available currently.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="SetLineThickness"
+                            element_types="2 0"
+                            information_property="LineThicknessInfo"
+                            name="LineThickness"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Set the series line thickness.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty information_only="1"
+                            name="LineStyleInfo"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Property which has the current state of line style for
+        the series available currently.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="SetLineStyle"
+                            element_types="2 0"
+                            information_property="LineStyleInfo"
+                            name="LineStyle"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Set the series line style.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty information_only="1"
+                            name="ColorInfo"
+                            number_of_elements_per_command="4"
+                            repeat_command="1">
+        <Documentation>Property which has the current state of line color for
+        the series.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="SetColor"
+                            element_types="2 1 1 1"
+                            information_property="ColorInfo"
+                            name="Color"
+                            number_of_elements_per_command="4"
+                            repeat_command="1">
+        <Documentation>Set the series line color.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty information_only="1"
+                            name="MarkerStyleInfo"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Property which has the current state of marker style for
+        the series available currently.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="SetMarkerStyle"
+                            element_types="2 0"
+                            information_property="MarkerStyleInfo"
+                            name="MarkerStyle"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Set the series marker style.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty information_only="1"
+                            name="PlotCornerInfo"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Property which has the current state of marker style for
+        the series available currently.</Documentation>
+      </StringVectorProperty>
+      <StringVectorProperty command="SetAxisCorner"
+                            element_types="2 0"
+                            information_property="PlotCornerInfo"
+                            name="PlotCorner"
+                            number_of_elements_per_command="2"
+                            repeat_command="1">
+        <Documentation>Set the series axis corner.</Documentation>
+      </StringVectorProperty>
+      <!-- End of PlotOptionsBase -->
+    </ContextNamedOptionsProxy>
+  </ProxyGroup>
+
+  <ProxyGroup name="coprocessing">
+    <LiveInsituLinkProxy name="LiveInsituLink" class="vtkLiveInsituLink"
+      processes="dataserver">
+      <Documentation>
+        Proxy used to connect to Catalyst CoProcessor for live-data
+        visualization.
+      </Documentation>
+
+      <IntVectorProperty name="InsituPort"
+        command="SetInsituPort"
+        number_of_elements="1"
+        default_values="0">
+      </IntVectorProperty>
+
+      <IntVectorProperty name="ProcessType"
+        command="SetProcessType"
+        number_of_elements="1"
+        default_values="0">
+        <EnumerationDomain name="enum">
+          <Entry text="Visualization" value="0" />
+          <Entry text="Simulation" value="1" />
+        </EnumerationDomain>
+      </IntVectorProperty>
+
+      <StringVectorProperty name="Hostname"
+        command="SetHostname"
+        number_of_elements="1"
+        default_values="localhost">
+      </StringVectorProperty>
+
+      <Property name="Initialize" command="Initialize" />
+
+    </LiveInsituLinkProxy>
+  </ProxyGroup>
+
+</ServerManagerConfiguration>

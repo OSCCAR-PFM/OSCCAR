@@ -1,0 +1,5 @@
+vtk_add_test_python(AutomaticPlaneGeneration.py)
+vtk_add_test_python(cylMap.py)
+vtk_add_test_python(socbal.py)
+vtk_add_test_python(textureThreshold.py)
+vtk_add_test_python(triangularTCoords.py)

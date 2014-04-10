@@ -1,0 +1,3 @@
+vtk_add_test_python(TestFreetypeTextOverlay.py)
+vtk_add_test_python(TestFreetypeTextMapper.py NO_RT)
+vtk_add_test_python(TestFreetypeTextMapperBigger.py)

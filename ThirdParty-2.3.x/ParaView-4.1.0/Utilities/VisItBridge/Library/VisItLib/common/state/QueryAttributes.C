@@ -1,0 +1,1495 @@
+/*****************************************************************************
+*
+* Copyright (c) 2000 - 2010, Lawrence Livermore National Security, LLC
+* Produced at the Lawrence Livermore National Laboratory
+* LLNL-CODE-400124
+* All rights reserved.
+*
+* This file is  part of VisIt. For  details, see https://visit.llnl.gov/.  The
+* full copyright notice is contained in the file COPYRIGHT located at the root
+* of the VisIt distribution or at http://www.llnl.gov/visit/copyright.html.
+*
+* Redistribution  and  use  in  source  and  binary  forms,  with  or  without
+* modification, are permitted provided that the following conditions are met:
+*
+*  - Redistributions of  source code must  retain the above  copyright notice,
+*    this list of conditions and the disclaimer below.
+*  - Redistributions in binary form must reproduce the above copyright notice,
+*    this  list of  conditions  and  the  disclaimer (as noted below)  in  the
+*    documentation and/or other materials provided with the distribution.
+*  - Neither the name of  the LLNS/LLNL nor the names of  its contributors may
+*    be used to endorse or promote products derived from this software without
+*    specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT  HOLDERS AND CONTRIBUTORS "AS IS"
+* AND ANY EXPRESS OR  IMPLIED WARRANTIES, INCLUDING,  BUT NOT  LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND  FITNESS FOR A PARTICULAR  PURPOSE
+* ARE  DISCLAIMED. IN  NO EVENT  SHALL LAWRENCE  LIVERMORE NATIONAL  SECURITY,
+* LLC, THE  U.S.  DEPARTMENT OF  ENERGY  OR  CONTRIBUTORS BE  LIABLE  FOR  ANY
+* DIRECT,  INDIRECT,   INCIDENTAL,   SPECIAL,   EXEMPLARY,  OR   CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT  LIMITED TO, PROCUREMENT OF  SUBSTITUTE GOODS OR
+* SERVICES; LOSS OF  USE, DATA, OR PROFITS; OR  BUSINESS INTERRUPTION) HOWEVER
+* CAUSED  AND  ON  ANY  THEORY  OF  LIABILITY,  WHETHER  IN  CONTRACT,  STRICT
+* LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE)  ARISING IN ANY  WAY
+* OUT OF THE  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+* DAMAGE.
+*
+*****************************************************************************/
+
+#include <QueryAttributes.h>
+#include <DataNode.h>
+#include <stdio.h>
+
+//
+// Enum conversion methods for QueryAttributes::ElementType
+//
+
+static const char *ElementType_strings[] = {
+"Zone", "Node"};
+
+std::string
+QueryAttributes::ElementType_ToString(QueryAttributes::ElementType t)
+{
+    int index = int(t);
+    if(index < 0 || index >= 2) index = 0;
+    return ElementType_strings[index];
+}
+
+std::string
+QueryAttributes::ElementType_ToString(int t)
+{
+    int index = (t < 0 || t >= 2) ? 0 : t;
+    return ElementType_strings[index];
+}
+
+bool
+QueryAttributes::ElementType_FromString(const std::string &s, QueryAttributes::ElementType &val)
+{
+    val = QueryAttributes::Zone;
+    for(int i = 0; i < 2; ++i)
+    {
+        if(s == ElementType_strings[i])
+        {
+            val = (ElementType)i;
+            return true;
+        }
+    }
+    return false;
+}
+
+//
+// Enum conversion methods for QueryAttributes::VarType
+//
+
+static const char *VarType_strings[] = {
+"Mesh", "Scalar", "Vector", 
+"Tensor", "Symmetric_Tensor", "Array", 
+"Label", "Material", "Species", 
+"Curve", "Unknown"};
+
+std::string
+QueryAttributes::VarType_ToString(QueryAttributes::VarType t)
+{
+    int index = int(t);
+    if(index < 0 || index >= 11) index = 0;
+    return VarType_strings[index];
+}
+
+std::string
+QueryAttributes::VarType_ToString(int t)
+{
+    int index = (t < 0 || t >= 11) ? 0 : t;
+    return VarType_strings[index];
+}
+
+bool
+QueryAttributes::VarType_FromString(const std::string &s, QueryAttributes::VarType &val)
+{
+    val = QueryAttributes::Mesh;
+    for(int i = 0; i < 11; ++i)
+    {
+        if(s == VarType_strings[i])
+        {
+            val = (VarType)i;
+            return true;
+        }
+    }
+    return false;
+}
+
+//
+// Enum conversion methods for QueryAttributes::DataType
+//
+
+static const char *DataType_strings[] = {
+"ActualData", "OriginalData"};
+
+std::string
+QueryAttributes::DataType_ToString(QueryAttributes::DataType t)
+{
+    int index = int(t);
+    if(index < 0 || index >= 2) index = 0;
+    return DataType_strings[index];
+}
+
+std::string
+QueryAttributes::DataType_ToString(int t)
+{
+    int index = (t < 0 || t >= 2) ? 0 : t;
+    return DataType_strings[index];
+}
+
+bool
+QueryAttributes::DataType_FromString(const std::string &s, QueryAttributes::DataType &val)
+{
+    val = QueryAttributes::ActualData;
+    for(int i = 0; i < 2; ++i)
+    {
+        if(s == DataType_strings[i])
+        {
+            val = (DataType)i;
+            return true;
+        }
+    }
+    return false;
+}
+
+// Type map format string
+const char *QueryAttributes::TypeMapFormatString = "ss*sDiid*iii*iibssd*d*ss";
+
+// ****************************************************************************
+// Method: QueryAttributes::QueryAttributes
+//
+// Purpose: 
+//   Constructor for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+QueryAttributes::QueryAttributes() : 
+    AttributeSubject(QueryAttributes::TypeMapFormatString)
+{
+    variables.push_back("default");
+    worldPoint[0] = 0;
+    worldPoint[1] = 0;
+    worldPoint[2] = 0;
+    domain = -1;
+    element = -1;
+    resultsValue.push_back(0);
+    elementType = Zone;
+    timeStep = 0;
+    dataType = ActualData;
+    pipeIndex = -1;
+    useGlobalId = false;
+    darg1.push_back(0);
+    darg2.push_back(0);
+    floatFormat = "%g";
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::QueryAttributes
+//
+// Purpose: 
+//   Copy constructor for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+QueryAttributes::QueryAttributes(const QueryAttributes &obj) : 
+    AttributeSubject(QueryAttributes::TypeMapFormatString)
+{
+    name = obj.name;
+    variables = obj.variables;
+    resultsMessage = obj.resultsMessage;
+    worldPoint[0] = obj.worldPoint[0];
+    worldPoint[1] = obj.worldPoint[1];
+    worldPoint[2] = obj.worldPoint[2];
+
+    domain = obj.domain;
+    element = obj.element;
+    resultsValue = obj.resultsValue;
+    elementType = obj.elementType;
+    timeStep = obj.timeStep;
+    varTypes = obj.varTypes;
+    dataType = obj.dataType;
+    pipeIndex = obj.pipeIndex;
+    useGlobalId = obj.useGlobalId;
+    xUnits = obj.xUnits;
+    yUnits = obj.yUnits;
+    darg1 = obj.darg1;
+    darg2 = obj.darg2;
+    floatFormat = obj.floatFormat;
+    xmlResult = obj.xmlResult;
+
+    SelectAll();
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::~QueryAttributes
+//
+// Purpose: 
+//   Destructor for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+QueryAttributes::~QueryAttributes()
+{
+    // nothing here
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::operator = 
+//
+// Purpose: 
+//   Assignment operator for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+QueryAttributes& 
+QueryAttributes::operator = (const QueryAttributes &obj)
+{
+    if (this == &obj) return *this;
+    name = obj.name;
+    variables = obj.variables;
+    resultsMessage = obj.resultsMessage;
+    worldPoint[0] = obj.worldPoint[0];
+    worldPoint[1] = obj.worldPoint[1];
+    worldPoint[2] = obj.worldPoint[2];
+
+    domain = obj.domain;
+    element = obj.element;
+    resultsValue = obj.resultsValue;
+    elementType = obj.elementType;
+    timeStep = obj.timeStep;
+    varTypes = obj.varTypes;
+    dataType = obj.dataType;
+    pipeIndex = obj.pipeIndex;
+    useGlobalId = obj.useGlobalId;
+    xUnits = obj.xUnits;
+    yUnits = obj.yUnits;
+    darg1 = obj.darg1;
+    darg2 = obj.darg2;
+    floatFormat = obj.floatFormat;
+    xmlResult = obj.xmlResult;
+
+    SelectAll();
+    return *this;
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::operator == 
+//
+// Purpose: 
+//   Comparison operator == for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+bool
+QueryAttributes::operator == (const QueryAttributes &obj) const
+{
+    // Compare the worldPoint arrays.
+    bool worldPoint_equal = true;
+    for(int i = 0; i < 3 && worldPoint_equal; ++i)
+        worldPoint_equal = (worldPoint[i] == obj.worldPoint[i]);
+
+    // Create the return value
+    return ((name == obj.name) &&
+            (variables == obj.variables) &&
+            (resultsMessage == obj.resultsMessage) &&
+            worldPoint_equal &&
+            (domain == obj.domain) &&
+            (element == obj.element) &&
+            (resultsValue == obj.resultsValue) &&
+            (elementType == obj.elementType) &&
+            (timeStep == obj.timeStep) &&
+            (varTypes == obj.varTypes) &&
+            (dataType == obj.dataType) &&
+            (pipeIndex == obj.pipeIndex) &&
+            (useGlobalId == obj.useGlobalId) &&
+            (xUnits == obj.xUnits) &&
+            (yUnits == obj.yUnits) &&
+            (darg1 == obj.darg1) &&
+            (darg2 == obj.darg2) &&
+            (floatFormat == obj.floatFormat) &&
+            (xmlResult == obj.xmlResult));
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::operator != 
+//
+// Purpose: 
+//   Comparison operator != for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+bool
+QueryAttributes::operator != (const QueryAttributes &obj) const
+{
+    return !(this->operator == (obj));
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::TypeName
+//
+// Purpose: 
+//   Type name method for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+const std::string
+QueryAttributes::TypeName() const
+{
+    return "QueryAttributes";
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::CopyAttributes
+//
+// Purpose: 
+//   CopyAttributes method for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+bool
+QueryAttributes::CopyAttributes(const AttributeGroup *atts)
+{
+    if(TypeName() != atts->TypeName())
+        return false;
+
+    // Call assignment operator.
+    const QueryAttributes *tmp = (const QueryAttributes *)atts;
+    *this = *tmp;
+
+    return true;
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::CreateCompatible
+//
+// Purpose: 
+//   CreateCompatible method for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+AttributeSubject *
+QueryAttributes::CreateCompatible(const std::string &tname) const
+{
+    AttributeSubject *retval = 0;
+    if(TypeName() == tname)
+        retval = new QueryAttributes(*this);
+    // Other cases could go here too. 
+
+    return retval;
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::NewInstance
+//
+// Purpose: 
+//   NewInstance method for the QueryAttributes class.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+AttributeSubject *
+QueryAttributes::NewInstance(bool copy) const
+{
+    AttributeSubject *retval = 0;
+    if(copy)
+        retval = new QueryAttributes(*this);
+    else
+        retval = new QueryAttributes;
+
+    return retval;
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::SelectAll
+//
+// Purpose: 
+//   Selects all attributes.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+void
+QueryAttributes::SelectAll()
+{
+    Select(ID_name,           (void *)&name);
+    Select(ID_variables,      (void *)&variables);
+    Select(ID_resultsMessage, (void *)&resultsMessage);
+    Select(ID_worldPoint,     (void *)worldPoint, 3);
+    Select(ID_domain,         (void *)&domain);
+    Select(ID_element,        (void *)&element);
+    Select(ID_resultsValue,   (void *)&resultsValue);
+    Select(ID_elementType,    (void *)&elementType);
+    Select(ID_timeStep,       (void *)&timeStep);
+    Select(ID_varTypes,       (void *)&varTypes);
+    Select(ID_dataType,       (void *)&dataType);
+    Select(ID_pipeIndex,      (void *)&pipeIndex);
+    Select(ID_useGlobalId,    (void *)&useGlobalId);
+    Select(ID_xUnits,         (void *)&xUnits);
+    Select(ID_yUnits,         (void *)&yUnits);
+    Select(ID_darg1,          (void *)&darg1);
+    Select(ID_darg2,          (void *)&darg2);
+    Select(ID_floatFormat,    (void *)&floatFormat);
+    Select(ID_xmlResult,      (void *)&xmlResult);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Persistence methods
+///////////////////////////////////////////////////////////////////////////////
+
+// ****************************************************************************
+// Method: QueryAttributes::CreateNode
+//
+// Purpose: 
+//   This method creates a DataNode representation of the object so it can be saved to a config file.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+bool
+QueryAttributes::CreateNode(DataNode *parentNode, bool completeSave, bool forceAdd)
+{
+    if(parentNode == 0)
+        return false;
+
+    QueryAttributes defaultObject;
+    bool addToParent = false;
+    // Create a node for QueryAttributes.
+    DataNode *node = new DataNode("QueryAttributes");
+
+    if(completeSave || !FieldsEqual(ID_name, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("name", name));
+    }
+
+    if(completeSave || !FieldsEqual(ID_variables, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("variables", variables));
+    }
+
+    if(completeSave || !FieldsEqual(ID_resultsMessage, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("resultsMessage", resultsMessage));
+    }
+
+    if(completeSave || !FieldsEqual(ID_worldPoint, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("worldPoint", worldPoint, 3));
+    }
+
+    if(completeSave || !FieldsEqual(ID_domain, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("domain", domain));
+    }
+
+    if(completeSave || !FieldsEqual(ID_element, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("element", element));
+    }
+
+    if(completeSave || !FieldsEqual(ID_resultsValue, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("resultsValue", resultsValue));
+    }
+
+    if(completeSave || !FieldsEqual(ID_elementType, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("elementType", ElementType_ToString(elementType)));
+    }
+
+    if(completeSave || !FieldsEqual(ID_timeStep, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("timeStep", timeStep));
+    }
+
+    if(completeSave || !FieldsEqual(ID_varTypes, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("varTypes", varTypes));
+    }
+
+    if(completeSave || !FieldsEqual(ID_dataType, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("dataType", DataType_ToString(dataType)));
+    }
+
+    if(completeSave || !FieldsEqual(ID_pipeIndex, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("pipeIndex", pipeIndex));
+    }
+
+    if(completeSave || !FieldsEqual(ID_useGlobalId, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("useGlobalId", useGlobalId));
+    }
+
+    if(completeSave || !FieldsEqual(ID_xUnits, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("xUnits", xUnits));
+    }
+
+    if(completeSave || !FieldsEqual(ID_yUnits, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("yUnits", yUnits));
+    }
+
+    if(completeSave || !FieldsEqual(ID_darg1, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("darg1", darg1));
+    }
+
+    if(completeSave || !FieldsEqual(ID_darg2, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("darg2", darg2));
+    }
+
+    if(completeSave || !FieldsEqual(ID_floatFormat, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("floatFormat", floatFormat));
+    }
+
+    if(completeSave || !FieldsEqual(ID_xmlResult, &defaultObject))
+    {
+        addToParent = true;
+        node->AddNode(new DataNode("xmlResult", xmlResult));
+    }
+
+
+    // Add the node to the parent node.
+    if(addToParent || forceAdd)
+        parentNode->AddNode(node);
+    else
+        delete node;
+
+    return (addToParent || forceAdd);
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::SetFromNode
+//
+// Purpose: 
+//   This method sets attributes in this object from values in a DataNode representation of the object.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+void
+QueryAttributes::SetFromNode(DataNode *parentNode)
+{
+    if(parentNode == 0)
+        return;
+
+    DataNode *searchNode = parentNode->GetNode("QueryAttributes");
+    if(searchNode == 0)
+        return;
+
+    DataNode *node;
+    if((node = searchNode->GetNode("name")) != 0)
+        SetName(node->AsString());
+    if((node = searchNode->GetNode("variables")) != 0)
+        SetVariables(node->AsStringVector());
+    if((node = searchNode->GetNode("resultsMessage")) != 0)
+        SetResultsMessage(node->AsString());
+    if((node = searchNode->GetNode("worldPoint")) != 0)
+        SetWorldPoint(node->AsDoubleArray());
+    if((node = searchNode->GetNode("domain")) != 0)
+        SetDomain(node->AsInt());
+    if((node = searchNode->GetNode("element")) != 0)
+        SetElement(node->AsInt());
+    if((node = searchNode->GetNode("resultsValue")) != 0)
+        SetResultsValue(node->AsDoubleVector());
+    if((node = searchNode->GetNode("elementType")) != 0)
+    {
+        // Allow enums to be int or string in the config file
+        if(node->GetNodeType() == INT_NODE)
+        {
+            int ival = node->AsInt();
+            if(ival >= 0 && ival < 2)
+                SetElementType(ElementType(ival));
+        }
+        else if(node->GetNodeType() == STRING_NODE)
+        {
+            ElementType value;
+            if(ElementType_FromString(node->AsString(), value))
+                SetElementType(value);
+        }
+    }
+    if((node = searchNode->GetNode("timeStep")) != 0)
+        SetTimeStep(node->AsInt());
+    if((node = searchNode->GetNode("varTypes")) != 0)
+        SetVarTypes(node->AsIntVector());
+    if((node = searchNode->GetNode("dataType")) != 0)
+    {
+        // Allow enums to be int or string in the config file
+        if(node->GetNodeType() == INT_NODE)
+        {
+            int ival = node->AsInt();
+            if(ival >= 0 && ival < 2)
+                SetDataType(DataType(ival));
+        }
+        else if(node->GetNodeType() == STRING_NODE)
+        {
+            DataType value;
+            if(DataType_FromString(node->AsString(), value))
+                SetDataType(value);
+        }
+    }
+    if((node = searchNode->GetNode("pipeIndex")) != 0)
+        SetPipeIndex(node->AsInt());
+    if((node = searchNode->GetNode("useGlobalId")) != 0)
+        SetUseGlobalId(node->AsBool());
+    if((node = searchNode->GetNode("xUnits")) != 0)
+        SetXUnits(node->AsString());
+    if((node = searchNode->GetNode("yUnits")) != 0)
+        SetYUnits(node->AsString());
+    if((node = searchNode->GetNode("darg1")) != 0)
+        SetDarg1(node->AsDoubleVector());
+    if((node = searchNode->GetNode("darg2")) != 0)
+        SetDarg2(node->AsDoubleVector());
+    if((node = searchNode->GetNode("floatFormat")) != 0)
+        SetFloatFormat(node->AsString());
+    if((node = searchNode->GetNode("xmlResult")) != 0)
+        SetXmlResult(node->AsString());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Set property methods
+///////////////////////////////////////////////////////////////////////////////
+
+void
+QueryAttributes::SetName(const std::string &name_)
+{
+    name = name_;
+    Select(ID_name, (void *)&name);
+}
+
+void
+QueryAttributes::SetVariables(const stringVector &variables_)
+{
+    variables = variables_;
+    Select(ID_variables, (void *)&variables);
+}
+
+void
+QueryAttributes::SetResultsMessage(const std::string &resultsMessage_)
+{
+    resultsMessage = resultsMessage_;
+    Select(ID_resultsMessage, (void *)&resultsMessage);
+}
+
+void
+QueryAttributes::SetWorldPoint(const double *worldPoint_)
+{
+    worldPoint[0] = worldPoint_[0];
+    worldPoint[1] = worldPoint_[1];
+    worldPoint[2] = worldPoint_[2];
+    Select(ID_worldPoint, (void *)worldPoint, 3);
+}
+
+void
+QueryAttributes::SetDomain(int domain_)
+{
+    domain = domain_;
+    Select(ID_domain, (void *)&domain);
+}
+
+void
+QueryAttributes::SetElement(int element_)
+{
+    element = element_;
+    Select(ID_element, (void *)&element);
+}
+
+void
+QueryAttributes::SetResultsValue(const doubleVector &resultsValue_)
+{
+    resultsValue = resultsValue_;
+    Select(ID_resultsValue, (void *)&resultsValue);
+}
+
+void
+QueryAttributes::SetElementType(QueryAttributes::ElementType elementType_)
+{
+    elementType = elementType_;
+    Select(ID_elementType, (void *)&elementType);
+}
+
+void
+QueryAttributes::SetTimeStep(int timeStep_)
+{
+    timeStep = timeStep_;
+    Select(ID_timeStep, (void *)&timeStep);
+}
+
+void
+QueryAttributes::SetVarTypes(const intVector &varTypes_)
+{
+    varTypes = varTypes_;
+    Select(ID_varTypes, (void *)&varTypes);
+}
+
+void
+QueryAttributes::SetDataType(QueryAttributes::DataType dataType_)
+{
+    dataType = dataType_;
+    Select(ID_dataType, (void *)&dataType);
+}
+
+void
+QueryAttributes::SetPipeIndex(int pipeIndex_)
+{
+    pipeIndex = pipeIndex_;
+    Select(ID_pipeIndex, (void *)&pipeIndex);
+}
+
+void
+QueryAttributes::SetUseGlobalId(bool useGlobalId_)
+{
+    useGlobalId = useGlobalId_;
+    Select(ID_useGlobalId, (void *)&useGlobalId);
+}
+
+void
+QueryAttributes::SetXUnits(const std::string &xUnits_)
+{
+    xUnits = xUnits_;
+    Select(ID_xUnits, (void *)&xUnits);
+}
+
+void
+QueryAttributes::SetYUnits(const std::string &yUnits_)
+{
+    yUnits = yUnits_;
+    Select(ID_yUnits, (void *)&yUnits);
+}
+
+void
+QueryAttributes::SetDarg1(const doubleVector &darg1_)
+{
+    darg1 = darg1_;
+    Select(ID_darg1, (void *)&darg1);
+}
+
+void
+QueryAttributes::SetDarg2(const doubleVector &darg2_)
+{
+    darg2 = darg2_;
+    Select(ID_darg2, (void *)&darg2);
+}
+
+void
+QueryAttributes::SetFloatFormat(const std::string &floatFormat_)
+{
+    floatFormat = floatFormat_;
+    Select(ID_floatFormat, (void *)&floatFormat);
+}
+
+void
+QueryAttributes::SetXmlResult(const std::string &xmlResult_)
+{
+    xmlResult = xmlResult_;
+    Select(ID_xmlResult, (void *)&xmlResult);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Get property methods
+///////////////////////////////////////////////////////////////////////////////
+
+const std::string &
+QueryAttributes::GetName() const
+{
+    return name;
+}
+
+std::string &
+QueryAttributes::GetName()
+{
+    return name;
+}
+
+const stringVector &
+QueryAttributes::GetVariables() const
+{
+    return variables;
+}
+
+stringVector &
+QueryAttributes::GetVariables()
+{
+    return variables;
+}
+
+const std::string &
+QueryAttributes::GetResultsMessage() const
+{
+    return resultsMessage;
+}
+
+std::string &
+QueryAttributes::GetResultsMessage()
+{
+    return resultsMessage;
+}
+
+const double *
+QueryAttributes::GetWorldPoint() const
+{
+    return worldPoint;
+}
+
+double *
+QueryAttributes::GetWorldPoint()
+{
+    return worldPoint;
+}
+
+int
+QueryAttributes::GetDomain() const
+{
+    return domain;
+}
+
+int
+QueryAttributes::GetElement() const
+{
+    return element;
+}
+
+const doubleVector &
+QueryAttributes::GetResultsValue() const
+{
+    return resultsValue;
+}
+
+doubleVector &
+QueryAttributes::GetResultsValue()
+{
+    return resultsValue;
+}
+
+QueryAttributes::ElementType
+QueryAttributes::GetElementType() const
+{
+    return ElementType(elementType);
+}
+
+int
+QueryAttributes::GetTimeStep() const
+{
+    return timeStep;
+}
+
+const intVector &
+QueryAttributes::GetVarTypes() const
+{
+    return varTypes;
+}
+
+intVector &
+QueryAttributes::GetVarTypes()
+{
+    return varTypes;
+}
+
+QueryAttributes::DataType
+QueryAttributes::GetDataType() const
+{
+    return DataType(dataType);
+}
+
+int
+QueryAttributes::GetPipeIndex() const
+{
+    return pipeIndex;
+}
+
+bool
+QueryAttributes::GetUseGlobalId() const
+{
+    return useGlobalId;
+}
+
+const std::string &
+QueryAttributes::GetXUnits() const
+{
+    return xUnits;
+}
+
+std::string &
+QueryAttributes::GetXUnits()
+{
+    return xUnits;
+}
+
+const std::string &
+QueryAttributes::GetYUnits() const
+{
+    return yUnits;
+}
+
+std::string &
+QueryAttributes::GetYUnits()
+{
+    return yUnits;
+}
+
+const doubleVector &
+QueryAttributes::GetDarg1() const
+{
+    return darg1;
+}
+
+doubleVector &
+QueryAttributes::GetDarg1()
+{
+    return darg1;
+}
+
+const doubleVector &
+QueryAttributes::GetDarg2() const
+{
+    return darg2;
+}
+
+doubleVector &
+QueryAttributes::GetDarg2()
+{
+    return darg2;
+}
+
+const std::string &
+QueryAttributes::GetFloatFormat() const
+{
+    return floatFormat;
+}
+
+std::string &
+QueryAttributes::GetFloatFormat()
+{
+    return floatFormat;
+}
+
+const std::string &
+QueryAttributes::GetXmlResult() const
+{
+    return xmlResult;
+}
+
+std::string &
+QueryAttributes::GetXmlResult()
+{
+    return xmlResult;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Select property methods
+///////////////////////////////////////////////////////////////////////////////
+
+void
+QueryAttributes::SelectName()
+{
+    Select(ID_name, (void *)&name);
+}
+
+void
+QueryAttributes::SelectVariables()
+{
+    Select(ID_variables, (void *)&variables);
+}
+
+void
+QueryAttributes::SelectResultsMessage()
+{
+    Select(ID_resultsMessage, (void *)&resultsMessage);
+}
+
+void
+QueryAttributes::SelectWorldPoint()
+{
+    Select(ID_worldPoint, (void *)worldPoint, 3);
+}
+
+void
+QueryAttributes::SelectResultsValue()
+{
+    Select(ID_resultsValue, (void *)&resultsValue);
+}
+
+void
+QueryAttributes::SelectVarTypes()
+{
+    Select(ID_varTypes, (void *)&varTypes);
+}
+
+void
+QueryAttributes::SelectXUnits()
+{
+    Select(ID_xUnits, (void *)&xUnits);
+}
+
+void
+QueryAttributes::SelectYUnits()
+{
+    Select(ID_yUnits, (void *)&yUnits);
+}
+
+void
+QueryAttributes::SelectDarg1()
+{
+    Select(ID_darg1, (void *)&darg1);
+}
+
+void
+QueryAttributes::SelectDarg2()
+{
+    Select(ID_darg2, (void *)&darg2);
+}
+
+void
+QueryAttributes::SelectFloatFormat()
+{
+    Select(ID_floatFormat, (void *)&floatFormat);
+}
+
+void
+QueryAttributes::SelectXmlResult()
+{
+    Select(ID_xmlResult, (void *)&xmlResult);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Keyframing methods
+///////////////////////////////////////////////////////////////////////////////
+
+// ****************************************************************************
+// Method: QueryAttributes::GetFieldName
+//
+// Purpose: 
+//   This method returns the name of a field given its index.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+std::string
+QueryAttributes::GetFieldName(int index) const
+{
+    switch (index)
+    {
+    case ID_name:           return "name";
+    case ID_variables:      return "variables";
+    case ID_resultsMessage: return "resultsMessage";
+    case ID_worldPoint:     return "worldPoint";
+    case ID_domain:         return "domain";
+    case ID_element:        return "element";
+    case ID_resultsValue:   return "resultsValue";
+    case ID_elementType:    return "elementType";
+    case ID_timeStep:       return "timeStep";
+    case ID_varTypes:       return "varTypes";
+    case ID_dataType:       return "dataType";
+    case ID_pipeIndex:      return "pipeIndex";
+    case ID_useGlobalId:    return "useGlobalId";
+    case ID_xUnits:         return "xUnits";
+    case ID_yUnits:         return "yUnits";
+    case ID_darg1:          return "darg1";
+    case ID_darg2:          return "darg2";
+    case ID_floatFormat:    return "floatFormat";
+    case ID_xmlResult:      return "xmlResult";
+    default:  return "invalid index";
+    }
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::GetFieldType
+//
+// Purpose: 
+//   This method returns the type of a field given its index.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+AttributeGroup::FieldType
+QueryAttributes::GetFieldType(int index) const
+{
+    switch (index)
+    {
+    case ID_name:           return FieldType_string;
+    case ID_variables:      return FieldType_stringVector;
+    case ID_resultsMessage: return FieldType_string;
+    case ID_worldPoint:     return FieldType_doubleArray;
+    case ID_domain:         return FieldType_int;
+    case ID_element:        return FieldType_int;
+    case ID_resultsValue:   return FieldType_doubleVector;
+    case ID_elementType:    return FieldType_enum;
+    case ID_timeStep:       return FieldType_int;
+    case ID_varTypes:       return FieldType_intVector;
+    case ID_dataType:       return FieldType_enum;
+    case ID_pipeIndex:      return FieldType_int;
+    case ID_useGlobalId:    return FieldType_bool;
+    case ID_xUnits:         return FieldType_string;
+    case ID_yUnits:         return FieldType_string;
+    case ID_darg1:          return FieldType_doubleVector;
+    case ID_darg2:          return FieldType_doubleVector;
+    case ID_floatFormat:    return FieldType_string;
+    case ID_xmlResult:      return FieldType_string;
+    default:  return FieldType_unknown;
+    }
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::GetFieldTypeName
+//
+// Purpose: 
+//   This method returns the name of a field type given its index.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+std::string
+QueryAttributes::GetFieldTypeName(int index) const
+{
+    switch (index)
+    {
+    case ID_name:           return "string";
+    case ID_variables:      return "stringVector";
+    case ID_resultsMessage: return "string";
+    case ID_worldPoint:     return "doubleArray";
+    case ID_domain:         return "int";
+    case ID_element:        return "int";
+    case ID_resultsValue:   return "doubleVector";
+    case ID_elementType:    return "enum";
+    case ID_timeStep:       return "int";
+    case ID_varTypes:       return "intVector";
+    case ID_dataType:       return "enum";
+    case ID_pipeIndex:      return "int";
+    case ID_useGlobalId:    return "bool";
+    case ID_xUnits:         return "string";
+    case ID_yUnits:         return "string";
+    case ID_darg1:          return "doubleVector";
+    case ID_darg2:          return "doubleVector";
+    case ID_floatFormat:    return "string";
+    case ID_xmlResult:      return "string";
+    default:  return "invalid index";
+    }
+}
+
+// ****************************************************************************
+// Method: QueryAttributes::FieldsEqual
+//
+// Purpose: 
+//   This method compares two fields and return true if they are equal.
+//
+// Note:       Autogenerated by xml2atts.
+//
+// Programmer: xml2atts
+// Creation:   omitted
+//
+// Modifications:
+//   
+// ****************************************************************************
+
+bool
+QueryAttributes::FieldsEqual(int index_, const AttributeGroup *rhs) const
+{
+    const QueryAttributes &obj = *((const QueryAttributes*)rhs);
+    bool retval = false;
+    switch (index_)
+    {
+    case ID_name:
+        {  // new scope
+        retval = (name == obj.name);
+        }
+        break;
+    case ID_variables:
+        {  // new scope
+        retval = (variables == obj.variables);
+        }
+        break;
+    case ID_resultsMessage:
+        {  // new scope
+        retval = (resultsMessage == obj.resultsMessage);
+        }
+        break;
+    case ID_worldPoint:
+        {  // new scope
+        // Compare the worldPoint arrays.
+        bool worldPoint_equal = true;
+        for(int i = 0; i < 3 && worldPoint_equal; ++i)
+            worldPoint_equal = (worldPoint[i] == obj.worldPoint[i]);
+
+        retval = worldPoint_equal;
+        }
+        break;
+    case ID_domain:
+        {  // new scope
+        retval = (domain == obj.domain);
+        }
+        break;
+    case ID_element:
+        {  // new scope
+        retval = (element == obj.element);
+        }
+        break;
+    case ID_resultsValue:
+        {  // new scope
+        retval = (resultsValue == obj.resultsValue);
+        }
+        break;
+    case ID_elementType:
+        {  // new scope
+        retval = (elementType == obj.elementType);
+        }
+        break;
+    case ID_timeStep:
+        {  // new scope
+        retval = (timeStep == obj.timeStep);
+        }
+        break;
+    case ID_varTypes:
+        {  // new scope
+        retval = (varTypes == obj.varTypes);
+        }
+        break;
+    case ID_dataType:
+        {  // new scope
+        retval = (dataType == obj.dataType);
+        }
+        break;
+    case ID_pipeIndex:
+        {  // new scope
+        retval = (pipeIndex == obj.pipeIndex);
+        }
+        break;
+    case ID_useGlobalId:
+        {  // new scope
+        retval = (useGlobalId == obj.useGlobalId);
+        }
+        break;
+    case ID_xUnits:
+        {  // new scope
+        retval = (xUnits == obj.xUnits);
+        }
+        break;
+    case ID_yUnits:
+        {  // new scope
+        retval = (yUnits == obj.yUnits);
+        }
+        break;
+    case ID_darg1:
+        {  // new scope
+        retval = (darg1 == obj.darg1);
+        }
+        break;
+    case ID_darg2:
+        {  // new scope
+        retval = (darg2 == obj.darg2);
+        }
+        break;
+    case ID_floatFormat:
+        {  // new scope
+        retval = (floatFormat == obj.floatFormat);
+        }
+        break;
+    case ID_xmlResult:
+        {  // new scope
+        retval = (xmlResult == obj.xmlResult);
+        }
+        break;
+    default: retval = false;
+    }
+
+    return retval;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// User-defined methods.
+///////////////////////////////////////////////////////////////////////////////
+
+void
+QueryAttributes::Reset()
+{
+    name    = " ";
+    resultsMessage  = " ";
+    xUnits = "";
+    yUnits = "";
+    if (!variables.empty())
+    {
+        variables.clear();
+        variables.push_back("default");
+    }
+    if (!varTypes.empty())
+    {
+         varTypes.clear();
+    }
+    worldPoint[0] = 0.;
+    worldPoint[1] = 0.;
+    worldPoint[2] = 0.;
+    domain = -1;
+    element = -1;
+    elementType = Zone;
+    if (!resultsValue.empty())
+    {
+        resultsValue.clear();
+        resultsValue.push_back(0.);
+    }
+    pipeIndex = -1;
+ 
+    SelectAll();
+}
+
+void
+QueryAttributes::PrintSelf(ostream &os)
+{
+    os << "\n" << name.c_str() << ":  ";
+    os << "selected variables: ";
+    for (size_t i = 0; i < variables.size(); i++)
+        os << variables[i].c_str() << "  ";
+    os << "\n";
+    os << "Results: <" << resultsMessage.c_str() << ">\n";
+    os << "World point: <" << worldPoint[0] << ", " << worldPoint[1] 
+       << ", " << worldPoint[2] << ">\n"; 
+    os << "Domain:      " << domain << "\n";
+    os << "Element:        " << element << ")\n";
+    if (elementType == Zone)
+    os << "Element type is Zone " << endl;
+    else
+    os << "Element type is Node " << endl;
+}
+
+void
+QueryAttributes::SetResultsValue(const double val)
+{
+    resultsValue[0] = val;    
+}
+
+void
+QueryAttributes::SetResultsValues(const double *vals, const int numVals)
+{
+    int i;
+    resultsValue.clear();
+    for (i = 0; i < numVals; ++i)
+        resultsValue.push_back(vals[i]);
+}
+

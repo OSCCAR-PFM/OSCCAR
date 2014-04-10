@@ -1,0 +1,9 @@
+
+set(SOURCES
+  avtNek5000FileFormat.C
+  )
+ADD_VISIT_READER(VisItNek5000Reader "1.0"
+  VISIT_READER_TYPE "MTMD"
+  VISIT_READER_NAME "avtNek5000FileFormat"    
+  SERVER_SOURCES ${SOURCES}
+  )

@@ -1,0 +1,10 @@
+vtk_module(vtkCommonSystem
+  GROUPS
+    StandAlone
+  DEPENDS
+    vtkCommonCore
+  PRIVATE_DEPENDS
+    vtksys
+  TEST_DEPENDS
+   vtkTestingCore
+  )

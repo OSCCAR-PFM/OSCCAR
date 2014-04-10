@@ -1,0 +1,18 @@
+vtk_module(vtkRenderingVolume
+  GROUPS
+    Rendering
+  DEPENDS
+    vtkImagingCore
+    vtkRenderingCore
+  TEST_DEPENDS
+    vtkTestingCore
+    vtkTestingRendering
+    vtkRenderingVolumeOpenGL
+    vtkRenderingFreeType
+    vtkIOXML
+    vtkImagingSources
+    vtkImagingGeneral
+    vtkImagingHybrid
+    vtkInteractionStyle
+    vtkIOLegacy
+  )

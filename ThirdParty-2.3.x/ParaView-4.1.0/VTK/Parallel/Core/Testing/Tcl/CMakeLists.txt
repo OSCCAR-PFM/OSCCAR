@@ -1,0 +1,2 @@
+vtk_add_test_tcl(TestPolyDataPieces.tcl)
+vtk_add_test_tcl(TestUnstructuredPieces.tcl)

@@ -1,0 +1,3 @@
+vtk_add_test_tcl(MultidimensionalSolution)
+vtk_add_test_tcl(progGlyphs)
+vtk_add_test_tcl(progGlyphsBySource)

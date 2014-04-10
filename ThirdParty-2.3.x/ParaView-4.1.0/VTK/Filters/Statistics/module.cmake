@@ -1,0 +1,13 @@
+vtk_module(vtkFiltersStatistics
+  GROUPS
+    StandAlone
+  DEPENDS
+    vtkCommonMath
+    vtkCommonExecutionModel
+    vtkCommonTransforms
+    vtkCommonMisc
+    vtkImagingFourier
+    vtkalglib
+  TEST_DEPENDS
+    vtkTestingCore
+  )

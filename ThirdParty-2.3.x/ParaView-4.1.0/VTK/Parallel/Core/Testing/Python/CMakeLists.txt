@@ -1,0 +1,2 @@
+vtk_add_test_python(TestPolyDataPieces.py)
+vtk_add_test_python(TestUnstructuredPieces.py)

@@ -1,0 +1,15 @@
+vtk_module(vtkRenderingParallel
+  DEPENDS
+    vtkParallelCore
+    vtkFiltersParallel
+    vtkRenderingOpenGL
+  PRIVATE_DEPENDS
+    vtkIOImage
+  TEST_DEPENDS
+    vtkParallelMPI
+    vtkFiltersParallelMPI
+    vtkTestingRendering
+    vtkImagingSources
+    vtkRenderingOpenGL
+    vtkInteractionStyle
+  )

@@ -1,0 +1,5 @@
+vtk_add_test_python(TestMNIObjects.py)
+vtk_add_test_python(TestMNITagPoints.py)
+vtk_add_test_python(TestMNITransforms.py)
+vtk_add_test_python(TestMINCImageReader.py)
+vtk_add_test_python(TestMINCImageWriter.py)
