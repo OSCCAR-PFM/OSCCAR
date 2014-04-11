@@ -1,5 +1,13 @@
+# OSCCAR variables and aliases, also sourcing OpenFOAM's variables.
+#
+
+# Set the OSCCAR install directory
 OSCCAR_DIR=$HOME/OSCCAR
 
+# Source OpenFOAM's variables
+source $OSCCAR_DIR/OpenFOAM-2.3.x/etc/bashrc
+
+# Create some aliases for the OSCCAR library
 alias OSCCARtut='cd $OSCCAR_DIR/tutorials'
 alias OSCCARsrc='cd $OSCCAR_DIR/src'
 alias OSCCARsol='cd $OSCCAR_DIR/applications/solvers'
