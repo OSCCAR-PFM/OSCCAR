@@ -34,8 +34,6 @@
 export WM_PROJECT=OpenFOAM
 export WM_PROJECT_VERSION=2.3.x
 
-export OSCCAR_VERSION=PFM
-
 ################################################################################
 # USER EDITABLE PART: Changes made here may be lost with the next upgrade
 #
@@ -44,8 +42,7 @@ export OSCCAR_VERSION=PFM
 #
 # Location of the OpenFOAM installation
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# foamInstall=$HOME/$WM_PROJECT
-foamInstall=$HOME/OSCCAR/$OSCCAR_VERSION
+foamInstall=$HOME/$WM_PROJECT
 # foamInstall=~$WM_PROJECT
 # foamInstall=/opt/$WM_PROJECT
 # foamInstall=/usr/local/$WM_PROJECT
@@ -63,6 +60,7 @@ foamInstall=$HOME/OSCCAR/$OSCCAR_VERSION
 #- Compiler location:
 #    foamCompiler= system | ThirdParty (OpenFOAM)
 foamCompiler=system
+#foamCompiler=ThirdParty
 
 #- Compiler:
 #    WM_COMPILER = Gcc | Gcc45 | Gcc46 | Gcc47 | Clang | Icc (Intel icc)
