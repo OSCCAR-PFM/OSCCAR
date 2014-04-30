@@ -85,80 +85,20 @@ host_triplet = @host@
 target_triplet = @target@
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/examples/Makefile.include \
-	$(top_srcdir)/configure \
+	$(top_srcdir)/configure $(top_srcdir)/ompi/include/mpi.h.in \
+	$(top_srcdir)/ompi/include/mpi_portable_platform.h.in \
 	$(top_srcdir)/ompi/include/ompi/version.h.in \
+	$(top_srcdir)/ompi/include/ompi_config.h.in \
 	$(top_srcdir)/opal/include/opal/version.h.in \
+	$(top_srcdir)/opal/include/opal_config.h.in \
 	$(top_srcdir)/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h.in \
 	$(top_srcdir)/opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h.in \
-	$(top_srcdir)/orte/include/orte/version.h.in AUTHORS INSTALL \
+	$(top_srcdir)/orte/include/orte/version.h.in \
+	$(top_srcdir)/orte/include/orte_config.h.in AUTHORS INSTALL \
 	NEWS
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/ompi/config/config_files.m4 \
-	$(top_srcdir)/ompi/config/cxx_find_exception_flags.m4 \
-	$(top_srcdir)/ompi/config/cxx_find_template_parameters.m4 \
-	$(top_srcdir)/ompi/config/cxx_find_template_repository.m4 \
-	$(top_srcdir)/ompi/config/cxx_have_exceptions.m4 \
-	$(top_srcdir)/ompi/config/f77_check.m4 \
-	$(top_srcdir)/ompi/config/f77_check_logical_array.m4 \
-	$(top_srcdir)/ompi/config/f77_check_real16_c_equiv.m4 \
-	$(top_srcdir)/ompi/config/f77_check_type.m4 \
-	$(top_srcdir)/ompi/config/f77_find_ext_symbol_convention.m4 \
-	$(top_srcdir)/ompi/config/f77_get_alignment.m4 \
-	$(top_srcdir)/ompi/config/f77_get_fortran_handle_max.m4 \
-	$(top_srcdir)/ompi/config/f77_get_sizeof.m4 \
-	$(top_srcdir)/ompi/config/f77_get_value_true.m4 \
-	$(top_srcdir)/ompi/config/f90_check.m4 \
-	$(top_srcdir)/ompi/config/f90_check_type.m4 \
-	$(top_srcdir)/ompi/config/f90_find_module_include_flag.m4 \
-	$(top_srcdir)/ompi/config/f90_get_int_kind.m4 \
-	$(top_srcdir)/ompi/config/f90_get_sizeof.m4 \
-	$(top_srcdir)/ompi/config/ompi_check_mx.m4 \
-	$(top_srcdir)/ompi/config/ompi_check_mxm.m4 \
-	$(top_srcdir)/ompi/config/ompi_check_openib.m4 \
-	$(top_srcdir)/ompi/config/ompi_check_portals.m4 \
-	$(top_srcdir)/ompi/config/ompi_check_psm.m4 \
-	$(top_srcdir)/ompi/config/ompi_check_udapl.m4 \
-	$(top_srcdir)/ompi/config/ompi_config_threads.m4 \
-	$(top_srcdir)/ompi/config/ompi_configure_options.m4 \
-	$(top_srcdir)/ompi/config/ompi_setup_contrib.m4 \
-	$(top_srcdir)/ompi/config/ompi_setup_cxx.m4 \
-	$(top_srcdir)/ompi/config/ompi_setup_f77.m4 \
-	$(top_srcdir)/ompi/config/ompi_setup_f90.m4 \
-	$(top_srcdir)/ompi/config/ompi_setup_mpi_ext.m4 \
-	$(top_srcdir)/ompi/config/ompi_setup_mpi_fortran.m4 \
-	$(top_srcdir)/ompi/config/ompi_setup_mpi_profiling.m4 \
-	$(top_srcdir)/ompi/config/ompi_setup_wrappers.m4 \
-	$(top_srcdir)/orte/config/config_files.m4 \
-	$(top_srcdir)/orte/config/orte_check_alps.m4 \
-	$(top_srcdir)/orte/config/orte_check_loadleveler.m4 \
-	$(top_srcdir)/orte/config/orte_check_lsf.m4 \
-	$(top_srcdir)/orte/config/orte_check_pmi.m4 \
-	$(top_srcdir)/orte/config/orte_check_sge.m4 \
-	$(top_srcdir)/orte/config/orte_check_slurm.m4 \
-	$(top_srcdir)/orte/config/orte_check_tm.m4 \
-	$(top_srcdir)/orte/config/orte_configure_options.m4 \
-	$(top_srcdir)/orte/config/orte_setup_debugger_flags.m4 \
-	$(top_srcdir)/orte/config/orte_setup_wrappers.m4 \
-	$(top_srcdir)/opal/config/config_files.m4 \
-	$(top_srcdir)/opal/config/opal_case_sensitive_fs_setup.m4 \
-	$(top_srcdir)/opal/config/opal_check_attributes.m4 \
-	$(top_srcdir)/opal/config/opal_check_compiler_version.m4 \
-	$(top_srcdir)/opal/config/opal_check_ident.m4 \
-	$(top_srcdir)/opal/config/opal_check_offsetof.m4 \
-	$(top_srcdir)/opal/config/opal_check_os_flavors.m4 \
-	$(top_srcdir)/opal/config/opal_check_pthread_pids.m4 \
-	$(top_srcdir)/opal/config/opal_check_visibility.m4 \
-	$(top_srcdir)/opal/config/opal_config_asm.m4 \
-	$(top_srcdir)/opal/config/opal_config_threads.m4 \
-	$(top_srcdir)/opal/config/opal_configure_options.m4 \
-	$(top_srcdir)/opal/config/opal_functions.m4 \
-	$(top_srcdir)/opal/config/opal_setup_cc.m4 \
-	$(top_srcdir)/opal/config/opal_setup_cxx.m4 \
-	$(top_srcdir)/opal/config/opal_setup_libevent.m4 \
-	$(top_srcdir)/opal/config/opal_setup_libltdl.m4 \
-	$(top_srcdir)/opal/config/opal_setup_wrappers.m4 \
-	$(top_srcdir)/config/c_get_alignment.m4 \
+am__aclocal_m4_deps = $(top_srcdir)/config/c_get_alignment.m4 \
 	$(top_srcdir)/config/c_weak_symbols.m4 \
 	$(top_srcdir)/config/libtool.m4 $(top_srcdir)/config/ltdl.m4 \
 	$(top_srcdir)/config/ltoptions.m4 \
@@ -166,31 +106,19 @@ am__aclocal_m4_deps = $(top_srcdir)/ompi/config/config_files.m4 \
 	$(top_srcdir)/config/ltversion.m4 \
 	$(top_srcdir)/config/lt~obsolete.m4 \
 	$(top_srcdir)/config/ompi_check_broken_qsort.m4 \
-	$(top_srcdir)/config/ompi_check_compiler_works.m4 \
 	$(top_srcdir)/config/ompi_check_func_lib.m4 \
 	$(top_srcdir)/config/ompi_check_icc.m4 \
 	$(top_srcdir)/config/ompi_check_libfca.m4 \
 	$(top_srcdir)/config/ompi_check_package.m4 \
 	$(top_srcdir)/config/ompi_check_ps.m4 \
-	$(top_srcdir)/config/ompi_check_vendor.m4 \
 	$(top_srcdir)/config/ompi_check_withdir.m4 \
-	$(top_srcdir)/config/ompi_config_pthreads.m4 \
-	$(top_srcdir)/config/ompi_config_solaris_threads.m4 \
 	$(top_srcdir)/config/ompi_config_subdir.m4 \
 	$(top_srcdir)/config/ompi_config_subdir_args.m4 \
-	$(top_srcdir)/config/ompi_contrib.m4 \
-	$(top_srcdir)/config/ompi_ensure_contains_optflags.m4 \
-	$(top_srcdir)/config/ompi_ext.m4 \
-	$(top_srcdir)/config/ompi_find_type.m4 \
-	$(top_srcdir)/config/ompi_get_libtool_linker_flags.m4 \
 	$(top_srcdir)/config/ompi_interix.m4 \
-	$(top_srcdir)/config/ompi_lang_link_with_c.m4 \
 	$(top_srcdir)/config/ompi_load_platform.m4 \
 	$(top_srcdir)/config/ompi_mca.m4 \
 	$(top_srcdir)/config/ompi_save_version.m4 \
 	$(top_srcdir)/config/ompi_setup_component_package.m4 \
-	$(top_srcdir)/config/ompi_strip_optflags.m4 \
-	$(top_srcdir)/config/ompi_try_assemble.m4 \
 	$(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/config/ompi_get_version.m4 \
 	$(top_srcdir)/config/mca_no_configure_components.m4 \
@@ -312,8 +240,6 @@ am__aclocal_m4_deps = $(top_srcdir)/ompi/config/config_files.m4 \
 	$(top_srcdir)/ompi/mpiext/affinity/configure.m4 \
 	$(top_srcdir)/ompi/mpiext/example/configure.m4 \
 	$(top_srcdir)/config/project_list.m4 \
-	$(top_srcdir)/ompi/contrib/libompitrace/configure.m4 \
-	$(top_srcdir)/ompi/contrib/vt/configure.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -410,18 +336,12 @@ CCASDEPMODE = @CCASDEPMODE@
 CCASFLAGS = @CCASFLAGS@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CFLAGS_WITHOUT_OPTFLAGS = @CFLAGS_WITHOUT_OPTFLAGS@
-CLEANFILES = @CLEANFILES@
 CONFIGURE_DEPENDENCIES = @CONFIGURE_DEPENDENCIES@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
-CXX = @CXX@
-CXXCPP = @CXXCPP@
 CXXCPPFLAGS = @CXXCPPFLAGS@
-CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
-DEBUGGER_CFLAGS = @DEBUGGER_CFLAGS@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
@@ -432,30 +352,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
-EXT_CXX_HEADERS = @EXT_CXX_HEADERS@
-EXT_CXX_LIBS = @EXT_CXX_LIBS@
-EXT_C_HEADERS = @EXT_C_HEADERS@
-EXT_C_LIBS = @EXT_C_LIBS@
-EXT_F77_HEADERS = @EXT_F77_HEADERS@
-EXT_F77_LIBS = @EXT_F77_LIBS@
-EXT_F90_HEADERS = @EXT_F90_HEADERS@
-EXT_F90_LIBS = @EXT_F90_LIBS@
-EXT_PROJECT_SUBDIRS = @EXT_PROJECT_SUBDIRS@
-EXT_mpiext_ALL_COMPONENTS = @EXT_mpiext_ALL_COMPONENTS@
-EXT_mpiext_ALL_SUBDIRS = @EXT_mpiext_ALL_SUBDIRS@
-EXT_mpiext_STATIC_COMPONENTS = @EXT_mpiext_STATIC_COMPONENTS@
-EXT_mpiext_STATIC_LTLIBS = @EXT_mpiext_STATIC_LTLIBS@
-EXT_mpiext_STATIC_SUBDIRS = @EXT_mpiext_STATIC_SUBDIRS@
-EXT_ompi_FRAMEWORKS = @EXT_ompi_FRAMEWORKS@
-EXT_ompi_FRAMEWORKS_SUBDIRS = @EXT_ompi_FRAMEWORKS_SUBDIRS@
-EXT_ompi_FRAMEWORK_COMPONENT_ALL_SUBDIRS = @EXT_ompi_FRAMEWORK_COMPONENT_ALL_SUBDIRS@
-EXT_ompi_FRAMEWORK_COMPONENT_STATIC_SUBDIRS = @EXT_ompi_FRAMEWORK_COMPONENT_STATIC_SUBDIRS@
-EXT_ompi_FRAMEWORK_LIBS = @EXT_ompi_FRAMEWORK_LIBS@
-F77 = @F77@
-FC = @FC@
 FCFLAGS = @FCFLAGS@
-FCFLAGS_f = @FCFLAGS_f@
-FCFLAGS_f90 = @FCFLAGS_f90@
 FFLAGS = @FFLAGS@
 FGREP = @FGREP@
 GREP = @GREP@
@@ -493,7 +390,6 @@ LEX = @LEX@
 LEXLIB = @LEXLIB@
 LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
 LIBLTDL = @LIBLTDL@
-LIBLTDL_SUBDIR = @LIBLTDL_SUBDIR@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -841,105 +737,28 @@ MCA_vprotocol_STATIC_COMPONENTS = @MCA_vprotocol_STATIC_COMPONENTS@
 MCA_vprotocol_STATIC_LTLIBS = @MCA_vprotocol_STATIC_LTLIBS@
 MCA_vprotocol_STATIC_SUBDIRS = @MCA_vprotocol_STATIC_SUBDIRS@
 MKDIR_P = @MKDIR_P@
-MPIF_H_PMPI_W_FUNCS = @MPIF_H_PMPI_W_FUNCS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
-OMPI_ASM_FILE = @OMPI_ASM_FILE@
-OMPI_AS_GLOBAL = @OMPI_AS_GLOBAL@
-OMPI_AS_LABEL_SUFFIX = @OMPI_AS_LABEL_SUFFIX@
-OMPI_CONFIGURE_DATE = @OMPI_CONFIGURE_DATE@
-OMPI_CONFIGURE_HOST = @OMPI_CONFIGURE_HOST@
-OMPI_CONFIGURE_USER = @OMPI_CONFIGURE_USER@
-OMPI_CONTRIB_DIST_SUBDIRS = @OMPI_CONTRIB_DIST_SUBDIRS@
-OMPI_CONTRIB_SUBDIRS = @OMPI_CONTRIB_SUBDIRS@
-OMPI_CXX_ABSOLUTE = @OMPI_CXX_ABSOLUTE@
-OMPI_F77_ABSOLUTE = @OMPI_F77_ABSOLUTE@
-OMPI_F90_ABSOLUTE = @OMPI_F90_ABSOLUTE@
-OMPI_F90_BUILD_SIZE = @OMPI_F90_BUILD_SIZE@
-OMPI_F90_CKINDS = @OMPI_F90_CKINDS@
-OMPI_F90_EXTRA_SHARED_LIBRARY_FLAGS = @OMPI_F90_EXTRA_SHARED_LIBRARY_FLAGS@
-OMPI_F90_IKINDS = @OMPI_F90_IKINDS@
-OMPI_F90_RKINDS = @OMPI_F90_RKINDS@
-OMPI_FC_MODULE_FLAG = @OMPI_FC_MODULE_FLAG@
-OMPI_FORTRAN_MAX_ARRAY_RANK = @OMPI_FORTRAN_MAX_ARRAY_RANK@
-OMPI_FORTRAN_STATUS_SIZE = @OMPI_FORTRAN_STATUS_SIZE@
 OMPI_GREEK_VERSION = @OMPI_GREEK_VERSION@
 OMPI_LIBMPI_EXTRA_LDFLAGS = @OMPI_LIBMPI_EXTRA_LDFLAGS@
 OMPI_LIBMPI_EXTRA_LIBS = @OMPI_LIBMPI_EXTRA_LIBS@
 OMPI_MAJOR_VERSION = @OMPI_MAJOR_VERSION@
 OMPI_MINOR_VERSION = @OMPI_MINOR_VERSION@
 OMPI_MPIF_MPI_IO_INCLUDE = @OMPI_MPIF_MPI_IO_INCLUDE@
-OMPI_MPI_ADDRESS_KIND = @OMPI_MPI_ADDRESS_KIND@
-OMPI_MPI_INTEGER_KIND = @OMPI_MPI_INTEGER_KIND@
-OMPI_MPI_OFFSET_KIND = @OMPI_MPI_OFFSET_KIND@
 OMPI_RELEASE_DATE = @OMPI_RELEASE_DATE@
 OMPI_RELEASE_VERSION = @OMPI_RELEASE_VERSION@
-OMPI_SIZEOF_F90_CHARACTER = @OMPI_SIZEOF_F90_CHARACTER@
-OMPI_SIZEOF_F90_COMPLEX = @OMPI_SIZEOF_F90_COMPLEX@
-OMPI_SIZEOF_F90_COMPLEX16 = @OMPI_SIZEOF_F90_COMPLEX16@
-OMPI_SIZEOF_F90_COMPLEX32 = @OMPI_SIZEOF_F90_COMPLEX32@
-OMPI_SIZEOF_F90_COMPLEX8 = @OMPI_SIZEOF_F90_COMPLEX8@
-OMPI_SIZEOF_F90_DOUBLE_COMPLEX = @OMPI_SIZEOF_F90_DOUBLE_COMPLEX@
-OMPI_SIZEOF_F90_DOUBLE_PRECISION = @OMPI_SIZEOF_F90_DOUBLE_PRECISION@
-OMPI_SIZEOF_F90_INTEGER = @OMPI_SIZEOF_F90_INTEGER@
-OMPI_SIZEOF_F90_INTEGER1 = @OMPI_SIZEOF_F90_INTEGER1@
-OMPI_SIZEOF_F90_INTEGER16 = @OMPI_SIZEOF_F90_INTEGER16@
-OMPI_SIZEOF_F90_INTEGER2 = @OMPI_SIZEOF_F90_INTEGER2@
-OMPI_SIZEOF_F90_INTEGER4 = @OMPI_SIZEOF_F90_INTEGER4@
-OMPI_SIZEOF_F90_INTEGER8 = @OMPI_SIZEOF_F90_INTEGER8@
-OMPI_SIZEOF_F90_LOGICAL = @OMPI_SIZEOF_F90_LOGICAL@
-OMPI_SIZEOF_F90_LOGICAL1 = @OMPI_SIZEOF_F90_LOGICAL1@
-OMPI_SIZEOF_F90_LOGICAL2 = @OMPI_SIZEOF_F90_LOGICAL2@
-OMPI_SIZEOF_F90_LOGICAL4 = @OMPI_SIZEOF_F90_LOGICAL4@
-OMPI_SIZEOF_F90_LOGICAL8 = @OMPI_SIZEOF_F90_LOGICAL8@
-OMPI_SIZEOF_F90_REAL = @OMPI_SIZEOF_F90_REAL@
-OMPI_SIZEOF_F90_REAL16 = @OMPI_SIZEOF_F90_REAL16@
-OMPI_SIZEOF_F90_REAL2 = @OMPI_SIZEOF_F90_REAL2@
-OMPI_SIZEOF_F90_REAL4 = @OMPI_SIZEOF_F90_REAL4@
-OMPI_SIZEOF_F90_REAL8 = @OMPI_SIZEOF_F90_REAL8@
 OMPI_SVN_R = @OMPI_SVN_R@
 OMPI_TOP_BUILDDIR = @OMPI_TOP_BUILDDIR@
 OMPI_TOP_SRCDIR = @OMPI_TOP_SRCDIR@
 OMPI_VERSION = @OMPI_VERSION@
 OMPI_WANT_SVN = @OMPI_WANT_SVN@
-OMPI_WRAPPER_CXX_LIB = @OMPI_WRAPPER_CXX_LIB@
-OMPI_WRAPPER_CXX_REQUIRED_FILE = @OMPI_WRAPPER_CXX_REQUIRED_FILE@
-OMPI_WRAPPER_EXTRA_CFLAGS = @OMPI_WRAPPER_EXTRA_CFLAGS@
-OMPI_WRAPPER_EXTRA_CPPFLAGS = @OMPI_WRAPPER_EXTRA_CPPFLAGS@
-OMPI_WRAPPER_EXTRA_CXXFLAGS = @OMPI_WRAPPER_EXTRA_CXXFLAGS@
-OMPI_WRAPPER_EXTRA_FCFLAGS = @OMPI_WRAPPER_EXTRA_FCFLAGS@
-OMPI_WRAPPER_EXTRA_FFLAGS = @OMPI_WRAPPER_EXTRA_FFLAGS@
-OMPI_WRAPPER_EXTRA_INCLUDES = @OMPI_WRAPPER_EXTRA_INCLUDES@
-OMPI_WRAPPER_EXTRA_LDFLAGS = @OMPI_WRAPPER_EXTRA_LDFLAGS@
-OMPI_WRAPPER_EXTRA_LIBS = @OMPI_WRAPPER_EXTRA_LIBS@
-OMPI_WRAPPER_F77_REQUIRED_FILE = @OMPI_WRAPPER_F77_REQUIRED_FILE@
-OMPI_WRAPPER_F90_REQUIRED_FILE = @OMPI_WRAPPER_F90_REQUIRED_FILE@
-OMPI_WRAPPER_INCLUDEDIR = @OMPI_WRAPPER_INCLUDEDIR@
-OMPI_WRAPPER_LIBDIR = @OMPI_WRAPPER_LIBDIR@
-OPAL_ASM_GSYM = @OPAL_ASM_GSYM@
-OPAL_ASM_LSYM = @OPAL_ASM_LSYM@
-OPAL_ASM_SUPPORT_64BIT = @OPAL_ASM_SUPPORT_64BIT@
-OPAL_ASM_TEXT = @OPAL_ASM_TEXT@
-OPAL_ASM_TYPE = @OPAL_ASM_TYPE@
-OPAL_ASSEMBLY_ARCH = @OPAL_ASSEMBLY_ARCH@
-OPAL_ASSEMBLY_FORMAT = @OPAL_ASSEMBLY_FORMAT@
-OPAL_CC_ABSOLUTE = @OPAL_CC_ABSOLUTE@
-OPAL_CXX_ABSOLUTE = @OPAL_CXX_ABSOLUTE@
 OPAL_DEFAULT_MCA_PARAM_CONF = @OPAL_DEFAULT_MCA_PARAM_CONF@
 OPAL_DYN_LIB_PREFIX = @OPAL_DYN_LIB_PREFIX@
 OPAL_DYN_LIB_SUFFIX = @OPAL_DYN_LIB_SUFFIX@
 OPAL_GREEK_VERSION = @OPAL_GREEK_VERSION@
-OPAL_LIBEVENT_SOURCES = @OPAL_LIBEVENT_SOURCES@
 OPAL_MAJOR_VERSION = @OPAL_MAJOR_VERSION@
-OPAL_MAX_DATAREP_STRING = @OPAL_MAX_DATAREP_STRING@
-OPAL_MAX_ERROR_STRING = @OPAL_MAX_ERROR_STRING@
-OPAL_MAX_INFO_KEY = @OPAL_MAX_INFO_KEY@
-OPAL_MAX_INFO_VAL = @OPAL_MAX_INFO_VAL@
-OPAL_MAX_OBJECT_NAME = @OPAL_MAX_OBJECT_NAME@
-OPAL_MAX_PORT_NAME = @OPAL_MAX_PORT_NAME@
-OPAL_MAX_PROCESSOR_NAME = @OPAL_MAX_PROCESSOR_NAME@
 OPAL_MINOR_VERSION = @OPAL_MINOR_VERSION@
 OPAL_PARAM_FROM_PLATFORM = @OPAL_PARAM_FROM_PLATFORM@
 OPAL_RELEASE_DATE = @OPAL_RELEASE_DATE@
@@ -947,14 +766,6 @@ OPAL_RELEASE_VERSION = @OPAL_RELEASE_VERSION@
 OPAL_SVN_R = @OPAL_SVN_R@
 OPAL_VERSION = @OPAL_VERSION@
 OPAL_WANT_SVN = @OPAL_WANT_SVN@
-OPAL_WRAPPER_EXTRA_CFLAGS = @OPAL_WRAPPER_EXTRA_CFLAGS@
-OPAL_WRAPPER_EXTRA_CPPFLAGS = @OPAL_WRAPPER_EXTRA_CPPFLAGS@
-OPAL_WRAPPER_EXTRA_CXXFLAGS = @OPAL_WRAPPER_EXTRA_CXXFLAGS@
-OPAL_WRAPPER_EXTRA_INCLUDES = @OPAL_WRAPPER_EXTRA_INCLUDES@
-OPAL_WRAPPER_EXTRA_LDFLAGS = @OPAL_WRAPPER_EXTRA_LDFLAGS@
-OPAL_WRAPPER_EXTRA_LIBS = @OPAL_WRAPPER_EXTRA_LIBS@
-OPAL_WRAPPER_INCLUDEDIR = @OPAL_WRAPPER_INCLUDEDIR@
-OPAL_WRAPPER_LIBDIR = @OPAL_WRAPPER_LIBDIR@
 ORTE_GREEK_VERSION = @ORTE_GREEK_VERSION@
 ORTE_MAJOR_VERSION = @ORTE_MAJOR_VERSION@
 ORTE_MINOR_VERSION = @ORTE_MINOR_VERSION@
@@ -963,14 +774,6 @@ ORTE_RELEASE_VERSION = @ORTE_RELEASE_VERSION@
 ORTE_SVN_R = @ORTE_SVN_R@
 ORTE_VERSION = @ORTE_VERSION@
 ORTE_WANT_SVN = @ORTE_WANT_SVN@
-ORTE_WRAPPER_EXTRA_CFLAGS = @ORTE_WRAPPER_EXTRA_CFLAGS@
-ORTE_WRAPPER_EXTRA_CPPFLAGS = @ORTE_WRAPPER_EXTRA_CPPFLAGS@
-ORTE_WRAPPER_EXTRA_CXXFLAGS = @ORTE_WRAPPER_EXTRA_CXXFLAGS@
-ORTE_WRAPPER_EXTRA_INCLUDES = @ORTE_WRAPPER_EXTRA_INCLUDES@
-ORTE_WRAPPER_EXTRA_LDFLAGS = @ORTE_WRAPPER_EXTRA_LDFLAGS@
-ORTE_WRAPPER_EXTRA_LIBS = @ORTE_WRAPPER_EXTRA_LIBS@
-ORTE_WRAPPER_INCLUDEDIR = @ORTE_WRAPPER_INCLUDEDIR@
-ORTE_WRAPPER_LIBDIR = @ORTE_WRAPPER_LIBDIR@
 OTOOL = @OTOOL@
 OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
@@ -983,30 +786,19 @@ PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
 PKG_CONFIG = @PKG_CONFIG@
-QRSH = @QRSH@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-WRAPPER_EXTRA_CFLAGS = @WRAPPER_EXTRA_CFLAGS@
-WRAPPER_EXTRA_CXXFLAGS = @WRAPPER_EXTRA_CXXFLAGS@
-WRAPPER_EXTRA_FCFLAGS = @WRAPPER_EXTRA_FCFLAGS@
-WRAPPER_EXTRA_FFLAGS = @WRAPPER_EXTRA_FFLAGS@
-WRAPPER_EXTRA_LDFLAGS = @WRAPPER_EXTRA_LDFLAGS@
-WRAPPER_EXTRA_LIBS = @WRAPPER_EXTRA_LIBS@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
-ac_ct_CXX = @ac_ct_CXX@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
-ac_ct_F77 = @ac_ct_F77@
-ac_ct_FC = @ac_ct_FC@
-ac_prefix_program = @ac_prefix_program@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
@@ -1244,6 +1036,50 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
 
+opal/include/opal_config.h: opal/include/stamp-h1
+	@if test ! -f $@; then rm -f opal/include/stamp-h1; else :; fi
+	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) opal/include/stamp-h1; else :; fi
+
+opal/include/stamp-h1: $(top_srcdir)/opal/include/opal_config.h.in $(top_builddir)/config.status
+	@rm -f opal/include/stamp-h1
+	cd $(top_builddir) && $(SHELL) ./config.status opal/include/opal_config.h
+$(top_srcdir)/opal/include/opal_config.h.in:  $(am__configure_deps) 
+	($(am__cd) $(top_srcdir) && $(AUTOHEADER))
+	rm -f opal/include/stamp-h1
+	touch $@
+
+orte/include/orte_config.h: orte/include/stamp-h2
+	@if test ! -f $@; then rm -f orte/include/stamp-h2; else :; fi
+	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) orte/include/stamp-h2; else :; fi
+
+orte/include/stamp-h2: $(top_srcdir)/orte/include/orte_config.h.in $(top_builddir)/config.status
+	@rm -f orte/include/stamp-h2
+	cd $(top_builddir) && $(SHELL) ./config.status orte/include/orte_config.h
+
+ompi/include/ompi_config.h: ompi/include/stamp-h3
+	@if test ! -f $@; then rm -f ompi/include/stamp-h3; else :; fi
+	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) ompi/include/stamp-h3; else :; fi
+
+ompi/include/stamp-h3: $(top_srcdir)/ompi/include/ompi_config.h.in $(top_builddir)/config.status
+	@rm -f ompi/include/stamp-h3
+	cd $(top_builddir) && $(SHELL) ./config.status ompi/include/ompi_config.h
+
+ompi/include/mpi.h: ompi/include/stamp-h4
+	@if test ! -f $@; then rm -f ompi/include/stamp-h4; else :; fi
+	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) ompi/include/stamp-h4; else :; fi
+
+ompi/include/stamp-h4: $(top_srcdir)/ompi/include/mpi.h.in $(top_builddir)/config.status
+	@rm -f ompi/include/stamp-h4
+	cd $(top_builddir) && $(SHELL) ./config.status ompi/include/mpi.h
+
+ompi/include/mpi_portable_platform.h: ompi/include/stamp-h5
+	@if test ! -f $@; then rm -f ompi/include/stamp-h5; else :; fi
+	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) ompi/include/stamp-h5; else :; fi
+
+ompi/include/stamp-h5: $(top_srcdir)/ompi/include/mpi_portable_platform.h.in $(top_builddir)/config.status
+	@rm -f ompi/include/stamp-h5
+	cd $(top_builddir) && $(SHELL) ./config.status ompi/include/mpi_portable_platform.h
+
 opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h: opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/stamp-h6
 	@if test ! -f $@; then rm -f opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/stamp-h6; else :; fi
 	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/stamp-h6; else :; fi
@@ -1251,10 +1087,6 @@ opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h: opal/mca/hwloc/h
 opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/stamp-h6: $(top_srcdir)/opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h.in $(top_builddir)/config.status
 	@rm -f opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/stamp-h6
 	cd $(top_builddir) && $(SHELL) ./config.status opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h
-$(top_srcdir)/opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h.in:  $(am__configure_deps) 
-	($(am__cd) $(top_srcdir) && $(AUTOHEADER))
-	rm -f opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/stamp-h6
-	touch $@
 
 opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h: opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/stamp-h7
 	@if test ! -f $@; then rm -f opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/stamp-h7; else :; fi
@@ -1265,7 +1097,7 @@ opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/stamp-h7: $(top_srcdir)/opal
 	cd $(top_builddir) && $(SHELL) ./config.status opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h
 
 distclean-hdr:
-	-rm -f opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/stamp-h6 opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/stamp-h7
+	-rm -f opal/include/opal_config.h opal/include/stamp-h1 orte/include/orte_config.h orte/include/stamp-h2 ompi/include/ompi_config.h ompi/include/stamp-h3 ompi/include/mpi.h ompi/include/stamp-h4 ompi/include/mpi_portable_platform.h ompi/include/stamp-h5 opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/stamp-h6 opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/stamp-h7
 ompi/include/ompi/version.h: $(top_builddir)/config.status $(top_srcdir)/ompi/include/ompi/version.h.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 orte/include/orte/version.h: $(top_builddir)/config.status $(top_srcdir)/orte/include/orte/version.h.in
@@ -1546,7 +1378,7 @@ distcheck: dist
 	*.zip*) \
 	  unzip $(distdir).zip ;;\
 	esac
-	chmod -R a-w $(distdir); chmod u+w $(distdir)
+	chmod -R a-w $(distdir); chmod a+w $(distdir)
 	mkdir $(distdir)/_build
 	mkdir $(distdir)/_inst
 	chmod a-w $(distdir)
@@ -1637,7 +1469,6 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)

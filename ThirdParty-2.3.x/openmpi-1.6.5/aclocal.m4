@@ -695,41 +695,6 @@ AC_MSG_RESULT([$_am_result])
 rm -f confinc confmf
 ])
 
-# Copyright (C) 1999, 2000, 2001, 2003, 2004, 2005, 2008
-# Free Software Foundation, Inc.
-#
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
-
-# serial 6
-
-# AM_PROG_CC_C_O
-# --------------
-# Like AC_PROG_CC_C_O, but changed for automake.
-AC_DEFUN([AM_PROG_CC_C_O],
-[AC_REQUIRE([AC_PROG_CC_C_O])dnl
-AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
-AC_REQUIRE_AUX_FILE([compile])dnl
-# FIXME: we rely on the cache variable name because
-# there is no other way.
-set dummy $CC
-am_cc=`echo $[2] | sed ['s/[^a-zA-Z0-9_]/_/g;s/^[0-9]/_/']`
-eval am_t=\$ac_cv_prog_cc_${am_cc}_c_o
-if test "$am_t" != yes; then
-   # Losing compiler, so override with the script.
-   # FIXME: It is wrong to rewrite CC.
-   # But if we don't then we get into trouble of one sort or another.
-   # A longer-term fix would be to have automake use am__CC in this case,
-   # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
-   CC="$am_aux_dir/compile $CC"
-fi
-dnl Make sure AC_PROG_CC is never called again, or it will override our
-dnl setting of CC.
-m4_define([AC_PROG_CC],
-          [m4_fatal([AC_PROG_CC cannot be called after AM_PROG_CC_C_O])])
-])
-
 # Fake the existence of programs that GNU maintainers use.  -*- Autoconf -*-
 
 # Copyright (C) 1997, 1999, 2000, 2001, 2003, 2004, 2005, 2008
@@ -1123,70 +1088,6 @@ AC_SUBST([am__tar])
 AC_SUBST([am__untar])
 ]) # _AM_PROG_TAR
 
-m4_include([ompi/config/config_files.m4])
-m4_include([ompi/config/cxx_find_exception_flags.m4])
-m4_include([ompi/config/cxx_find_template_parameters.m4])
-m4_include([ompi/config/cxx_find_template_repository.m4])
-m4_include([ompi/config/cxx_have_exceptions.m4])
-m4_include([ompi/config/f77_check.m4])
-m4_include([ompi/config/f77_check_logical_array.m4])
-m4_include([ompi/config/f77_check_real16_c_equiv.m4])
-m4_include([ompi/config/f77_check_type.m4])
-m4_include([ompi/config/f77_find_ext_symbol_convention.m4])
-m4_include([ompi/config/f77_get_alignment.m4])
-m4_include([ompi/config/f77_get_fortran_handle_max.m4])
-m4_include([ompi/config/f77_get_sizeof.m4])
-m4_include([ompi/config/f77_get_value_true.m4])
-m4_include([ompi/config/f90_check.m4])
-m4_include([ompi/config/f90_check_type.m4])
-m4_include([ompi/config/f90_find_module_include_flag.m4])
-m4_include([ompi/config/f90_get_int_kind.m4])
-m4_include([ompi/config/f90_get_sizeof.m4])
-m4_include([ompi/config/ompi_check_mx.m4])
-m4_include([ompi/config/ompi_check_mxm.m4])
-m4_include([ompi/config/ompi_check_openib.m4])
-m4_include([ompi/config/ompi_check_portals.m4])
-m4_include([ompi/config/ompi_check_psm.m4])
-m4_include([ompi/config/ompi_check_udapl.m4])
-m4_include([ompi/config/ompi_config_threads.m4])
-m4_include([ompi/config/ompi_configure_options.m4])
-m4_include([ompi/config/ompi_setup_contrib.m4])
-m4_include([ompi/config/ompi_setup_cxx.m4])
-m4_include([ompi/config/ompi_setup_f77.m4])
-m4_include([ompi/config/ompi_setup_f90.m4])
-m4_include([ompi/config/ompi_setup_mpi_ext.m4])
-m4_include([ompi/config/ompi_setup_mpi_fortran.m4])
-m4_include([ompi/config/ompi_setup_mpi_profiling.m4])
-m4_include([ompi/config/ompi_setup_wrappers.m4])
-m4_include([orte/config/config_files.m4])
-m4_include([orte/config/orte_check_alps.m4])
-m4_include([orte/config/orte_check_loadleveler.m4])
-m4_include([orte/config/orte_check_lsf.m4])
-m4_include([orte/config/orte_check_pmi.m4])
-m4_include([orte/config/orte_check_sge.m4])
-m4_include([orte/config/orte_check_slurm.m4])
-m4_include([orte/config/orte_check_tm.m4])
-m4_include([orte/config/orte_configure_options.m4])
-m4_include([orte/config/orte_setup_debugger_flags.m4])
-m4_include([orte/config/orte_setup_wrappers.m4])
-m4_include([opal/config/config_files.m4])
-m4_include([opal/config/opal_case_sensitive_fs_setup.m4])
-m4_include([opal/config/opal_check_attributes.m4])
-m4_include([opal/config/opal_check_compiler_version.m4])
-m4_include([opal/config/opal_check_ident.m4])
-m4_include([opal/config/opal_check_offsetof.m4])
-m4_include([opal/config/opal_check_os_flavors.m4])
-m4_include([opal/config/opal_check_pthread_pids.m4])
-m4_include([opal/config/opal_check_visibility.m4])
-m4_include([opal/config/opal_config_asm.m4])
-m4_include([opal/config/opal_config_threads.m4])
-m4_include([opal/config/opal_configure_options.m4])
-m4_include([opal/config/opal_functions.m4])
-m4_include([opal/config/opal_setup_cc.m4])
-m4_include([opal/config/opal_setup_cxx.m4])
-m4_include([opal/config/opal_setup_libevent.m4])
-m4_include([opal/config/opal_setup_libltdl.m4])
-m4_include([opal/config/opal_setup_wrappers.m4])
 m4_include([config/c_get_alignment.m4])
 m4_include([config/c_weak_symbols.m4])
 m4_include([config/libtool.m4])
@@ -1196,29 +1097,17 @@ m4_include([config/ltsugar.m4])
 m4_include([config/ltversion.m4])
 m4_include([config/lt~obsolete.m4])
 m4_include([config/ompi_check_broken_qsort.m4])
-m4_include([config/ompi_check_compiler_works.m4])
 m4_include([config/ompi_check_func_lib.m4])
 m4_include([config/ompi_check_icc.m4])
 m4_include([config/ompi_check_libfca.m4])
 m4_include([config/ompi_check_package.m4])
 m4_include([config/ompi_check_ps.m4])
-m4_include([config/ompi_check_vendor.m4])
 m4_include([config/ompi_check_withdir.m4])
-m4_include([config/ompi_config_pthreads.m4])
-m4_include([config/ompi_config_solaris_threads.m4])
 m4_include([config/ompi_config_subdir.m4])
 m4_include([config/ompi_config_subdir_args.m4])
-m4_include([config/ompi_contrib.m4])
-m4_include([config/ompi_ensure_contains_optflags.m4])
-m4_include([config/ompi_ext.m4])
-m4_include([config/ompi_find_type.m4])
-m4_include([config/ompi_get_libtool_linker_flags.m4])
 m4_include([config/ompi_interix.m4])
-m4_include([config/ompi_lang_link_with_c.m4])
 m4_include([config/ompi_load_platform.m4])
 m4_include([config/ompi_mca.m4])
 m4_include([config/ompi_save_version.m4])
 m4_include([config/ompi_setup_component_package.m4])
-m4_include([config/ompi_strip_optflags.m4])
-m4_include([config/ompi_try_assemble.m4])
 m4_include([acinclude.m4])
