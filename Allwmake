@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -x
+
+cd ${0%/*} || exit 1    # run from this directory
+
+wmakeCheckPwd "$OSCCAR_HOME" || {
+    echo "Error: Current directory is not \$OSCCAR_HOME"
+    echo "    The environment variables are inconsistent with the installation."
+    echo "    Check the OSCCAR entries in your dot-files and source them."
+    exit 1
+}
+
+[ -n "$FOAM_EXT_LIBBIN" ] || {
+    echo "Error: FOAM_EXT_LIBBIN not set"
+    echo "    Check the OSCCAR entry in your dot-files and source them."
+    exit 1
+}
+
+# wmake is required for subsequent targets
+( cd $WM_PROJECT_DIR/wmake/src && make )
+
+# Build ThirdParty sources
+if [ -d "$WM_THIRD_PARTY_DIR" ]
+then
+    ( cd $WM_THIRD_PARTY_DIR && ./Allwmake )
+else
+    echo "no ThirdParty sources found - skipping"
+fi
+
+# Build OpenFOAM libraries and applications
+( cd $WM_PROJECT_DIR/src && ./Allwmake )
+( cd $WM_PROJECT_DIR/applications && ./Allwmake )
+
+
+#if [ "$1" = doc ]
+#then
+#    doc/Allwmake $*
+#fi
+
+# ----------------------------------------------------------------- end-of-file
