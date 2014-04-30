@@ -1,0 +1,16 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+inletVelocity        (0 0 0.12);
+pressure             1e5;
+turbulentKE          2.16e-4;
+turbulentEpsilon     2.48e-4;
+
+#inputMode           merge
+
+// ************************************************************************* //

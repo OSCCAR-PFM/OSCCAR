@@ -1,0 +1,26 @@
+Date:      Wed Apr 30 15:24:45 CEST 2014
+Author:    Gijsbert Wierink
+
+Description:
+
+This case is set up according to the square bubble column as published by
+Deen et al. (2001)[1].
+
+The case is a square bubble column of 0.15 m wide, 0.15 m deep, and 0.6 m high.
+In the original case of Deen et al. (2001) the total height was 1 m. The
+column is filled with water up to 0.45 m high. Air is introduced through a patch
+on the bottom of 0.03 m by 0.03 m. The inlet velocity is 0.12 m/s, giving a
+superficial gas velocity of 4.9e-3 m/s.
+
+For the turbulence properties a turbulent intensity of 10% is assumed at the
+inlet. This gives a value for k of 2.16e-4 m2/s2. When assuming a characteristic
+length of 7% of inlet diameter, epsilon is 2.48e-4 m2/s3. At the inlet the phase
+fraction is assumed 100% air and 0% water. Pressure is fixed at the outlet at
+1e5 Pa.
+
+
+References:
+1. Deen, N.G., Solberg, T., and Hjertager, B.H. (2001). "Large eddy simulation
+   of the Gas–Liquid flow in a square cross-sectioned bubble column". Chemical
+   Engineering Science 56(21–22), 6341-6349.
+
