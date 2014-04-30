@@ -2,13 +2,23 @@
 #
 
 # Set the OSCCAR install directory
-OSCCAR_DIR=$HOME/OSCCAR
+export OSCCAR_DIR=$HOME/OSCCAR
+export OSCCAR_PROJECT=PFM
+export OSCCAR_HOME=$OSCCAR_DIR/OSCCAR-$OSCCAR_PROJECT
 
 # Source OpenFOAM's variables
-source $OSCCAR_DIR/OpenFOAM-2.3.x/etc/bashrc
+source $OSCCAR_HOME/OpenFOAM-2.3.x/etc/bashrc
+
+export OSCCAR_APP=$OSCCAR_HOME/OSCCAR/applications
+export OSCCAR_SRC=$OSCCAR_HOME/OSCCAR/src
+export OSCCAR_TUTORIALS=$OSCCAR_HOME/OSCCAR/tutorials
+export OSCCAR_UTILITIES=$OSCCAR_HOME/OSCCAR/utilities
+export OSCCAR_SOLVERS=$OSCCAR_HOME/OSCCAR/solvers
+
 
 # Create some aliases for the OSCCAR library
-alias OSCCARtut='cd $OSCCAR_DIR/tutorials'
-alias OSCCARsrc='cd $OSCCAR_DIR/src'
-alias OSCCARsol='cd $OSCCAR_DIR/applications/solvers'
-alias OSCCARutil='cd $OSCCAR_DIR/applications/utilities'
+alias otut='cd $OSCCAR_TUTORIALS'
+alias osrc='cd $OSCCAR_SRC'
+alias osol='cd $OSCCAR_SOLVERS'
+alias outil='cd $OSCCAR_UTILITIES'
+alias osccar='cd $OSCCAR_HOME'
