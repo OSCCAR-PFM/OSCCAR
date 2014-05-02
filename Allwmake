@@ -32,6 +32,11 @@ fi
 ( cd $WM_PROJECT_DIR/src && ./Allwmake )
 ( cd $WM_PROJECT_DIR/applications && ./Allwmake )
 
+# Build OSCCAR libraries and applications
+( cd $OSCCAR_SRC && ./Allwmake )
+( cd $OSCCAR_APP && ./Allwmake )
+
+
 
 #if [ "$1" = doc ]
 #then
