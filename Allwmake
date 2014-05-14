@@ -4,8 +4,8 @@ set -x
 
 cd ${0%/*} || exit 1    # run from this directory
 
-wmakeCheckPwd "$OSCCAR_HOME" || {
-    echo "Error: Current directory is not \$OSCCAR_HOME"
+wmakeCheckPwd "$OSCCAR_DIR" || {
+    echo "Error: Current directory is not \$OSCCAR_DIR"
     echo "    The environment variables are inconsistent with the installation."
     echo "    Check the OSCCAR entries in your dot-files and source them."
     exit 1
