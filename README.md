@@ -40,7 +40,7 @@ gedit ~/.bashrc
 ```
 add the following line:
 ```bash
-source $HOME/OSCCAR/etc/bashrc
+source $HOME/OSCCAR/OSCCAR/etc/bashrc
 ```
 ... and save and close the file.
 
