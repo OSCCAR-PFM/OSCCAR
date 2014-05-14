@@ -37,6 +37,11 @@ fi
 ( cd $OSCCAR_APP && ./Allwmake )
 
 
+# Compile ParaView-4.1
+( cd $WM_THIRD_PARTY_DIR && ./makeCmake && ./makeParaView4 )
+
+# Compile the OpenFOAM reader module
+(cd $FOAM_UTILITIES/postProcessing/graphics/PV4Readers && ./Allwclean && ./Allwmake )
 
 #if [ "$1" = doc ]
 #then
