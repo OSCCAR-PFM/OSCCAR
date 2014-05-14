@@ -1,4 +1,4 @@
-# OSCCAR-PFM
+# OSCCAR
 ## Introduction
 OSCCAR is an suite of open source tools geared towards setting up, running and post-processing CFD simulations for industrial applications. OSCCAR builds on OpenFOAM®[1] and uses other various open source tools. The OSCCAR-PFM package includes tools, solvers, tutorials and documentation developed at an up-to-date code base of OpenFOAM. Ongoing contributions from the Department of Particulate Flow Modelling (PFM) at the Johannes Kepler University Linz, Austria, are added regularly. In addition, contributions from our academic and industrial partners are included in OSCCAR.
 

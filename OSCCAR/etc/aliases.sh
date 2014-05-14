@@ -1,6 +1,5 @@
 # OSCCAR aliases
 
-
 # Create some aliases for the OSCCAR library
 alias otut='cd $OSCCAR_TUTORIALS'
 alias osrc='cd $OSCCAR_SRC'

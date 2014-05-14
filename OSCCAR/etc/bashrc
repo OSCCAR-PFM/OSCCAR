@@ -3,8 +3,14 @@
 
 # Set the OSCCAR install directory
 export OSCCAR_DIR=$HOME/OSCCAR
-export OSCCAR_PROJECT=PFM
-export OSCCAR_HOME=$OSCCAR_DIR/OSCCAR-$OSCCAR_PROJECT
+
+# Specify a version of the code, if applicable
+#export OSCCAR_PROJECT=FOO
+# OSCCAR home with project name
+#export OSCCAR_HOME=$OSCCAR_DIR/OSCCAR-$OSCCAR_PROJECT
+
+# OSCCAR home without project name
+export OSCCAR_HOME=$OSCCAR_DIR/OSCCAR
 
 # Source OpenFOAM's variables
 source $OSCCAR_HOME/OpenFOAM-2.3.x/etc/bashrc
