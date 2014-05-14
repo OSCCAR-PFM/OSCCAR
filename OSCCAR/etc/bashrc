@@ -13,14 +13,14 @@ export OSCCAR_DIR=$HOME/OSCCAR
 export OSCCAR_HOME=$OSCCAR_DIR/OSCCAR
 
 # Source OpenFOAM's variables
-source $OSCCAR_HOME/OpenFOAM-2.3.x/etc/bashrc
+source $OSCCAR_DIR/OpenFOAM-2.3.x/etc/bashrc
 
-export OSCCAR_APP=$OSCCAR_HOME/OSCCAR/applications
-export OSCCAR_SRC=$OSCCAR_HOME/OSCCAR/src
-export OSCCAR_TUTORIALS=$OSCCAR_HOME/OSCCAR/tutorials
-export OSCCAR_UTILITIES=$OSCCAR_HOME/OSCCAR/utilities
-export OSCCAR_SOLVERS=$OSCCAR_HOME/OSCCAR/solvers
-export OSCCAR_DOC=$OSCCAR_HOME/OSCCAR/doc
+export OSCCAR_APP=$OSCCAR_HOME/applications
+export OSCCAR_SRC=$OSCCAR_HOME/src
+export OSCCAR_TUTORIALS=$OSCCAR_HOME/tutorials
+export OSCCAR_UTILITIES=$OSCCAR_HOME/utilities
+export OSCCAR_SOLVERS=$OSCCAR_HOME/solvers
+export OSCCAR_DOC=$OSCCAR_HOME/doc
 export OSCCAR_RUN=$FOAM_RUN
 
-source $OSCCAR_HOME/OSCCAR/etc/aliases.sh
+source $OSCCAR_HOME/etc/aliases.sh

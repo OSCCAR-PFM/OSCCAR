@@ -6,7 +6,7 @@ alias osrc='cd $OSCCAR_SRC'
 alias osol='cd $OSCCAR_SOLVERS'
 alias outil='cd $OSCCAR_UTILITIES'
 alias odoc='cd $OSCCAR_DOC'
-alias osccar='cd $OSCCAR_HOME'
+alias osccar='cd $OSCCAR_DIR'
 
 # Create some aliases for the OSCCAR library
 alias osccartut='cd $OSCCAR_TUTORIALS'

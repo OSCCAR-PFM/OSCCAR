@@ -1,20 +1,37 @@
 # OSCCAR
 ## Introduction
-OSCCAR is an suite of open source tools geared towards setting up, running and post-processing CFD simulations for industrial applications. OSCCAR builds on OpenFOAM®[1] and uses other various open source tools. The OSCCAR-PFM package includes tools, solvers, tutorials and documentation developed at an up-to-date code base of OpenFOAM. Ongoing contributions from the Department of Particulate Flow Modelling (PFM) at the Johannes Kepler University Linz, Austria, are added regularly. In addition, contributions from our academic and industrial partners are included in OSCCAR.
+OSCCAR is an suite of open source tools geared towards setting up, running and post-processing CFD simulations for industrial applications. OSCCAR builds on OpenFOAM®[1] and uses other various open source tools. The OSCCAR package includes tools, solvers, tutorials and documentation developed at an up-to-date code base of OpenFOAM. Ongoing contributions from the Department of Particulate Flow Modelling (PFM) at the Johannes Kepler University Linz, Austria, are added regularly. In addition, contributions from our academic and industrial partners are included in OSCCAR.
 
 Please note that this project is work in progress. Any comments, ideas and suggestions are very welcome.
 
 ## Getting and installing OSCCAR
-### Pull the code and set up the environment
-OSCCAR can be downloaded using git (a recent version of git is advisable). OSCCAR assumes you have a directory in your home directory named "OSCCAR", where the package will be located. Of course you can change this, this is vanilla installation. Now, create the OSCCAR directory and pull the code (note "~" and "$HOME" are equivalent):
+### Prerequisites
+Most of the people involved use Ubuntu linux. Therefore, this package is primarily set up for Ubuntu 12.04. OSCCAR can be compiled on any linux system, but if you need help and/or have requests, please let us know.
+To be able to get started a few dependencies are needed to compile OpenFOAM. These dependencies are the same as mentioned on the [OpenFOAM website](http://www.openfoam.org/download/git.php) plus octave:
 ```bash
-# Create a directory named OSCCAR, if not there already
-mkdir ~/OSCCAR
-cd ~/OSCCAR
+sudo apt-get install \
+git build-essential flex bison cmake zlib1g-dev qt4-dev-tools libqt4-dev \
+gnuplot libreadline-dev libncurses-dev libxt-dev libscotch-dev libopenmpi-dev \
+libcgal-dev octave3.2
+```
+To compile OpenFOAM-2.3.x it is useful to install gcc-4.8. Of course you can compile gcc-4.8 or clang yourself, but for the less adventurous among us, you can also install it [via a backport](http://askubuntu.com/questions/271388/how-to-install-gcc-4-8-in-ubuntu-12-04-from-the-terminal):
+```bash
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+sudo apt-get install gcc-4.8
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50
+```
+
+### Pull the code and set up the environment
+OSCCAR can be downloaded using git (a recent version of git is advisable). A default clone of the project stores the code in a directory named "OSCCAR" in the directory you issue the clone command from. OSCCAR assumes you have a directory in your home directory named "OSCCAR", where the package will be located. To get OSCCAR, simply do:
+```bash
+# Make sure you are in your home directory
+cd
 
 # Pull OSCCAR (do this in $HOME/OSCCAR)
 git clone https://github.com/OSCCAR-PFM/OSCCAR.git
 ```
+Of course you can change all this, this is vanilla installation. 
 
 Now make sure your shell knows about OSCCAR and its environment variables by sourcing the OSCCAR environment. To do this, open up your bash startup file:
 ```bash
@@ -23,7 +40,7 @@ gedit ~/.bashrc
 ```
 add the following line:
 ```bash
-source $HOME/OSCCAR/OSCCAR/etc/bashrc
+source $HOME/OSCCAR/etc/bashrc
 ```
 ... and save and close the file.
 
