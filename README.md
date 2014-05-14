@@ -13,7 +13,7 @@ mkdir ~/OSCCAR
 cd ~/OSCCAR
 
 # Pull OSCCAR (do this in $HOME/OSCCAR)
-git clone https://github.com/OSCCAR-PFM/OSCCAR-PFM.git
+git clone https://github.com/OSCCAR-PFM/OSCCAR.git
 ```
 
 Now make sure your shell knows about OSCCAR and its environment variables by sourcing the OSCCAR environment. To do this, open up your bash startup file:
@@ -23,7 +23,7 @@ gedit ~/.bashrc
 ```
 add the following line:
 ```bash
-source $HOME/OSCCAR/OSCCAR-PFM/OSCCAR/etc/bashrc
+source $HOME/OSCCAR/OSCCAR/etc/bashrc
 ```
 ... and save and close the file.
 
@@ -36,7 +36,7 @@ source ~/.bashrc
 ### Compile OpenFOAM and OSCCAR
 Now the environment has been set up OpenFOAM and OSCCAR can be compiled. Either change to the OSCCAR directory "by hand":
 ```bash
-cd ~/OSCCAR/OSCCAR-PFM
+cd ~/OSCCAR
 ```
 or use the OSCCAR alias:
 ```bash
