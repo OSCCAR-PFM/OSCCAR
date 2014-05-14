@@ -1,0 +1,21 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # run from this directory
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Create the mesh using blockMesh
+runApplication blockMesh
+
+# Run the solver
+runApplication $(getApplication)
+
+# Sample velocity along a vertical line (see system/sampleDict)
+runApplication sample
+
+# Plot the sampled velocity. The velocity plot is stored as
+# images/velocityProfile.png in the case directory.
+( cd gnuplot && gnuplot plotVelocityProfile.gp )
+
+
+# ----------------------------------------------------------------- end-of-file

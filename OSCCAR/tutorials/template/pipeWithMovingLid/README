@@ -1,0 +1,24 @@
+#-----------------------------------------------------------------------------#
+
+File:        README
+Code:        OSCCAR with OpenFOAM-2.3.x
+Author:      Foo Bar
+             PFM-JKU
+Date:        Wed May 14 13:05:20 CEST 2014
+
+Tutorial:    channelWithMovingWall
+Solver:      icoFoam
+
+
+Description:
+
+This is a basic tutorial as an example case to start from. This tutorial is
+a simple square channel with a moving top wall.
+
+After running icoFoam the user can run the sample utility to sample velocity
+along a vertical line in the channel. In the gnuplot directory there is a
+gnuplot script to plot the horizontal velocity to a png graph. The graph is
+stored in the images directory in the case.
+
+
+# ----------------------------------------------------------------- end-of-file
