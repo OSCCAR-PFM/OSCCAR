@@ -84,4 +84,7 @@ doc/Doxygen/DTAGS
 /.cproject
 /.project
 
-# end-of-file
+# Ignore user directory
+$USER-2.3.x/
+
+# ----------------------------------------------------------------- end-of-file
