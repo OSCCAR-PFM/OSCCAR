@@ -7,12 +7,12 @@ Please note that this project is work in progress. Any comments, ideas and sugge
 ## Getting and installing OSCCAR
 ### Prerequisites
 Most of the people involved use Ubuntu linux. Therefore, this package is primarily set up for Ubuntu 12.04. OSCCAR can be compiled on any linux system, but if you need help and/or have requests, please let us know.
-To be able to get started a few dependencies are needed to compile OpenFOAM. These dependencies are the same as mentioned on the [OpenFOAM website](http://www.openfoam.org/download/git.php) plus octave:
+To be able to get started a few dependencies are needed to compile OpenFOAM. These dependencies are the same as mentioned on the [OpenFOAM website](http://www.openfoam.org/download/git.php) plus octave and doxygen:
 ```bash
 sudo apt-get install \
 git build-essential flex bison cmake zlib1g-dev qt4-dev-tools libqt4-dev \
 gnuplot libreadline-dev libncurses-dev libxt-dev libscotch-dev libopenmpi-dev \
-libcgal-dev octave3.2
+libcgal-dev octave3.2 doxygen
 ```
 To compile OpenFOAM-2.3.x it is useful to install gcc-4.8. Of course you can compile gcc-4.8 or clang yourself, but for the less adventurous among us, you can also install it [via a backport](http://askubuntu.com/questions/271388/how-to-install-gcc-4-8-in-ubuntu-12-04-from-the-terminal):
 ```bash
