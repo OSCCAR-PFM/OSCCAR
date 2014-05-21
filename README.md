@@ -86,6 +86,33 @@ After this you can change to the run directory by typing:
 run
 ```
 
+OSCCAR and OpenFOAM contain more aliases that can be useful for a smooth workflow. The aliases and associated environment variables are listed below.
+
+### OSCCAR aliases
+| Alias      | Function                                                       | Environment variable |
+|:---------- |:-------------------------------------------------------------- |:-------------------- |
+| otut       | Change directory to OSCCAR tutorials                           | OSCCAR_TUTORIALS     |
+| osrc       | Change directory to OSCCAR source                              | OSCCAR_SRC           |
+| osol       | Change directory to OSCCAR solvers                             | OSCCAR_SOLVERS       |
+| outil      | Change directory to OSCCAR utilities                           | OSCCAR_UTILITIES     |
+| odoc       | Change directory to OSCCAR documentation                       | OSCCAR_DOC           |
+| osccar     | Change directory to OSCCAR installation directory              | OSCCAR_DIR           |
+| ouser      | Change directory to OSCCAR user directory                      | OSCCAR_USER          |
+| run        | Change directory to run directory in the OSCCAR user directory | OSCCAR_RUN           |
+| osccartut  | Same as otut                                                   | OSCCAR_TUTORIALS     |
+| osccarsrc  | Same as osrc                                                   | OSCCAR_SRC           |
+| osccarsol  | Same as osol                                                   | OSCCAR_SOLVERS       |
+| osccarutil | Same as outil                                                  | OSCCAR_UTILITIES     |
+| osccardoc  | Same as odoc                                                   | OSCCAR_DOC           |
+
+### OpenFOAM aliases
+| Alias      | Function                                            | Environment variable |
+| ---------- |:--------------------------------------------------- |:---------------------|
+| tut        | Change directory to OpenFOAM tutorials              | FOAM_TUTORIALS       |
+| src        | Change directory to OpenFOAM source                 | FOAM_SRC             |
+| sol        | Change directory to OpenFOAM solvers                | FOAM_SOLVERS         |
+| util       | Change directory to OpenFOAM utilities              | FOAM_UTILITIES       |
+| run        | Change directory to the OpenFOAM user run directory. Defaults to OSCCAR run directory. | FOAM_RUN |
 
 
 ## Disclamer
