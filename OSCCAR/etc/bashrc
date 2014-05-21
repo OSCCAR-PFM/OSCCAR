@@ -22,5 +22,6 @@ export OSCCAR_UTILITIES=$OSCCAR_HOME/utilities
 export OSCCAR_SOLVERS=$OSCCAR_HOME/solvers
 export OSCCAR_DOC=$OSCCAR_HOME/doc
 export OSCCAR_RUN=$FOAM_RUN
+export OSCCAR_USER=$WM_PROJECT_USER_DIR
 
 source $OSCCAR_HOME/etc/aliases.sh
