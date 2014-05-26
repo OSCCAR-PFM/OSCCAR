@@ -1,0 +1,26 @@
+#-----------------------------------------------------------------------------#
+
+File:        README
+Code:        OSCCAR with OpenFOAM-2.3.x
+Author:      Foo Bar
+             PFM-JKU
+Date:        Wed May 14 13:05:20 CEST 2014
+
+Tutorial:    cavity
+Solver:      icoExampleFoam
+
+
+Description:
+
+This is a basic solver as an example to start from. The icoExampleFoam solver
+is the same as icoFoam, but shows how to build and document a solver. As
+example a header called myCode.H is oncluded in the solver so that code is
+more modular, easier to maintain and re-usable. Also, example comments are
+provided to show how to comment and structure your code for better usability
+and maintainability in the OSCCAR package.
+
+icoExampleFoam can be run on e.g.:
+$OSCCAR_TUTORIALS/incompressible/icoMasslessTracerFoam/cavityClippedMasslessTracer
+
+
+# ----------------------------------------------------------------- end-of-file
