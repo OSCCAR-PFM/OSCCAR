@@ -18,8 +18,8 @@ source $OSCCAR_DIR/OpenFOAM-2.3.x/etc/bashrc
 export OSCCAR_APP=$OSCCAR_HOME/applications
 export OSCCAR_SRC=$OSCCAR_HOME/src
 export OSCCAR_TUTORIALS=$OSCCAR_HOME/tutorials
-export OSCCAR_UTILITIES=$OSCCAR_HOME/utilities
-export OSCCAR_SOLVERS=$OSCCAR_HOME/solvers
+export OSCCAR_UTILITIES=$OSCCAR_APP/utilities
+export OSCCAR_SOLVERS=$OSCCAR_APP/solvers
 export OSCCAR_DOC=$OSCCAR_HOME/doc
 export OSCCAR_RUN=$FOAM_RUN
 export OSCCAR_USER=$WM_PROJECT_USER_DIR
