@@ -40,7 +40,15 @@ if [ -d $WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/ParaView-4.1.0 ]; the
   echo -e "\n\tParaView-4.1.0 already built."
 else
   # Compile ParaView-4.1, only needed first time
-  ( cd $WM_THIRD_PARTY_DIR && ./makeCmake && ./makeParaView4 )
+  # First compile cmake-2.8+
+  ( cd $WM_THIRD_PARTY_DIR && ./makeCmake )
+
+  # Source to make sure cmake-2.8+ is used
+  source $HOME/.bashrc
+  
+  # Compile ParaView
+  ( cd $WM_THIRD_PARTY_DIR && ./makeParaView4 )
+
   # Compile the OpenFOAM reader module
   (cd $FOAM_UTILITIES/postProcessing/graphics/PV4Readers && ./Allwclean && ./Allwmake )
 fi

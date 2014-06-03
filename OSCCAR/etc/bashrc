@@ -24,4 +24,8 @@ export OSCCAR_DOC=$OSCCAR_HOME/doc
 export OSCCAR_RUN=$FOAM_RUN
 export OSCCAR_USER=$WM_PROJECT_USER_DIR
 
+export ParaView_DIR=$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/ParaView-4.1.0;
+export PATH=$ParaView_DIR/bin:$PATH;
+export PV_PLUGIN_PATH=$FOAM_LIBBIN/paraview-4.1
+  
 source $OSCCAR_HOME/etc/aliases.sh
