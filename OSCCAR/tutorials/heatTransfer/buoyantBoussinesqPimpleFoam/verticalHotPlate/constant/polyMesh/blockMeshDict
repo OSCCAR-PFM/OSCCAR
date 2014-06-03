@@ -1,0 +1,94 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+
+vertices
+(
+    (0     0.25 -0.4) //  0
+    (0.01  0.25 -0.4) //  1
+    (0.1   0.25 -0.4) //  2
+    (0    -0.25 -0.4) //  3
+    (0.01 -0.25 -0.4) //  4
+    (0.1  -0.25 -0.4) //  5
+    (0     0.25  0.4) //  6
+    (0.01  0.25  0.4) //  7
+    (0.1   0.25  0.4) //  8
+    (0.1  -0.25  0.4) //  9
+    (0.01 -0.25  0.4) // 10
+    (0    -0.25  0.4) // 11
+);
+
+blocks
+(
+    hex (3 4 1 0 11 10 7 6) (10 50 80) simpleGrading (5 1 1) // Boundary layer
+    hex (4 5 2 1 10 9 8 7)  (9 50 80) simpleGrading (1 1 1) // Main domain
+);
+
+edges
+(
+);
+
+boundary
+(
+    hotWall
+    {
+        type wall;
+        faces
+        (
+            (0 3 11 6)
+        );
+    }
+    
+    sides
+    {
+        type patch;
+        faces
+        (
+            (3 4 10 11) // Front BL
+            (0 6 7 1)   // Back BL
+            (4 5 9 10)  // Front main domain
+            (1 7 8 2)   // Back main domain
+            (2 8 9 5)   // Right side main domain
+        );
+    }
+    
+    inlet
+    {
+        type patch;
+        faces
+        (
+            (0 1 4 3)   // Bottom BL
+            (1 2 5 4)   // Bottom main domain
+        );
+    }
+    
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (6 11 10 7) // Top BL
+            (7 10 9 8)  // Top main domain
+        );
+    }
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //
