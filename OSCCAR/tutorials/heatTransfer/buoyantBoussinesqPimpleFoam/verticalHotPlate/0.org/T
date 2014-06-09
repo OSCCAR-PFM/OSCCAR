@@ -36,7 +36,7 @@ boundaryField
     hotWall
     {
         type            fixedValue;
-        value           uniform 373.15;
+        value           uniform 313.15;
     }
 }
 
