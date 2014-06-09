@@ -1,7 +1,0 @@
-cPolygon.C
-
-cRectangle.C
-
-myFirstClass.C  
-
-EXE = $(FOAM_USER_APPBIN)/myFirstClass

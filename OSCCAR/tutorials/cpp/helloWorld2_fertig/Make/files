@@ -1,3 +1,0 @@
-helloWorld2.C  
-
-EXE = $(FOAM_USER_APPBIN)/helloWorld2
