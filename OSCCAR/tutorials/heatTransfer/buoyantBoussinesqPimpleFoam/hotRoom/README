@@ -1,0 +1,6 @@
+Wed Jun 4 21:35:56 CEST 2014
+
+This is a copy of the buoyantBoussinesqPimpleFoam tutorial hotRoom, adjusted
+to work with the wallHeatFluxIncompressible utility. Files that need to be
+added are constant/turbulenceProperties and constant/thermophysicalProperties
+(see wallHeatFluxIncompressible utility for example entries of the latter).

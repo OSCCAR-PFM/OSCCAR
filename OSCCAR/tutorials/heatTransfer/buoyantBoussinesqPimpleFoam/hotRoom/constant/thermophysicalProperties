@@ -1,0 +1,32 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant/bottomAir";
+    object      thermophysicalProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+// Laminar Prandtl number
+Pr                 Pr [0 0 0 0 0 0 0] 0.9;
+
+// Turbulent Prandtl number
+Prt                Prt [0 0 0 0 0 0 0] 0.85;
+
+// Reference Cp to calculate Boussinesq incompressible wall heat flux
+CpRef              CpRef [0 2 -2 -1 0 0 0] 1.0;
+
+// Reference density to calculate Boussinesq incompressible wall heat flux
+rhoRef             rhoRef [1 -3 0 0 0 0 0] 1.2;
+
+
+// ************************************************************************* //

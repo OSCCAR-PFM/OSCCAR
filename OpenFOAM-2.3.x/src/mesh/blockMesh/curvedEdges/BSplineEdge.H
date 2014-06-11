@@ -22,83 +22,83 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::aspectRatioModels::TomiyamaAspectRatio
+    Foam::BSplineEdge
 
 Description
-    Aspect ratio model of Tomiyama.
-
-    Reference:
-    \verbatim
-        "Implementation and Comparison of Correlations for interfacial Forces
-        in a Gas-Liquid System within an Euler-Euler Framework"
-        M Otromke
-        PhD Thesis
-        April 2013
-    \endverbatim
+    A curvedEdge interface for B-splines.
 
 SourceFiles
-    TomiyamaAspectRatio.C
+    BSplineEdge.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef TomiyamaAspectRatio_H
-#define TomiyamaAspectRatio_H
+#ifndef BSplineEdge_H
+#define BSplineEdge_H
 
-#include "VakhrushevEfremov.H"
+#include "curvedEdge.H"
+#include "BSpline.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 namespace Foam
 {
-namespace aspectRatioModels
-{
 
 /*---------------------------------------------------------------------------*\
-                       Class TomiyamaAspectRatio Declaration
+                      Class BSplineEdge Declaration
 \*---------------------------------------------------------------------------*/
 
-class TomiyamaAspectRatio
+class BSplineEdge
 :
-    public VakhrushevEfremov
+    public curvedEdge,
+    public BSpline
 {
-private:
+    // Private Member Functions
 
-    // Private data
+        //- Disallow default bitwise copy construct
+        BSplineEdge(const BSplineEdge&);
 
-        //- Wall distance
-        const volScalarField& yWall_;
+        //- Disallow default bitwise assignment
+        void operator=(const BSplineEdge&);
 
 
 public:
 
     //- Runtime type information
-    TypeName("Tomiyama");
+    TypeName("BSpline");
 
 
     // Constructors
 
-        //- Construct from a dictionary and an ordered phase pair
-        TomiyamaAspectRatio
+        //- Construct from components
+        BSplineEdge
         (
-            const dictionary& dict,
-            const orderedPhasePair& pair
+            const pointField&,
+            const label start,
+            const label end,
+            const pointField& internalPoints
         );
+
+        //- Construct from Istream, setting pointsList
+        BSplineEdge(const pointField&, Istream&);
 
 
     //- Destructor
-    virtual ~TomiyamaAspectRatio();
+    virtual ~BSplineEdge();
 
 
     // Member Functions
 
-        //- Aspect ratio
-        virtual tmp<volScalarField> E() const;
+        //- Return the point position corresponding to the curve parameter
+        //  0 <= lambda <= 1
+        virtual point position(const scalar) const;
+
+        //- Return the length of the spline curve (not implemented)
+        virtual scalar length() const;
 };
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-} // End namespace aspectRatioModels
 } // End namespace Foam
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
