@@ -11,7 +11,9 @@ runApplication createPatch -overwrite
 cp -r 0.org 0
 runApplication setFields
 
-runApplication $(getapplication)
+runApplication $(getApplication)
+
+runApplication sample
 
 gnuplot plotVelocityProfile.gp
 
