@@ -50,7 +50,7 @@ Description
         type            pressureInletOutletVelocity;
         phi             phi;
         tangentialVelocity uniform (0 0 0);
-        value           uniform 0;
+        value           uniform (0 0 0);
     }
     \endverbatim
 
