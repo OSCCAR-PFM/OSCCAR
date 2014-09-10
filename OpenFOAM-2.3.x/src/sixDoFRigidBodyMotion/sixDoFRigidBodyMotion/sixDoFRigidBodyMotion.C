@@ -331,10 +331,19 @@ void Foam::sixDoFRigidBodyMotion::updateAcceleration
 
 void Foam::sixDoFRigidBodyMotion::status() const
 {
+<<<<<<< HEAD
     Info<< "Centre of rotation: " << centreOfRotation() << nl
         << "Centre of mass: " << centreOfMass() << nl
         << "Linear velocity: " << v() << nl
         << "Angular velocity: " << omega()
+=======
+    Info<< "6-DoF rigid body motion" << nl
+        << "    Centre of rotation: " << centreOfRotation() << nl
+        << "    Centre of mass: " << centreOfMass() << nl
+        << "    Orientation: " << orientation() << nl
+        << "    Linear velocity: " << v() << nl
+        << "    Angular velocity: " << omega()
+>>>>>>> OpenFOAM/master
         << endl;
 }
 

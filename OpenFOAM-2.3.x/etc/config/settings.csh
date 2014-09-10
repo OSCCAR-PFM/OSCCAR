@@ -542,6 +542,11 @@ endif
 # cleanup environment:
 # ~~~~~~~~~~~~~~~~~~~~
 #- keep _foamAddPath _foamAddLib _foamAddMan
+<<<<<<< HEAD
 unset foamCompiler minBufferSize
+=======
+unset minBufferSize
+unsetenv foamCompiler
+>>>>>>> OpenFOAM/master
 
 # ----------------------------------------------------------------- end-of-file

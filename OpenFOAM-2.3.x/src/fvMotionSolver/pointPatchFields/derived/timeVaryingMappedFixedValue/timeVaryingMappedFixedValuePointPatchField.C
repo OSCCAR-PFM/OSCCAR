@@ -2,7 +2,11 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
+<<<<<<< HEAD
     \\  /    A nd           | Copyright (C) 2012-2013 OpenFOAM Foundation
+=======
+    \\  /    A nd           | Copyright (C) 2012-2014 OpenFOAM Foundation
+>>>>>>> OpenFOAM/master
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -42,6 +46,10 @@ timeVaryingMappedFixedValuePointPatchField
     fieldTableName_(iF.name()),
     setAverage_(false),
     perturb_(0),
+<<<<<<< HEAD
+=======
+    mapperPtr_(NULL),
+>>>>>>> OpenFOAM/master
     sampleTimes_(0),
     startSampleTime_(-1),
     startSampledValues_(0),
@@ -68,7 +76,12 @@ timeVaryingMappedFixedValuePointPatchField
     fieldTableName_(ptf.fieldTableName_),
     setAverage_(ptf.setAverage_),
     perturb_(ptf.perturb_),
+<<<<<<< HEAD
     mapperPtr_(ptf.mapperPtr_),
+=======
+    mapMethod_(ptf.mapMethod_),
+    mapperPtr_(NULL),
+>>>>>>> OpenFOAM/master
     sampleTimes_(0),
     startSampleTime_(-1),
     startSampledValues_(0),
@@ -99,6 +112,17 @@ timeVaryingMappedFixedValuePointPatchField
     fieldTableName_(iF.name()),
     setAverage_(readBool(dict.lookup("setAverage"))),
     perturb_(dict.lookupOrDefault("perturb", 1e-5)),
+<<<<<<< HEAD
+=======
+    mapMethod_
+    (
+        dict.lookupOrDefault<word>
+        (
+            "mapMethod",
+            "planarInterpolation"
+        )
+    ),
+>>>>>>> OpenFOAM/master
     mapperPtr_(NULL),
     sampleTimes_(0),
     startSampleTime_(-1),
@@ -146,6 +170,10 @@ timeVaryingMappedFixedValuePointPatchField
     fieldTableName_(ptf.fieldTableName_),
     setAverage_(ptf.setAverage_),
     perturb_(ptf.perturb_),
+<<<<<<< HEAD
+=======
+    mapMethod_(ptf.mapMethod_),
+>>>>>>> OpenFOAM/master
     mapperPtr_(ptf.mapperPtr_),
     sampleTimes_(ptf.sampleTimes_),
     startSampleTime_(ptf.startSampleTime_),
@@ -176,6 +204,10 @@ timeVaryingMappedFixedValuePointPatchField
     fieldTableName_(ptf.fieldTableName_),
     setAverage_(ptf.setAverage_),
     perturb_(ptf.perturb_),
+<<<<<<< HEAD
+=======
+    mapMethod_(ptf.mapMethod_),
+>>>>>>> OpenFOAM/master
     mapperPtr_(ptf.mapperPtr_),
     sampleTimes_(ptf.sampleTimes_),
     startSampleTime_(ptf.startSampleTime_),
@@ -290,13 +322,29 @@ void Foam::timeVaryingMappedFixedValuePointPatchField<Type>::checkTable()
             )
         );
 
+<<<<<<< HEAD
+=======
+        // tbd: run-time selection
+        bool nearestOnly =
+        (
+           !mapMethod_.empty()
+         && mapMethod_ != "planarInterpolation"
+        );
+
+        // Allocate the interpolator
+>>>>>>> OpenFOAM/master
         mapperPtr_.reset
         (
             new pointToPointPlanarInterpolation
             (
                 samplePoints,
                 meshPts,
+<<<<<<< HEAD
                 perturb_
+=======
+                perturb_,
+                nearestOnly
+>>>>>>> OpenFOAM/master
             )
         );
 
@@ -593,6 +641,21 @@ void Foam::timeVaryingMappedFixedValuePointPatchField<Type>::write
             << token::END_STATEMENT << nl;
     }
 
+<<<<<<< HEAD
+=======
+    if
+    (
+        (
+           !mapMethod_.empty()
+         && mapMethod_ != "planarInterpolation"
+        )
+    )
+    {
+        os.writeKeyword("mapMethod") << mapMethod_
+            << token::END_STATEMENT << nl;
+    }
+
+>>>>>>> OpenFOAM/master
     if (offset_.valid())
     {
         offset_->writeData(os);

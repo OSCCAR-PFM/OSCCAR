@@ -2066,6 +2066,18 @@ void Foam::autoLayerDriver::setupLayerInfoTruncation
             }
         }
         nPatchPointLayers = patchNLayers;
+<<<<<<< HEAD
+=======
+
+        // Set any unset patch face layers
+        forAll(nPatchFaceLayers, patchFaceI)
+        {
+            if (nPatchFaceLayers[patchFaceI] == -1)
+            {
+                nPatchFaceLayers[patchFaceI] = 0;
+            }
+        }
+>>>>>>> OpenFOAM/master
     }
     else
     {

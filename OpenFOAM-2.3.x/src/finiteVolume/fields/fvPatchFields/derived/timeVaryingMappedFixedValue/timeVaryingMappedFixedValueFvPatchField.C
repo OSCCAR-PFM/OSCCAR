@@ -2,7 +2,11 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
+<<<<<<< HEAD
     \\  /    A nd           | Copyright (C) 2011-2013 OpenFOAM Foundation
+=======
+    \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
+>>>>>>> OpenFOAM/master
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -72,6 +76,10 @@ timeVaryingMappedFixedValueFvPatchField
     fieldTableName_(ptf.fieldTableName_),
     setAverage_(ptf.setAverage_),
     perturb_(ptf.perturb_),
+<<<<<<< HEAD
+=======
+    mapMethod_(ptf.mapMethod_),
+>>>>>>> OpenFOAM/master
     mapperPtr_(NULL),
     sampleTimes_(0),
     startSampleTime_(-1),
@@ -102,6 +110,17 @@ timeVaryingMappedFixedValueFvPatchField
     fieldTableName_(iF.name()),
     setAverage_(readBool(dict.lookup("setAverage"))),
     perturb_(dict.lookupOrDefault("perturb", 1e-5)),
+<<<<<<< HEAD
+=======
+    mapMethod_
+    (
+        dict.lookupOrDefault<word>
+        (
+            "mapMethod",
+            "planarInterpolation"
+        )
+    ),
+>>>>>>> OpenFOAM/master
     mapperPtr_(NULL),
     sampleTimes_(0),
     startSampleTime_(-1),
@@ -112,6 +131,30 @@ timeVaryingMappedFixedValueFvPatchField
     endAverage_(pTraits<Type>::zero),
     offset_(DataEntry<Type>::New("offset", dict))
 {
+<<<<<<< HEAD
+=======
+    if
+    (
+        mapMethod_ != "planarInterpolation"
+     && mapMethod_ != "nearest"
+    )
+    {
+        FatalIOErrorIn
+        (
+            "timeVaryingMappedFixedValueFvPatchField<Type>::\n"
+            "timeVaryingMappedFixedValueFvPatchField\n"
+            "(\n"
+            "    const fvPatch&\n"
+            "    const DimensionedField<Type, volMesh>&\n"
+            "    const dictionary&\n"
+            ")\n",
+            dict
+        )   << "mapMethod should be one of 'planarInterpolation'"
+            << ", 'nearest'" << exit(FatalIOError);
+    }
+
+
+>>>>>>> OpenFOAM/master
     dict.readIfPresent("fieldTableName", fieldTableName_);
 
     if (dict.found("value"))
@@ -140,6 +183,10 @@ timeVaryingMappedFixedValueFvPatchField
     fieldTableName_(ptf.fieldTableName_),
     setAverage_(ptf.setAverage_),
     perturb_(ptf.perturb_),
+<<<<<<< HEAD
+=======
+    mapMethod_(ptf.mapMethod_),
+>>>>>>> OpenFOAM/master
     mapperPtr_(NULL),
     sampleTimes_(ptf.sampleTimes_),
     startSampleTime_(ptf.startSampleTime_),
@@ -169,6 +216,10 @@ timeVaryingMappedFixedValueFvPatchField
     fieldTableName_(ptf.fieldTableName_),
     setAverage_(ptf.setAverage_),
     perturb_(ptf.perturb_),
+<<<<<<< HEAD
+=======
+    mapMethod_(ptf.mapMethod_),
+>>>>>>> OpenFOAM/master
     mapperPtr_(NULL),
     sampleTimes_(ptf.sampleTimes_),
     startSampleTime_(ptf.startSampleTime_),
@@ -258,6 +309,17 @@ void timeVaryingMappedFixedValueFvPatchField<Type>::checkTable()
                 << samplePointsFile << endl;
         }
 
+<<<<<<< HEAD
+=======
+
+        // tbd: run-time selection
+        bool nearestOnly =
+        (
+           !mapMethod_.empty()
+         && mapMethod_ != "planarInterpolation"
+        );
+
+>>>>>>> OpenFOAM/master
         // Allocate the interpolator
         mapperPtr_.reset
         (
@@ -265,7 +327,12 @@ void timeVaryingMappedFixedValueFvPatchField<Type>::checkTable()
             (
                 samplePoints,
                  this->patch().patch().faceCentres(),
+<<<<<<< HEAD
                 perturb_
+=======
+                perturb_,
+                nearestOnly
+>>>>>>> OpenFOAM/master
             )
         );
 
@@ -560,6 +627,21 @@ void timeVaryingMappedFixedValueFvPatchField<Type>::write(Ostream& os) const
             << token::END_STATEMENT << nl;
     }
 
+<<<<<<< HEAD
+=======
+    if
+    (
+        (
+           !mapMethod_.empty()
+         && mapMethod_ != "planarInterpolation"
+        )
+    )
+    {
+        os.writeKeyword("mapMethod") << mapMethod_
+            << token::END_STATEMENT << nl;
+    }
+
+>>>>>>> OpenFOAM/master
     offset_->writeData(os);
 
     this->writeEntry("value", os);

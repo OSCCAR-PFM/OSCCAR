@@ -73,4 +73,14 @@ inline Foam::scalar Foam::meshToMesh::V() const
 }
 
 
+<<<<<<< HEAD
+=======
+inline const Foam::PtrList<Foam::AMIPatchToPatchInterpolation>&
+Foam::meshToMesh::patchAMIs() const
+{
+    return patchAMIs_;
+}
+
+
+>>>>>>> OpenFOAM/master
 // ************************************************************************* //

@@ -1179,7 +1179,13 @@ Foam::tmp<Foam::scalarField> Foam::polyMesh::movePoints
 
     if (debug && moveError)
     {
+<<<<<<< HEAD
         write();
+=======
+        // Write mesh to ease debugging. Note we want to avoid calling
+        // e.g. fvMesh::write since meshPhi not yet complete.
+        polyMesh::write();
+>>>>>>> OpenFOAM/master
     }
 
     return sweptVols;
