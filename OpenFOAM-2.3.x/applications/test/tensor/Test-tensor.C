@@ -70,7 +70,10 @@ int main()
     Info<< (t7 && symm(t7)) - (t7 && 0.5*(t7 + t7.T())) << endl;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> e703b792933da4136816a0d0616d2757672e396a
 
     /*
     // Lots of awkward eigenvector tests ...
@@ -187,6 +190,9 @@ int main()
     */
 
 
+<<<<<<< HEAD
 >>>>>>> OpenFOAM/master
+=======
+>>>>>>> e703b792933da4136816a0d0616d2757672e396a
     return 0;
 }

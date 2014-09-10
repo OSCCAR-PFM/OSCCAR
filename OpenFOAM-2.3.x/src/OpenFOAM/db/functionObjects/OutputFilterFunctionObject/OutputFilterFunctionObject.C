@@ -3,10 +3,14 @@
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
 <<<<<<< HEAD
+<<<<<<< HEAD
     \\  /    A nd           | Copyright (C) 2011-2013 OpenFOAM Foundation
 =======
     \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
 >>>>>>> OpenFOAM/master
+=======
+    \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
+>>>>>>> e703b792933da4136816a0d0616d2757672e396a
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -115,12 +119,18 @@ Foam::OutputFilterFunctionObject<OutputFilter>::OutputFilterFunctionObject
     timeStart_(-VGREAT),
     timeEnd_(VGREAT),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> e703b792933da4136816a0d0616d2757672e396a
     nStepsToStartTimeChange_
     (
         dict.lookupOrDefault("nStepsToStartTimeChange", 3)
     ),
+<<<<<<< HEAD
 >>>>>>> OpenFOAM/master
+=======
+>>>>>>> e703b792933da4136816a0d0616d2757672e396a
     outputControl_(t, dict, "output"),
     evaluateControl_(t, dict, "evaluate")
 {

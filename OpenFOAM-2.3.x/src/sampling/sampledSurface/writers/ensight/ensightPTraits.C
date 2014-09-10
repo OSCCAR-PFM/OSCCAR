@@ -3,10 +3,14 @@
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
 <<<<<<< HEAD
+<<<<<<< HEAD
     \\  /    A nd           | Copyright (C) 2013 OpenFOAM Foundation
 =======
     \\  /    A nd           | Copyright (C) 2013-2014 OpenFOAM Foundation
 >>>>>>> OpenFOAM/master
+=======
+    \\  /    A nd           | Copyright (C) 2013-2014 OpenFOAM Foundation
+>>>>>>> e703b792933da4136816a0d0616d2757672e396a
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -45,10 +49,14 @@ const char* const Foam::ensightPTraits<Foam::symmTensor>::typeName =
 
 const char* const Foam::ensightPTraits<Foam::tensor>::typeName =
 <<<<<<< HEAD
+<<<<<<< HEAD
     Foam::pTraits<Foam::tensor>::typeName;
 =======
     "tensor asym";
 >>>>>>> OpenFOAM/master
+=======
+    "tensor asym";
+>>>>>>> e703b792933da4136816a0d0616d2757672e396a
 
 
 // ************************************************************************* //
