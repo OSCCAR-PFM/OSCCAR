@@ -10,9 +10,9 @@ Most of the people involved use Ubuntu linux. Therefore, this package is primari
 To be able to get started a few dependencies are needed to compile OpenFOAM. These dependencies are the same as mentioned on the [OpenFOAM website](http://www.openfoam.org/download/git.php) plus octave and doxygen:
 ```bash
 sudo apt-get install \
-git build-essential flex bison cmake zlib1g-dev qt4-dev-tools libqt4-dev \
-gnuplot libreadline-dev libncurses-dev libxt-dev libscotch-dev libopenmpi-dev \
-libcgal-dev octave3.2 doxygen
+    git build-essential flex bison cmake zlib1g-dev qt4-dev-tools libqt4-dev \
+    gnuplot libreadline-dev libncurses-dev libxt-dev libscotch-dev libopenmpi-dev \
+    libcgal-dev octave3.2 doxygen
 ```
 To compile OpenFOAM-2.3.x it is useful to install gcc-4.8. Of course you can compile gcc-4.8 or clang yourself, but for the less adventurous among us, you can also install it [via a backport](http://askubuntu.com/questions/271388/how-to-install-gcc-4-8-in-ubuntu-12-04-from-the-terminal):
 ```bash
