@@ -1,12 +1,7 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-<<<<<<< HEAD
-    \\  /    A nd           | Copyright (C) 2013 OpenFOAM Foundation
-=======
     \\  /    A nd           | Copyright (C) 2013-2014 OpenFOAM Foundation
->>>>>>> OpenFOAM/master
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -166,8 +161,6 @@ public:
                 const label fieldI
             );
 
-<<<<<<< HEAD
-=======
             //- Explicit and implicit matrix contributions for compressible
             //  equations
             virtual void addSup
@@ -177,7 +170,6 @@ public:
                 const label fieldI
             );
 
->>>>>>> OpenFOAM/master
             //- Set value
             virtual void setValue
             (

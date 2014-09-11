@@ -1,12 +1,7 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-<<<<<<< HEAD
-    \\  /    A nd           | Copyright (C) 2012-2013 OpenFOAM Foundation
-=======
     \\  /    A nd           | Copyright (C) 2012-2014 OpenFOAM Foundation
->>>>>>> OpenFOAM/master
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -33,14 +28,9 @@ License
 #include "vector2D.H"
 #include "triSurface.H"
 #include "triSurfaceTools.H"
-<<<<<<< HEAD
-#include "OFstream.H"
-#include "Time.H"
-=======
 #include "OBJstream.H"
 #include "Time.H"
 #include "matchPoints.H"
->>>>>>> OpenFOAM/master
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -149,116 +139,6 @@ void Foam::pointToPointPlanarInterpolation::calcWeights
     const pointField& destPoints
 )
 {
-<<<<<<< HEAD
-    tmp<vectorField> tlocalVertices
-    (
-        referenceCS_.localPosition(sourcePoints)
-    );
-    vectorField& localVertices = tlocalVertices();
-
-    const boundBox bb(localVertices, true);
-    const point bbMid(bb.midpoint());
-
-    if (debug)
-    {
-        Info<< "pointToPointPlanarInterpolation::readData :"
-            << " Perturbing points with " << perturb_
-            << " fraction of a random position inside " << bb
-            << " to break any ties on regular meshes."
-            << nl << endl;
-    }
-
-    Random rndGen(123456);
-    forAll(localVertices, i)
-    {
-        localVertices[i] +=
-            perturb_
-           *(rndGen.position(bb.min(), bb.max())-bbMid);
-    }
-
-    // Determine triangulation
-    List<vector2D> localVertices2D(localVertices.size());
-    forAll(localVertices, i)
-    {
-        localVertices2D[i][0] = localVertices[i][0];
-        localVertices2D[i][1] = localVertices[i][1];
-    }
-
-    triSurface s(triSurfaceTools::delaunay2D(localVertices2D));
-
-    tmp<pointField> tlocalFaceCentres
-    (
-        referenceCS_.localPosition
-        (
-            destPoints
-        )
-    );
-    const pointField& localFaceCentres = tlocalFaceCentres();
-
-    if (debug)
-    {
-        Pout<< "pointToPointPlanarInterpolation::readData :"
-            <<" Dumping triangulated surface to triangulation.stl" << endl;
-        s.write("triangulation.stl");
-
-        OFstream str("localFaceCentres.obj");
-        Pout<< "readSamplePoints :"
-            << " Dumping face centres to " << str.name() << endl;
-
-        forAll(localFaceCentres, i)
-        {
-            const point& p = localFaceCentres[i];
-            str<< "v " << p.x() << ' ' << p.y() << ' ' << p.z() << nl;
-        }
-    }
-
-    // Determine interpolation onto face centres.
-    triSurfaceTools::calcInterpolationWeights
-    (
-        s,
-        localFaceCentres,   // points to interpolate to
-        nearestVertex_,
-        nearestVertexWeight_
-    );
-
-    if (debug)
-    {
-        forAll(sourcePoints, i)
-        {
-            Pout<< "source:" << i << " at:" << sourcePoints[i]
-                << " 2d:" << localVertices[i]
-                << endl;
-        }
-
-
-        forAll(destPoints, i)
-        {
-            label v0 = nearestVertex_[i][0];
-            label v1 = nearestVertex_[i][1];
-            label v2 = nearestVertex_[i][2];
-
-            Pout<< "For location " << destPoints[i]
-                << " 2d:" << localFaceCentres[i]
-                << " sampling vertices" << nl
-                << "    " << v0
-                << " at:" << sourcePoints[v0]
-                << " weight:" << nearestVertexWeight_[i][0] << nl;
-
-            if (v1 != -1)
-            {
-                Pout<< "    " << v1
-                    << " at:" << sourcePoints[v1]
-                    << " weight:" << nearestVertexWeight_[i][1] << nl;
-            }
-            if (v2 != -1)
-            {
-                Pout<< "    " << v2
-                    << " at:" << sourcePoints[v2]
-                    << " weight:" << nearestVertexWeight_[i][2] << nl;
-            }
-
-            Pout<< endl;
-=======
     if (nearestOnly_)
     {
         labelList destToSource;
@@ -425,7 +305,6 @@ void Foam::pointToPointPlanarInterpolation::calcWeights
 
                 Pout<< endl;
             }
->>>>>>> OpenFOAM/master
         }
     }
 }
@@ -437,15 +316,6 @@ Foam::pointToPointPlanarInterpolation::pointToPointPlanarInterpolation
 (
     const pointField& sourcePoints,
     const pointField& destPoints,
-<<<<<<< HEAD
-    const scalar perturb
-)
-:
-    perturb_(perturb),
-    referenceCS_(calcCoordinateSystem(sourcePoints)),
-    nPoints_(sourcePoints.size())
-
-=======
     const scalar perturb,
     const bool nearestOnly
 )
@@ -454,7 +324,6 @@ Foam::pointToPointPlanarInterpolation::pointToPointPlanarInterpolation
     nearestOnly_(nearestOnly),
     referenceCS_(calcCoordinateSystem(sourcePoints)),
     nPoints_(sourcePoints.size())
->>>>>>> OpenFOAM/master
 {
     calcWeights(sourcePoints, destPoints);
 }
@@ -469,10 +338,7 @@ Foam::pointToPointPlanarInterpolation::pointToPointPlanarInterpolation
 )
 :
     perturb_(perturb),
-<<<<<<< HEAD
-=======
     nearestOnly_(false),
->>>>>>> OpenFOAM/master
     referenceCS_(referenceCS),
     nPoints_(sourcePoints.size())
 {

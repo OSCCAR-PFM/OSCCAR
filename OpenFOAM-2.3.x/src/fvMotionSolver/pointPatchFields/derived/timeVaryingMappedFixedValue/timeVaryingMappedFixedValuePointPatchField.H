@@ -1,12 +1,7 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-<<<<<<< HEAD
-    \\  /    A nd           | Copyright (C) 2012-2013 OpenFOAM Foundation
-=======
     \\  /    A nd           | Copyright (C) 2012-2014 OpenFOAM Foundation
->>>>>>> OpenFOAM/master
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -72,14 +67,10 @@ class timeVaryingMappedFixedValuePointPatchField
         //- Fraction of perturbation (fraction of bounding box) to add
         scalar perturb_;
 
-<<<<<<< HEAD
-        //- 2D interpolation
-=======
         //- Interpolation scheme to use
         word mapMethod_;
 
         //- 2D interpolation (for 'planarInterpolation' mapMethod)
->>>>>>> OpenFOAM/master
         autoPtr<pointToPointPlanarInterpolation> mapperPtr_;
 
         //- List of boundaryData time directories

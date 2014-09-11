@@ -1,5 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
     \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
@@ -2066,8 +2065,6 @@ void Foam::autoLayerDriver::setupLayerInfoTruncation
             }
         }
         nPatchPointLayers = patchNLayers;
-<<<<<<< HEAD
-=======
 
         // Set any unset patch face layers
         forAll(nPatchFaceLayers, patchFaceI)
@@ -2077,7 +2074,6 @@ void Foam::autoLayerDriver::setupLayerInfoTruncation
                 nPatchFaceLayers[patchFaceI] = 0;
             }
         }
->>>>>>> OpenFOAM/master
     }
     else
     {

@@ -1,5 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
     \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
@@ -41,12 +40,8 @@ void mapConsistentMesh
 (
     const fvMesh& meshSource,
     const fvMesh& meshTarget,
-<<<<<<< HEAD
-    const meshToMesh::interpolationMethod& mapMethod,
-=======
     const word& mapMethod,
     const word& AMIMapMethod,
->>>>>>> OpenFOAM/master
     const bool subtract,
     const HashSet<word>& selectedFields,
     const bool noLagrangian
@@ -55,11 +50,7 @@ void mapConsistentMesh
     Info<< nl << "Consistently creating and mapping fields for time "
         << meshSource.time().timeName() << nl << endl;
 
-<<<<<<< HEAD
-    meshToMesh interp(meshSource, meshTarget, mapMethod);
-=======
     meshToMesh interp(meshSource, meshTarget, mapMethod, AMIMapMethod);
->>>>>>> OpenFOAM/master
 
     if (subtract)
     {
@@ -88,12 +79,8 @@ void mapSubMesh
     const fvMesh& meshTarget,
     const HashTable<word>& patchMap,
     const wordList& cuttingPatches,
-<<<<<<< HEAD
-    const meshToMesh::interpolationMethod& mapMethod,
-=======
     const word& mapMethod,
     const word& AMIMapMethod,
->>>>>>> OpenFOAM/master
     const bool subtract,
     const HashSet<word>& selectedFields,
     const bool noLagrangian
@@ -107,10 +94,7 @@ void mapSubMesh
         meshSource,
         meshTarget,
         mapMethod,
-<<<<<<< HEAD
-=======
         AMIMapMethod,
->>>>>>> OpenFOAM/master
         patchMap,
         cuttingPatches
     );
@@ -204,15 +188,12 @@ int main(int argc, char *argv[])
         "word",
         "specify the mapping method (direct|mapNearest|cellVolumeWeight)"
     );
-<<<<<<< HEAD
-=======
     argList::addOption
     (
         "patchMapMethod",
         "word",
         "specify the patch mapping method (direct|mapNearest|faceAreaWeight)"
     );
->>>>>>> OpenFOAM/master
     argList::addBoolOption
     (
         "subtract",
@@ -258,19 +239,6 @@ int main(int argc, char *argv[])
 
     const bool consistent = args.optionFound("consistent");
 
-<<<<<<< HEAD
-    meshToMesh::interpolationMethod mapMethod =
-        meshToMesh::imCellVolumeWeight;
-
-    if (args.optionFound("mapMethod"))
-    {
-        mapMethod = meshToMesh::interpolationMethodNames_[args["mapMethod"]];
-
-        Info<< "Mapping method: "
-            << meshToMesh::interpolationMethodNames_[mapMethod] << endl;
-    }
-
-=======
 
     word mapMethod = meshToMesh::interpolationMethodNames_
     [
@@ -315,7 +283,6 @@ int main(int argc, char *argv[])
 
 
 
->>>>>>> OpenFOAM/master
     const bool subtract = args.optionFound("subtract");
     if (subtract)
     {
@@ -388,10 +355,7 @@ int main(int argc, char *argv[])
             meshSource,
             meshTarget,
             mapMethod,
-<<<<<<< HEAD
-=======
             patchMapMethod,
->>>>>>> OpenFOAM/master
             subtract,
             selectedFields,
             noLagrangian
@@ -406,10 +370,7 @@ int main(int argc, char *argv[])
             patchMap,
             addProcessorPatches(meshTarget, cuttingPatches),
             mapMethod,
-<<<<<<< HEAD
-=======
             patchMapMethod,
->>>>>>> OpenFOAM/master
             subtract,
             selectedFields,
             noLagrangian

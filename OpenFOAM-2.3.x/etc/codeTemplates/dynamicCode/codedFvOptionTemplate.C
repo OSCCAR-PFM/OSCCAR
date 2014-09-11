@@ -1,12 +1,7 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-<<<<<<< HEAD
-    \\  /    A nd           | Copyright (C) 2013 OpenFOAM Foundation
-=======
     \\  /    A nd           | Copyright (C) 2013-2014 OpenFOAM Foundation
->>>>>>> OpenFOAM/master
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -47,10 +42,7 @@ namespace Foam
 
 namespace fv
 {
-<<<<<<< HEAD
-=======
 
->>>>>>> OpenFOAM/master
 // * * * * * * * * * * * * * * * Local Functions * * * * * * * * * * * * * * //
 
 //{{{ begin localCode
@@ -168,8 +160,6 @@ void ${typeName}FvOption${SourceType}::addSup
 }
 
 
-<<<<<<< HEAD
-=======
 void ${typeName}FvOption${SourceType}::addSup
 (
     const volScalarField& rho,
@@ -188,7 +178,6 @@ void ${typeName}FvOption${SourceType}::addSup
 }
 
 
->>>>>>> OpenFOAM/master
 void ${typeName}FvOption${SourceType}::setValue
 (
     fvMatrix<${TemplateType}>& eqn,

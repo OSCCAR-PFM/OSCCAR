@@ -1,5 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
     \\  /    A nd           | Copyright (C) 2012-2014 OpenFOAM Foundation
@@ -92,11 +91,7 @@ private:
         List<label> tgtPatchID_;
 
         //- List of AMIs between source and target patches
-<<<<<<< HEAD
-        mutable PtrList<AMIPatchToPatchInterpolation> patchAMIs_;
-=======
         PtrList<AMIPatchToPatchInterpolation> patchAMIs_;
->>>>>>> OpenFOAM/master
 
         //- Cutting patches whose values are set using a zero-gradient condition
         List<label> cuttingPatches_;
@@ -113,12 +108,6 @@ private:
         //- Target to source cell interpolation weights
         scalarListList tgtToSrcCellWght_;
 
-<<<<<<< HEAD
-        //- Interpolation method
-        interpolationMethod method_;
-
-=======
->>>>>>> OpenFOAM/master
         //- Cell total volume in overlap region [m3]
         scalar V_;
 
@@ -150,24 +139,6 @@ private:
             scalarListList& wght
         ) const;
 
-<<<<<<< HEAD
-        //- Calculate the addressing between overalping regions of src and tgt
-        //  meshes
-        void calcAddressing(const polyMesh& src, const polyMesh& tgt);
-
-        //- Calculate - main driver function
-        void calculate();
-
-        //- Conversion between mesh and patch interpolation methods
-        AMIPatchToPatchInterpolation::interpolationMethod
-        interpolationMethodAMI
-        (
-            const interpolationMethod method
-        ) const;
-
-        //- Return the list of AMIs between source and target patches
-        const PtrList<AMIPatchToPatchInterpolation>& patchAMIs() const;
-=======
         //- Calculate the addressing between overlapping regions of src and tgt
         //  meshes
         void calcAddressing
@@ -203,7 +174,6 @@ private:
         //- Return the list of AMIs between source and target patches
         inline const PtrList<AMIPatchToPatchInterpolation>&
         patchAMIs() const;
->>>>>>> OpenFOAM/master
 
 
         // Parallel operations
@@ -282,8 +252,6 @@ public:
         const bool interpAllPatches = true
     );
 
-<<<<<<< HEAD
-=======
     //- Construct from source and target meshes, generic mapping methods
     meshToMesh
     (
@@ -293,7 +261,6 @@ public:
         const word& AMIMethodName,  // boundary mapping
         const bool interpAllPatches = true
     );
->>>>>>> OpenFOAM/master
 
     //- Construct from source and target meshes
     meshToMesh
@@ -306,8 +273,6 @@ public:
     );
 
 
-<<<<<<< HEAD
-=======
     //- Construct from source and target meshes, generic mapping methods
     meshToMesh
     (
@@ -320,7 +285,6 @@ public:
     );
 
 
->>>>>>> OpenFOAM/master
     //- Destructor
     virtual ~meshToMesh();
 
@@ -350,8 +314,6 @@ public:
             //- Return const access to the overlap volume
             inline scalar V() const;
 
-<<<<<<< HEAD
-=======
             //- Conversion between mesh and patch interpolation methods
             static AMIPatchToPatchInterpolation::interpolationMethod
             interpolationMethodAMI
@@ -359,7 +321,6 @@ public:
                 const interpolationMethod method
             );
 
->>>>>>> OpenFOAM/master
 
         // Evaluation
 

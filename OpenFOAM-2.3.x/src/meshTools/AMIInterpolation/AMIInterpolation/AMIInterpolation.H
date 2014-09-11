@@ -1,5 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
     \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
@@ -110,11 +109,7 @@ private:
     // Private data
 
         //- Interpolation method
-<<<<<<< HEAD
-        interpolationMethod method_;
-=======
         const word methodName_;
->>>>>>> OpenFOAM/master
 
         //- Flag to indicate that the two patches are co-directional and
         //  that the orientation of the target patch should be reversed
@@ -254,11 +249,7 @@ private:
             );
 
 
-<<<<<<< HEAD
-        // Constructor helper
-=======
         // Constructor helpers
->>>>>>> OpenFOAM/master
 
             static void agglomerate
             (
@@ -277,15 +268,12 @@ private:
                 autoPtr<mapDistribute>& tgtMap
             );
 
-<<<<<<< HEAD
-=======
             void constructFromSurface
             (
                 const SourcePatch& srcPatch,
                 const TargetPatch& tgtPatch,
                 const autoPtr<searchableSurface>& surfPtr
             );
->>>>>>> OpenFOAM/master
 
 public:
 
@@ -303,8 +291,6 @@ public:
             const bool reverseTarget = false
         );
 
-<<<<<<< HEAD
-=======
         //- Construct from components
         AMIInterpolation
         (
@@ -318,7 +304,6 @@ public:
             const bool reverseTarget = false
         );
 
->>>>>>> OpenFOAM/master
         //- Construct from components, with projection surface
         AMIInterpolation
         (
@@ -332,8 +317,6 @@ public:
             const bool reverseTarget = false
         );
 
-<<<<<<< HEAD
-=======
         //- Construct from components, with projection surface
         AMIInterpolation
         (
@@ -348,7 +331,6 @@ public:
             const bool reverseTarget = false
         );
 
->>>>>>> OpenFOAM/master
         //- Construct from agglomeration of AMIInterpolation. Agglomeration
         //  passed in as new coarse size and addressing from fine from coarse
         AMIInterpolation

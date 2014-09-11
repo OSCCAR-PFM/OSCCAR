@@ -1,5 +1,4 @@
 #----------------------------------*-sh-*--------------------------------------
-# =========                 |
 # \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
 #  \\    /   O peration     |
 #   \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
@@ -542,11 +541,7 @@ endif
 # cleanup environment:
 # ~~~~~~~~~~~~~~~~~~~~
 #- keep _foamAddPath _foamAddLib _foamAddMan
-<<<<<<< HEAD
-unset foamCompiler minBufferSize
-=======
 unset minBufferSize
 unsetenv foamCompiler
->>>>>>> OpenFOAM/master
 
 # ----------------------------------------------------------------- end-of-file

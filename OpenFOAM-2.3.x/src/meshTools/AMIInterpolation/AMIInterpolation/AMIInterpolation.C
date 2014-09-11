@@ -1,5 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
     \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
@@ -536,68 +535,6 @@ void Foam::AMIInterpolation<SourcePatch, TargetPatch>::agglomerate
 }
 
 
-<<<<<<< HEAD
-// * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
-
-template<class SourcePatch, class TargetPatch>
-Foam::AMIInterpolation<SourcePatch, TargetPatch>::AMIInterpolation
-(
-    const SourcePatch& srcPatch,
-    const TargetPatch& tgtPatch,
-    const faceAreaIntersect::triangulationMode& triMode,
-    const bool requireMatch,
-    const interpolationMethod& method,
-    const scalar lowWeightCorrection,
-    const bool reverseTarget
-)
-:
-    method_(method),
-    reverseTarget_(reverseTarget),
-    requireMatch_(requireMatch),
-    singlePatchProc_(-999),
-    lowWeightCorrection_(lowWeightCorrection),
-    srcAddress_(),
-    srcWeights_(),
-    srcWeightsSum_(),
-    tgtAddress_(),
-    tgtWeights_(),
-    tgtWeightsSum_(),
-    triMode_(triMode),
-    srcMapPtr_(NULL),
-    tgtMapPtr_(NULL)
-{
-    update(srcPatch, tgtPatch);
-}
-
-
-template<class SourcePatch, class TargetPatch>
-Foam::AMIInterpolation<SourcePatch, TargetPatch>::AMIInterpolation
-(
-    const SourcePatch& srcPatch,
-    const TargetPatch& tgtPatch,
-    const autoPtr<searchableSurface>& surfPtr,
-    const faceAreaIntersect::triangulationMode& triMode,
-    const bool requireMatch,
-    const interpolationMethod& method,
-    const scalar lowWeightCorrection,
-    const bool reverseTarget
-)
-:
-    method_(method),
-    reverseTarget_(reverseTarget),
-    requireMatch_(requireMatch),
-    singlePatchProc_(-999),
-    lowWeightCorrection_(lowWeightCorrection),
-    srcAddress_(),
-    srcWeights_(),
-    srcWeightsSum_(),
-    tgtAddress_(),
-    tgtWeights_(),
-    tgtWeightsSum_(),
-    triMode_(triMode),
-    srcMapPtr_(NULL),
-    tgtMapPtr_(NULL)
-=======
 template<class SourcePatch, class TargetPatch>
 void Foam::AMIInterpolation<SourcePatch, TargetPatch>::constructFromSurface
 (
@@ -605,7 +542,6 @@ void Foam::AMIInterpolation<SourcePatch, TargetPatch>::constructFromSurface
     const TargetPatch& tgtPatch,
     const autoPtr<searchableSurface>& surfPtr
 )
->>>>>>> OpenFOAM/master
 {
     if (surfPtr.valid())
     {
@@ -668,8 +604,6 @@ void Foam::AMIInterpolation<SourcePatch, TargetPatch>::constructFromSurface
 }
 
 
-<<<<<<< HEAD
-=======
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 template<class SourcePatch, class TargetPatch>
@@ -798,7 +732,6 @@ Foam::AMIInterpolation<SourcePatch, TargetPatch>::AMIInterpolation
 }
 
 
->>>>>>> OpenFOAM/master
 template<class SourcePatch, class TargetPatch>
 Foam::AMIInterpolation<SourcePatch, TargetPatch>::AMIInterpolation
 (
@@ -807,11 +740,7 @@ Foam::AMIInterpolation<SourcePatch, TargetPatch>::AMIInterpolation
     const labelList& targetRestrictAddressing
 )
 :
-<<<<<<< HEAD
-    method_(fineAMI.method_),
-=======
     methodName_(fineAMI.methodName_),
->>>>>>> OpenFOAM/master
     reverseTarget_(fineAMI.reverseTarget_),
     requireMatch_(fineAMI.requireMatch_),
     singlePatchProc_(fineAMI.singlePatchProc_),
@@ -1028,11 +957,7 @@ void Foam::AMIInterpolation<SourcePatch, TargetPatch>::update
         (
             AMIMethod<SourcePatch, TargetPatch>::New
             (
-<<<<<<< HEAD
-                interpolationMethodToWord(method_),
-=======
                 methodName_,
->>>>>>> OpenFOAM/master
                 srcPatch,
                 newTgtPatch,
                 srcMagSf_,
@@ -1149,11 +1074,7 @@ void Foam::AMIInterpolation<SourcePatch, TargetPatch>::update
         (
             AMIMethod<SourcePatch, TargetPatch>::New
             (
-<<<<<<< HEAD
-                interpolationMethodToWord(method_),
-=======
                 methodName_,
->>>>>>> OpenFOAM/master
                 srcPatch,
                 tgtPatch,
                 srcMagSf_,

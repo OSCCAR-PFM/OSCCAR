@@ -1,5 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
     \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation
@@ -1179,19 +1178,12 @@ Foam::tmp<Foam::scalarField> Foam::polyMesh::movePoints
 
     if (debug && moveError)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        write();
-=======
         // Write mesh to ease debugging. Note we want to avoid calling
         // e.g. fvMesh::write since meshPhi not yet complete.
         polyMesh::write();
->>>>>>> OpenFOAM/master
-=======
         // Write mesh to ease debugging. Note we want to avoid calling
         // e.g. fvMesh::write since meshPhi not yet complete.
         polyMesh::write();
->>>>>>> e703b792933da4136816a0d0616d2757672e396a
     }
 
     return sweptVols;

@@ -1,5 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
     \\  /    A nd           | Copyright (C) 2011-2013 OpenFOAM Foundation
@@ -65,14 +64,7 @@ void Foam::fieldCoordinateSystemTransform::transformField
 
     dimensionedTensor R("R", field.dimensions(), coordSys_.R().R());
 
-<<<<<<< HEAD
-    forAll(field, i)
-    {
-        Foam::transform(transField, R, transField);
-    }
-=======
     Foam::transform(transField, R, transField);
->>>>>>> OpenFOAM/master
 
     Info<< "    writing field " << transField.name() << nl << endl;
 

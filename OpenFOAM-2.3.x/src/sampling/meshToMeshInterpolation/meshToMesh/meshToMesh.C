@@ -1,5 +1,4 @@
 /*---------------------------------------------------------------------------*\
-  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
     \\  /    A nd           | Copyright (C) 2012-2014 OpenFOAM Foundation
@@ -119,10 +118,7 @@ void Foam::meshToMesh::normaliseWeights
 
 void Foam::meshToMesh::calcAddressing
 (
-<<<<<<< HEAD
-=======
     const word& methodName,
->>>>>>> OpenFOAM/master
     const polyMesh& src,
     const polyMesh& tgt
 )
@@ -131,11 +127,7 @@ void Foam::meshToMesh::calcAddressing
     (
         meshToMeshMethod::New
         (
-<<<<<<< HEAD
-            interpolationMethodNames_[method_],
-=======
             methodName,
->>>>>>> OpenFOAM/master
             src,
             tgt
         )
@@ -158,19 +150,11 @@ void Foam::meshToMesh::calcAddressing
 }
 
 
-<<<<<<< HEAD
-void Foam::meshToMesh::calculate()
-{
-    Info<< "Creating mesh-to-mesh addressing for " << srcRegion_.name()
-        << " and " << tgtRegion_.name() << " regions using "
-        << interpolationMethodNames_[method_] << endl;
-=======
 void Foam::meshToMesh::calculate(const word& methodName)
 {
     Info<< "Creating mesh-to-mesh addressing for " << srcRegion_.name()
         << " and " << tgtRegion_.name() << " regions using "
         << methodName << endl;
->>>>>>> OpenFOAM/master
 
     singleMeshProc_ = calcDistribution(srcRegion_, tgtRegion_);
 
@@ -257,11 +241,7 @@ void Foam::meshToMesh::calculate(const word& methodName)
             }
         }
 
-<<<<<<< HEAD
-        calcAddressing(srcRegion_, newTgt);
-=======
         calcAddressing(methodName, srcRegion_, newTgt);
->>>>>>> OpenFOAM/master
 
         // per source cell the target cell address in newTgt mesh
         forAll(srcToTgtCellAddr_, i)
@@ -340,11 +320,7 @@ void Foam::meshToMesh::calculate(const word& methodName)
     }
     else
     {
-<<<<<<< HEAD
-        calcAddressing(srcRegion_, tgtRegion_);
-=======
         calcAddressing(methodName, srcRegion_, tgtRegion_);
->>>>>>> OpenFOAM/master
 
         normaliseWeights
         (
@@ -366,18 +342,9 @@ void Foam::meshToMesh::calculate(const word& methodName)
 
 
 Foam::AMIPatchToPatchInterpolation::interpolationMethod
-<<<<<<< HEAD
-Foam::meshToMesh::interpolationMethodAMI
-(
-    const interpolationMethod method
-) const
-{
-    switch (method_)
-=======
 Foam::meshToMesh::interpolationMethodAMI(const interpolationMethod method)
 {
     switch (method)
->>>>>>> OpenFOAM/master
     {
         case imDirect:
         {
@@ -404,11 +371,7 @@ Foam::meshToMesh::interpolationMethodAMI(const interpolationMethod method)
                     "const interpolationMethod method"
                 ") const"
             )
-<<<<<<< HEAD
-                << "Unhandled enumeration " << method_
-=======
                 << "Unhandled enumeration " << method
->>>>>>> OpenFOAM/master
                 << abort(FatalError);
         }
     }
@@ -417,92 +380,6 @@ Foam::meshToMesh::interpolationMethodAMI(const interpolationMethod method)
 }
 
 
-<<<<<<< HEAD
-const Foam::PtrList<Foam::AMIPatchToPatchInterpolation>&
-Foam::meshToMesh::patchAMIs() const
-{
-    if (patchAMIs_.empty())
-    {
-        const word amiMethod =
-            AMIPatchToPatchInterpolation::interpolationMethodToWord
-            (
-                interpolationMethodAMI(method_)
-            );
-
-        patchAMIs_.setSize(srcPatchID_.size());
-
-        forAll(srcPatchID_, i)
-        {
-            label srcPatchI = srcPatchID_[i];
-            label tgtPatchI = tgtPatchID_[i];
-
-            const polyPatch& srcPP = srcRegion_.boundaryMesh()[srcPatchI];
-            const polyPatch& tgtPP = tgtRegion_.boundaryMesh()[tgtPatchI];
-
-            Info<< "Creating AMI between source patch " << srcPP.name()
-                << " and target patch " << tgtPP.name()
-                << " using " << amiMethod
-                << endl;
-
-            Info<< incrIndent;
-
-            patchAMIs_.set
-            (
-                i,
-                new AMIPatchToPatchInterpolation
-                (
-                    srcPP,
-                    tgtPP,
-                    faceAreaIntersect::tmMesh,
-                    false,
-                    interpolationMethodAMI(method_),
-                    -1,
-                    true // flip target patch since patch normals are aligned
-                )
-            );
-
-            Info<< decrIndent;
-        }
-    }
-
-    return patchAMIs_;
-}
-
-
-// * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
-
-Foam::meshToMesh::meshToMesh
-(
-    const polyMesh& src,
-    const polyMesh& tgt,
-    const interpolationMethod& method,
-    bool interpAllPatches
-)
-:
-    srcRegion_(src),
-    tgtRegion_(tgt),
-    srcPatchID_(),
-    tgtPatchID_(),
-    patchAMIs_(),
-    cuttingPatches_(),
-    srcToTgtCellAddr_(),
-    tgtToSrcCellAddr_(),
-    srcToTgtCellWght_(),
-    tgtToSrcCellWght_(),
-    method_(method),
-    V_(0.0),
-    singleMeshProc_(-1),
-    srcMapPtr_(NULL),
-    tgtMapPtr_(NULL)
-{
-    if (interpAllPatches)
-    {
-        const polyBoundaryMesh& srcBM = src.boundaryMesh();
-        const polyBoundaryMesh& tgtBM = tgt.boundaryMesh();
-
-        DynamicList<label> srcPatchID(src.boundaryMesh().size());
-        DynamicList<label> tgtPatchID(tgt.boundaryMesh().size());
-=======
 void Foam::meshToMesh::calculatePatchAMIs(const word& AMIMethodName)
 {
     if (!patchAMIs_.empty())
@@ -563,7 +440,6 @@ void Foam::meshToMesh::constructNoCuttingPatches
 
         DynamicList<label> srcPatchID(srcBM.size());
         DynamicList<label> tgtPatchID(tgtBM.size());
->>>>>>> OpenFOAM/master
         forAll(srcBM, patchI)
         {
             const polyPatch& pp = srcBM[patchI];
@@ -571,11 +447,7 @@ void Foam::meshToMesh::constructNoCuttingPatches
             {
                 srcPatchID.append(pp.index());
 
-<<<<<<< HEAD
-                label tgtPatchI = tgt.boundaryMesh().findPatchID(pp.name());
-=======
                 label tgtPatchI = tgtBM.findPatchID(pp.name());
->>>>>>> OpenFOAM/master
 
                 if (tgtPatchI != -1)
                 {
@@ -605,39 +477,6 @@ void Foam::meshToMesh::constructNoCuttingPatches
     }
 
     // calculate volume addressing and weights
-<<<<<<< HEAD
-    calculate();
-
-    // calculate patch addressing and weights
-    (void)patchAMIs();
-}
-
-
-Foam::meshToMesh::meshToMesh
-(
-    const polyMesh& src,
-    const polyMesh& tgt,
-    const interpolationMethod& method,
-    const HashTable<word>& patchMap,
-    const wordList& cuttingPatches
-)
-:
-    srcRegion_(src),
-    tgtRegion_(tgt),
-    srcPatchID_(),
-    tgtPatchID_(),
-    patchAMIs_(),
-    cuttingPatches_(),
-    srcToTgtCellAddr_(),
-    tgtToSrcCellAddr_(),
-    srcToTgtCellWght_(),
-    tgtToSrcCellWght_(),
-    method_(method),
-    V_(0.0),
-    singleMeshProc_(-1),
-    srcMapPtr_(NULL),
-    tgtMapPtr_(NULL)
-=======
     calculate(methodName);
 
     // calculate patch addressing and weights
@@ -652,7 +491,6 @@ void Foam::meshToMesh::constructFromCuttingPatches
     const HashTable<word>& patchMap,
     const wordList& cuttingPatches
 )
->>>>>>> OpenFOAM/master
 {
     srcPatchID_.setSize(patchMap.size());
     tgtPatchID_.setSize(patchMap.size());
@@ -672,34 +510,21 @@ void Foam::meshToMesh::constructFromCuttingPatches
     }
 
     // calculate volume addressing and weights
-<<<<<<< HEAD
-    calculate();
-
-    // calculate patch addressing and weights
-    (void)patchAMIs();
-=======
     calculate(methodName);
 
     // calculate patch addressing and weights
     calculatePatchAMIs(AMIMethodName);
->>>>>>> OpenFOAM/master
 
     // set IDs of cutting patches on target mesh
     cuttingPatches_.setSize(cuttingPatches.size());
     forAll(cuttingPatches_, i)
     {
         const word& patchName = cuttingPatches[i];
-<<<<<<< HEAD
-        cuttingPatches_[i] = tgt.boundaryMesh().findPatchID(patchName);
-=======
         cuttingPatches_[i] = tgtRegion_.boundaryMesh().findPatchID(patchName);
->>>>>>> OpenFOAM/master
     }
 }
 
 
-<<<<<<< HEAD
-=======
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 Foam::meshToMesh::meshToMesh
@@ -837,7 +662,6 @@ Foam::meshToMesh::meshToMesh
 }
 
 
->>>>>>> OpenFOAM/master
 // * * * * * * * * * * * * * * * * Destructor  * * * * * * * * * * * * * * * //
 
 Foam::meshToMesh::~meshToMesh()
