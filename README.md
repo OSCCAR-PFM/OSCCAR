@@ -1,8 +1,8 @@
 # OSCCAR
 ## Introduction
-OSCCAR is an suite of open source tools geared towards setting up, running and post-processing CFD simulations for industrial applications. OSCCAR builds on OpenFOAM®[1] and uses other various open source tools. The OSCCAR package includes tools, solvers, tutorials and documentation developed at an up-to-date code base of OpenFOAM. Ongoing contributions from the Department of Particulate Flow Modelling (PFM) at the Johannes Kepler University Linz, Austria, are added regularly. In addition, contributions from our academic and industrial partners are included in OSCCAR.
+OSCCAR is an suite of open source tools geared towards setting up, running and post-processing CFD simulations for industrial applications. OSCCAR builds on OpenFOAM®[1] and uses other open source tools as well. The OSCCAR package includes tools, solvers, tutorials and documentation developed in conjunction with an up-to-date code base of OpenFOAM. Ongoing contributions from the [Department of Particulate Flow Modelling (PFM)](http://particulate-flow.at) at the [Johannes Kepler University](http://www.jku.at) in Linz, Austria, are added regularly. In addition, contributions from our academic and industrial partners are included in OSCCAR.
 
-Please note that this project is work in progress. Any comments, ideas and suggestions are very welcome.
+Please note that this project is work in progress. Any comments, ideas and suggestions are very welcome. Please contact me at gijsbert.wierink (at) jku.at.
 
 ## Getting and installing OSCCAR
 ### Prerequisites
@@ -31,7 +31,7 @@ cd
 # Pull OSCCAR (do this in $HOME/OSCCAR)
 git clone https://github.com/OSCCAR-PFM/OSCCAR.git
 ```
-Of course you can change all this, this is vanilla installation. 
+Of course you can change all this, this is vanilla installation.
 
 Now make sure your shell knows about OSCCAR and its environment variables by sourcing the OSCCAR environment. To do this, open up your bash startup file:
 ```bash
@@ -115,5 +115,5 @@ OSCCAR and OpenFOAM contain more aliases that can be useful for a smooth workflo
 | run        | Change directory to the OpenFOAM user run directory. Defaults to OSCCAR run directory. | FOAM_RUN |
 
 
-## Disclamer
+## Disclaimer
 [1] This offering is not approved or endorsed by OpenCFD Limited, the producer of the OpenFOAM software and owner of the OPENFOAM®  and OpenCFD®  trade marks.
