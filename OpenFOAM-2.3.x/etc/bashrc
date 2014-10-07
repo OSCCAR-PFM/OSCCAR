@@ -42,12 +42,7 @@ export WM_PROJECT_VERSION=2.3.x
 #
 # Location of the OpenFOAM installation
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<<<<<<< HEAD
-# foamInstall=$HOME/$WM_PROJECT
-foamInstall=$OSCCAR_DIR
-=======
 foamInstall=$HOME/$WM_PROJECT
->>>>>>> OpenFOAM/master
 # foamInstall=~$WM_PROJECT
 # foamInstall=/opt/$WM_PROJECT
 # foamInstall=/usr/local/$WM_PROJECT
@@ -135,11 +130,7 @@ fi
 # Location of user files
 # ~~~~~~~~~~~~~~~~~~~~~~
 export WM_PROJECT_USER_DIR=$HOME/$WM_PROJECT/$USER-$WM_PROJECT_VERSION
-<<<<<<< HEAD
-export WM_PROJECT_USER_DIR=$OSCCAR_DIR/$USER-$WM_PROJECT_VERSION
-=======
 
->>>>>>> OpenFOAM/master
 
 # Source files, possibly with some verbosity
 _foamSource()

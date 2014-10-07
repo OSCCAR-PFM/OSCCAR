@@ -1,4 +1,5 @@
 #----------------------------------*-sh-*--------------------------------------
+# =========                 |
 # \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
 #  \\    /   O peration     |
 #   \\  /    A nd           | Copyright (C) 2011-2014 OpenFOAM Foundation

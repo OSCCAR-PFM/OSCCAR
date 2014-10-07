@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------*\
+  =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2013-2014 OpenFOAM Foundation
     \\  /    A nd           | Copyright (C) 2013-2014 OpenFOAM Foundation
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
@@ -40,7 +40,6 @@ const char* const Foam::ensightPTraits<Foam::symmTensor>::typeName =
     "tensor symm";
 
 const char* const Foam::ensightPTraits<Foam::tensor>::typeName =
-    "tensor asym";
     "tensor asym";
 
 
