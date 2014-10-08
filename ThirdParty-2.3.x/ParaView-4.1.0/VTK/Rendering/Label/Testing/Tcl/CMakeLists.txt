@@ -1,2 +1,0 @@
-vtk_add_test_tcl(labeledContours)
-vtk_add_test_tcl(labeledMesh)

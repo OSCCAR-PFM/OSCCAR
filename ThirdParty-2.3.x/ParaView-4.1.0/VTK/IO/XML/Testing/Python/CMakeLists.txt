@@ -1,6 +1,0 @@
-vtk_add_test_python(TestEmptyXML.py NO_DATA NO_VALID NO_RT)
-vtk_add_test_python(TestXMLImageDataIO.py)
-vtk_add_test_python(TestXMLPolyDataIO.py)
-vtk_add_test_python(TestXMLRectilinearGridIO.py)
-vtk_add_test_python(TestXMLStructuredGridIO.py)
-vtk_add_test_python(TestXMLUnstructuredGridIO.py)

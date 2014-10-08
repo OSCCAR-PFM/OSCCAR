@@ -1,8 +1,0 @@
-vtk_add_test_python(TestBMPReader.py)
-vtk_add_test_python(TestImageWriters.py)
-vtk_add_test_python(TestJPEGReader.py)
-vtk_add_test_python(TestMHD.py)
-vtk_add_test_python(TestTIFFReader.py)
-vtk_add_test_python(dem.py)
-vtk_add_test_python(TestMetaImage2D.py)
-vtk_add_test_python(TestSetFileNames.py)

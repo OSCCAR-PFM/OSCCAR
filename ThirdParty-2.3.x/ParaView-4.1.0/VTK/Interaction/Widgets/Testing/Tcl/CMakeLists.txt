@@ -1,6 +1,0 @@
-if(NOT VTK_OPENGL_HAS_OSMESA)
-  vtk_add_test_tcl(TestInteractorEventRecorder)
-  vtk_add_test_tcl(TestSphereWidget)
-  vtk_add_test_tcl(TestBoxWidget)
-  vtk_add_test_tcl(TestTextWidget)
-endif()

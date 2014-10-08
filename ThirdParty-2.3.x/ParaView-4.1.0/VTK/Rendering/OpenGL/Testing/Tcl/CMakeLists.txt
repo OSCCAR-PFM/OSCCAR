@@ -1,3 +1,0 @@
-vtk_add_test_tcl(TestFreetypeTextMapperBigger)
-vtk_add_test_tcl(TestFreetypeTextMapper)
-vtk_add_test_tcl(TestFreetypeTextOverlay)

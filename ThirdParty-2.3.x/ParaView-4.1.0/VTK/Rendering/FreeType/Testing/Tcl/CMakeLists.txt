@@ -1,3 +1,0 @@
-vtk_add_test_tcl(OverlayTextOnImage)
-vtk_add_test_tcl(text)
-vtk_add_test_tcl(multiLineText)
