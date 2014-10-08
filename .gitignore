@@ -86,7 +86,7 @@ doc/Doxygen/DTAGS
 
 
 # Ignore user directory
-$USER-2.3.x/
+$USER-2.3.x/**
 RASPBERRY/**
 
 # ----------------------------------------------------------------- end-of-file
